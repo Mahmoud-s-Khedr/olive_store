@@ -1,0 +1,25 @@
+meta {
+  name: admin_products_delete_image
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{base_url}}/api/admin/products/{{product_id}}/images/{{product_image_id}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+
+  test("returns message", () => {
+    expect(res.body.message).to.be.a("string");
+  });
+}

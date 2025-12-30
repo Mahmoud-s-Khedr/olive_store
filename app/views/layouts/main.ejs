@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="light" lang="<%= typeof lang !== 'undefined' ? lang : 'ar' %>"
+    dir="<%= typeof dir !== 'undefined' ? dir : 'rtl' %>">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= typeof title !=='undefined' ? title + ' - ' : '' %>
+            <%= typeof t !=='undefined' ? t('common.brand', 'زيتون مصر' ) : 'زيتون مصر' %>
+    </title>
+    <meta name="description"
+        content="<%= typeof metaDescription !== 'undefined' ? metaDescription : (typeof t !== 'undefined' ? t('common.metaDescription', 'متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي') : 'متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي') %>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans Arabic', 'Tajawal', sans-serif;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-dropdown {
+            min-width: 120px;
+        }
+    </style>
+
+    <!-- i18n Setup (before page load) -->
+    <script>
+            (function () {
+                const lang = localStorage.getItem('lang') || 'ar';
+                const dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                document.documentElement.dir = dir;
+            })();
+    </script>
+</head>
+
+<body class="bg-background-light text-olive-dark min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3 text-olive-dark hover:opacity-90 transition-opacity">
+                    <div class="w-8 h-8 text-primary">
+                        <span class="material-symbols-outlined text-3xl">water_drop</span>
+                    </div>
+                    <h1 class="text-xl lg:text-2xl font-bold tracking-tight">
+                        <%= typeof t !=='undefined' ? t('common.brand', 'زيتون مصر' ) : 'زيتون مصر' %>
+                    </h1>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="/"
+                        class="text-olive-dark text-sm font-medium hover:text-primary transition-colors <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'text-primary font-bold' : '' %>">
+                        <%= typeof t !=='undefined' ? t('nav.home', 'الرئيسية' ) : 'الرئيسية' %>
+                    </a>
+                    <a href="/products"
+                        class="text-olive-dark text-sm font-medium hover:text-primary transition-colors <%= typeof currentPage !== 'undefined' && currentPage === 'products' ? 'text-primary font-bold' : '' %>">
+                        <%= typeof t !=='undefined' ? t('nav.products', 'المتجر' ) : 'المتجر' %>
+                    </a>
+                    <a href="/categories"
+                        class="text-olive-dark text-sm font-medium hover:text-primary transition-colors <%= typeof currentPage !== 'undefined' && currentPage === 'categories' ? 'text-primary font-bold' : '' %>">
+                        <%= typeof t !=='undefined' ? t('nav.categories', 'الأقسام' ) : 'الأقسام' %>
+                    </a>
+                    <a href="/about"
+                        class="text-olive-dark text-sm font-medium hover:text-primary transition-colors <%= typeof currentPage !== 'undefined' && currentPage === 'about' ? 'text-primary font-bold' : '' %>">
+                        <%= typeof t !=='undefined' ? t('nav.about', 'من نحن' ) : 'من نحن' %>
+                    </a>
+                    <a href="/contact"
+                        class="text-olive-dark text-sm font-medium hover:text-primary transition-colors <%= typeof currentPage !== 'undefined' && currentPage === 'contact' ? 'text-primary font-bold' : '' %>">
+                        <%= typeof t !=='undefined' ? t('nav.contact', 'تواصل معنا' ) : 'تواصل معنا' %>
+                    </a>
+                </nav>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-2 lg:gap-4">
+
+                    <!-- Search Bar (Desktop) -->
+                    <div class="hidden md:flex w-64 lg:w-80 relative">
+                        <input type="text" id="search-input"
+                            placeholder="<%= typeof t !== 'undefined' ? t('nav.search', 'ابحث عن منتج...') : 'ابحث عن منتج...' %>"
+                            class="w-full bg-gray-50 border-none rounded-lg py-2.5 <%= typeof dir !== 'undefined' && dir === 'rtl' ? 'pr-10 pl-4' : 'pl-10 pr-4' %> text-sm focus:ring-2 focus:ring-primary/50 transition-all">
+                        <span
+                            class="material-symbols-outlined absolute <%= typeof dir !== 'undefined' && dir === 'rtl' ? 'right-3' : 'left-3' %> top-2.5 text-olive-light">search</span>
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <div class="relative" id="lang-menu-container">
+                        <button id="lang-menu-btn"
+                            class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                            <span id="current-lang-flag" data-current-flag>🇪🇬</span>
+                            <span id="current-lang-name" class="hidden sm:inline text-olive-dark"
+                                data-current-lang>العربية</span>
+                            <span class="material-symbols-outlined text-olive-light text-lg">expand_more</span>
+                        </button>
+                        <div id="lang-dropdown"
+                            class="hidden absolute left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 lang-dropdown">
+                            <button
+                                class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                                data-lang="ar">
+                                <span>🇪🇬</span>
+                                <span>العربية</span>
+                            </button>
+                            <button
+                                class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                                data-lang="en">
+                                <span>🇬🇧</span>
+                                <span>English</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cart Button -->
+                    <a href="/cart"
+                        class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <span class="material-symbols-outlined text-olive-dark">shopping_cart</span>
+                        <span id="cart-badge"
+                            class="cart-badge absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full hidden">0</span>
+                    </a>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="user-menu-container">
+                        <button id="user-menu-btn"
+                            class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                            <span class="material-symbols-outlined text-olive-dark">account_circle</span>
+                        </button>
+
+                        <!-- User Dropdown (Hidden by default) -->
+                        <div id="user-dropdown"
+                            class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50">
+                            <!-- Logged Out State -->
+                            <div id="logged-out-menu">
+                                <a href="/login"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">login</span>
+                                    <%= typeof t !=='undefined' ? t('nav.login', 'تسجيل الدخول' ) : 'تسجيل الدخول' %>
+                                </a>
+                                <a href="/register"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">person_add</span>
+                                    <%= typeof t !=='undefined' ? t('nav.register', 'إنشاء حساب' ) : 'إنشاء حساب' %>
+                                </a>
+                            </div>
+
+                            <!-- Logged In State (Hidden by default) -->
+                            <div id="logged-in-menu" class="hidden">
+                                <a href="/profile"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">person</span>
+                                    <%= typeof t !=='undefined' ? t('nav.profile', 'الملف الشخصي' ) : 'الملف الشخصي' %>
+                                </a>
+                                <a href="/my-orders"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">shopping_bag</span>
+                                    <%= typeof t !=='undefined' ? t('nav.orders', 'طلباتي' ) : 'طلباتي' %>
+                                </a>
+                                <a href="/addresses"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">location_on</span>
+                                    <%= typeof t !=='undefined' ? t('nav.addresses', 'عناويني' ) : 'عناويني' %>
+                                </a>
+                                <hr class="my-2 border-gray-100">
+                                <button id="logout-btn"
+                                    class="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors w-full">
+                                    <span class="material-symbols-outlined text-lg">logout</span>
+                                    <%= typeof t !=='undefined' ? t('nav.logout', 'تسجيل الخروج' ) : 'تسجيل الخروج' %>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-btn"
+                        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <span class="material-symbols-outlined text-olive-dark">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100 bg-white">
+            <div class="px-4 py-4 space-y-2">
+                <!-- Mobile Search -->
+                <div class="relative mb-4">
+                    <input type="text"
+                        placeholder="<%= typeof t !== 'undefined' ? t('nav.search', 'ابحث عن منتج...') : 'ابحث عن منتج...' %>"
+                        class="w-full bg-gray-50 border-none rounded-lg py-2.5 <%= typeof dir !== 'undefined' && dir === 'rtl' ? 'pr-10 pl-4' : 'pl-10 pr-4' %> text-sm focus:ring-2 focus:ring-primary/50">
+                    <span
+                        class="material-symbols-outlined absolute <%= typeof dir !== 'undefined' && dir === 'rtl' ? 'right-3' : 'left-3' %> top-2.5 text-olive-light">search</span>
+                </div>
+
+                <a href="/"
+                    class="block px-4 py-2 text-olive-dark font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                    <%= typeof t !=='undefined' ? t('nav.home', 'الرئيسية' ) : 'الرئيسية' %>
+                </a>
+                <a href="/products"
+                    class="block px-4 py-2 text-olive-dark font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                    <%= typeof t !=='undefined' ? t('nav.products', 'المتجر' ) : 'المتجر' %>
+                </a>
+                <a href="/categories"
+                    class="block px-4 py-2 text-olive-dark font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                    <%= typeof t !=='undefined' ? t('nav.categories', 'الأقسام' ) : 'الأقسام' %>
+                </a>
+                <a href="/about"
+                    class="block px-4 py-2 text-olive-dark font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                    <%= typeof t !=='undefined' ? t('nav.about', 'من نحن' ) : 'من نحن' %>
+                </a>
+                <a href="/contact"
+                    class="block px-4 py-2 text-olive-dark font-medium hover:bg-gray-50 rounded-lg transition-colors">
+                    <%= typeof t !=='undefined' ? t('nav.contact', 'تواصل معنا' ) : 'تواصل معنا' %>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <%- body %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#2c3325] text-[#f9f7f2] pt-16 pb-8 mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+                <!-- Brand Column -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-3xl text-primary">water_drop</span>
+                        <span class="text-2xl font-bold">
+                            <%= typeof t !=='undefined' ? t('footer.brand', 'زيتون مصر' ) : 'زيتون مصر' %>
+                        </span>
+                    </div>
+                    <p class="text-[#b0b8a6] text-sm leading-relaxed">
+                        <%= typeof t !=='undefined' ?
+                            t('footer.description', 'نقدم أفخر أنواع زيت الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.'
+                            )
+                            : 'نقدم أفخر أنواع زيت الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.'
+                            %>
+                    </p>
+                    <div class="flex gap-3 mt-2">
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="text-xs font-bold">FB</span>
+                        </a>
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="text-xs font-bold">IG</span>
+                        </a>
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="text-xs font-bold">WA</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg">
+                        <%= typeof t !=='undefined' ? t('footer.quickLinks', 'روابط سريعة' ) : 'روابط سريعة' %>
+                    </h4>
+                    <ul class="flex flex-col gap-2 text-[#b0b8a6] text-sm">
+                        <li><a href="/about" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.aboutStore', 'عن المتجر' ) : 'عن المتجر' %>
+                            </a></li>
+                        <li><a href="/shipping" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.shippingReturns', 'الشحن والإرجاع' )
+                                    : 'الشحن والإرجاع' %>
+                            </a></li>
+                        <li><a href="/payment-info" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.paymentMethods', 'طرق الدفع' ) : 'طرق الدفع' %>
+                            </a></li>
+                        <li><a href="/contact" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.contactUs', 'اتصل بنا' ) : 'اتصل بنا' %>
+                            </a></li>
+                    </ul>
+                </div>
+
+                <!-- Shop Links -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg">
+                        <%= typeof t !=='undefined' ? t('footer.shop', 'تسوق' ) : 'تسوق' %>
+                    </h4>
+                    <ul class="flex flex-col gap-2 text-[#b0b8a6] text-sm">
+                        <li><a href="/products" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.allProducts', 'جميع المنتجات' )
+                                    : 'جميع المنتجات' %>
+                            </a></li>
+                        <li><a href="/products?category=olive-oil" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.virginOliveOil', 'زيت زيتون بكر' )
+                                    : 'زيت زيتون بكر' %>
+                            </a></li>
+                        <li><a href="/products?category=care" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.careProducts', 'منتجات العناية' )
+                                    : 'منتجات العناية' %>
+                            </a></li>
+                        <li><a href="/products?category=gifts" class="hover:text-primary transition-colors">
+                                <%= typeof t !=='undefined' ? t('footer.giftsAndSets', 'هدايا ومجموعات' )
+                                    : 'هدايا ومجموعات' %>
+                            </a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg">
+                        <%= typeof t !=='undefined' ? t('footer.contact', 'تواصل معنا' ) : 'تواصل معنا' %>
+                    </h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                            <span>
+                                <%= typeof t !=='undefined' ? t('footer.address', 'القاهرة، مصر الجديدة' )
+                                    : 'القاهرة، مصر الجديدة' %>
+                            </span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">phone</span>
+                            <span dir="ltr">
+                                <%= typeof t !=='undefined' ? t('footer.phone', '+20 123 456 7890' )
+                                    : '+20 123 456 7890' %>
+                            </span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">mail</span>
+                            <span>
+                                <%= typeof t !=='undefined' ? t('footer.email', 'info@zaytounmasr.com' )
+                                    : 'info@zaytounmasr.com' %>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-[#3d4536] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-[#b0b8a6] text-sm">
+                    <%= typeof t !=='undefined' ? t('footer.copyright', '© 2024 زيتون مصر. جميع الحقوق محفوظة.' )
+                        : '© 2024 زيتون مصر. جميع الحقوق محفوظة.' %>
+                </p>
+                <div class="flex items-center gap-3 opacity-60">
+                    <div
+                        class="w-12 h-7 bg-white rounded flex items-center justify-center text-xs text-black font-bold">
+                        VISA</div>
+                    <div
+                        class="w-12 h-7 bg-white rounded flex items-center justify-center text-xs text-black font-bold">
+                        MC</div>
+                    <div
+                        class="w-12 h-7 bg-white rounded flex items-center justify-center text-xs text-black font-bold">
+                        Meeza</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-[9999]"></div>
+
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/i18n.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // User dropdown toggle
+        document.getElementById('user-menu-btn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('user-dropdown').classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('user-dropdown');
+            const container = document.getElementById('user-menu-container');
+            if (dropdown && container && !container.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Initialize auth state on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof AuthModule !== 'undefined') {
+                AuthModule.init();
+            }
+            if (typeof Cart !== 'undefined') {
+                Cart.updateBadge();
+            }
+
+            // Language switcher
+            document.getElementById('lang-menu-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('lang-dropdown').classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    if (typeof I18n !== 'undefined') {
+                        I18n.setLanguage(lang);
+                    } else {
+                        localStorage.setItem('lang', lang);
+                        location.reload();
+                    }
+                    document.getElementById('lang-dropdown').classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                const langDropdown = document.getElementById('lang-dropdown');
+                const langContainer = document.getElementById('lang-menu-container');
+                if (langDropdown && langContainer && !langContainer.contains(e.target)) {
+                    langDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

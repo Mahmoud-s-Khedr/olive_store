@@ -1,0 +1,38 @@
+meta {
+  name: admin_files_create
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/api/admin/files
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "r2_key": "products/<uuid>.jpg",
+    "filename": "<uuid>.jpg",
+    "original_name": "hero-banner.jpg",
+    "mime_type": "image/jpeg",
+    "size": 145678,
+    "entity_type": "product",       // optional
+    "entity_id": 123               // optional
+  }
+  
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns files array", () => {
+    expect(res.body.files).to.be.an("array");
+  });
+}

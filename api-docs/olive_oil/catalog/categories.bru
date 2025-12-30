@@ -1,0 +1,22 @@
+meta {
+  name: categories
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/categories
+  body: none
+  auth: none
+}
+
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns categories array", () => {
+    expect(res.body.categories).to.be.an("array");
+  });
+}

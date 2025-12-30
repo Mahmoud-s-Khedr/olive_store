@@ -1,0 +1,11 @@
+meta {
+  name: settings_public
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/settings/public
+  body: none
+  auth: none
+}

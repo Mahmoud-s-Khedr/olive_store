@@ -1,0 +1,31 @@
+{
+  "name": "local",
+  "type": "environment",
+  "variables": [
+    { "name": "base_url", "value": "http://localhost:5000" },
+    { "name": "token", "value": "" },
+    { "name": "admin_token", "value": "" },
+    { "name": "email", "value": "user@example.com" },
+    { "name": "password", "value": "password123" },
+    { "name": "admin_email", "value": "admin@example.com" },
+    { "name": "admin_password", "value": "change-me" },
+    { "name": "email_token", "value": "" },
+    { "name": "reset_token", "value": "" },
+    { "name": "address_id", "value": "1" },
+    { "name": "category_id", "value": "1" },
+    { "name": "category_slug", "value": "oil" },
+    { "name": "product_id", "value": "1" },
+    { "name": "product_slug", "value": "sample-slug" },
+    { "name": "product_image_id", "value": "1" },
+    { "name": "order_id", "value": "1" },
+    { "name": "order_number", "value": "OR12345678" },
+    { "name": "customer_id", "value": "1" },
+    { "name": "file_id", "value": "1" },
+    { "name": "status", "value": "" },
+    { "name": "payment_status", "value": "" },
+    { "name": "sort", "value": "" },
+    { "name": "search", "value": "" },
+    { "name": "min_price", "value": "" },
+    { "name": "max_price", "value": "" }
+  ]
+}

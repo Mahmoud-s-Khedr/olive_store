@@ -1,0 +1,126 @@
+<!-- Terms and Conditions Page -->
+<div class="max-w-[960px] mx-auto px-4 lg:px-8 py-12">
+
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+            <span class="material-symbols-outlined text-3xl">gavel</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4">
+            <%= t('terms.title', 'الشروط والأحكام' ) %>
+        </h1>
+        <p class="text-olive-light text-lg">
+            <%= t('terms.subtitle', 'يرجى قراءة الشروط والأحكام بعناية قبل استخدام الموقع' ) %>
+        </p>
+    </div>
+
+    <!-- Content -->
+    <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 space-y-10">
+
+        <!-- Introduction -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">info</span>
+                <%= t('terms.intro.title', 'مقدمة' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <p>
+                    <%= t('terms.intro.content', 'مرحباً بكم في زيتون مصر. تحكم هذه الشروط والأحكام استخدامكم لموقعنا وخدماتنا. باستخدامكم للموقع، فإنكم توافقون على هذه الشروط بالكامل.'
+                        ) %>
+                </p>
+            </div>
+        </section>
+
+        <!-- Account -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">person</span>
+                <%= t('terms.account.title', 'حساب المستخدم' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <p>
+                    <%= t('terms.account.content', 'عند إنشاء حساب، يجب عليكم تزويدنا بمعلومات دقيقة وكاملة. أنتم مسؤولون عن الحفاظ على سرية حسابكم وكلمة المرور، وعن تقييد الوصول إلى جهاز الكمبيوتر الخاص بكم.'
+                        ) %>
+                </p>
+            </div>
+        </section>
+
+        <!-- Orders & Pricing -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">shopping_cart</span>
+                <%= t('terms.orders.title', 'الطلبات والأسعار' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <ul class="space-y-2 list-disc list-inside">
+                    <li>
+                        <%= t('terms.orders.acceptance', 'نحتفظ بالحق في رفض أو إلغاء أي طلب لأي سبب، بما في ذلك عدم توفر المنتج أو أخطاء في التسعير.'
+                            ) %>
+                    </li>
+                    <li>
+                        <%= t('terms.orders.pricing', 'الأسعار المعروضة شاملة الضرائب ما لم ينص على خلاف ذلك. قد تتغير الأسعار في أي وقت دون إشعار مسبق.'
+                            ) %>
+                    </li>
+                    <li>
+                        <%= t('terms.orders.payment', 'يجب دفع ثمن المنتجات بالكامل قبل الشحن (في حالة الدفع الإلكتروني) أو عند الاستلام.'
+                            ) %>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Intellectual Property -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">copyright</span>
+                <%= t('terms.ip.title', 'حقوق الملكية الفكرية' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <p>
+                    <%= t('terms.ip.content', 'جميع المحتويات الموجودة على هذا الموقع، بما في ذلك النصوص والرسومات والشعارات والصور، هي ملك لزيتون مصر ومحمية بموجب قوانين حقوق النشر.'
+                        ) %>
+                </p>
+            </div>
+        </section>
+
+        <!-- Privacy -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">security</span>
+                <%= t('terms.privacy.title', 'الخصوصية والأمان' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <p>
+                    <%= t('terms.privacy.content', 'نحن نأخذ خصوصيتكم بجدية. يرجى مراجعة سياسة الخصوصية الخاصة بنا لفهم ممارساتنا فيما يتعلق ببياناتكم الشخصية.'
+                        ) %>
+                </p>
+            </div>
+        </section>
+
+        <!-- Changes -->
+        <section>
+            <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">update</span>
+                <%= t('terms.changes.title', 'التغييرات على الشروط' ) %>
+            </h2>
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <p>
+                    <%= t('terms.changes.content', 'نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم نشر التغييرات على هذه الصفحة، ويعتبر استمرار استخدامكم للموقع قبولاً لهذه التغييرات.'
+                        ) %>
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="mt-12 text-center">
+        <p class="text-olive-light mb-4">
+            <%= t('terms.contact.text', 'إذا كان لديكم أي استفسارات حول الشروط والأحكام، يرجى التواصل معنا.' ) %>
+        </p>
+        <a href="/contact" class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+            <%= t('terms.contact.link', 'اتصل بنا' ) %>
+                <span class="material-symbols-outlined text-sm rtl:rotate-180">arrow_forward</span>
+        </a>
+    </div>
+</div>

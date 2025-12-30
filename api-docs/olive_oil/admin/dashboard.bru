@@ -1,0 +1,26 @@
+meta {
+  name: admin_dashboard
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/dashboard
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+
+  test("returns dashboard dto", () => {
+    expect(res.body.metrics).to.be.an("object");
+    expect(res.body.recent_orders).to.be.an("array");
+  });
+}

@@ -1,0 +1,35 @@
+meta {
+  name: files_upload_url
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/files/upload-url
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "file_name": "image.png",
+    "content_type": "image/png",
+    "key_prefix": "products"
+  }
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns signed upload dto", () => {
+    expect(res.body.key).to.be.a("string");
+    expect(res.body.uploadUrl).to.be.a("string");
+  });
+}

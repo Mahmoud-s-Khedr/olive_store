@@ -1,0 +1,21 @@
+meta {
+  name: admin_orders_update_status
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/api/admin/orders/1/status
+  body: json
+  auth: none
+}
+
+body:json {
+  status: "confirmed"
+  payment_status: "paid"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

@@ -1,0 +1,42 @@
+meta {
+  name: register
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/auth/register
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Test User",
+    "email": "{{email}}",
+    "phone": "+200000456789",
+    "password": "{{password}}"
+  }
+}
+
+tests {
+  test("status is 201 or 409 for duplicate", () => {
+    expect([201, 409]).to.include(res.status);
+  });
+  
+  test("returns message", () => {
+    expect(res.body.message).to.be.a("string");
+  });
+  
+  test("returns user dto on success", () => {
+    if (res.status === 201) {
+      expect(res.body.user).to.be.an("object");
+      expect(res.body.user).to.have.property("id");
+      expect(res.body.user).to.have.property("email");
+    }
+  });
+}

@@ -1,0 +1,27 @@
+meta {
+  name: admin_root
+  type: http
+  seq: 0
+}
+
+get {
+  url: {{base_url}}/api/admin
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 403", () => {
+    expect([200, 403]).to.include(res.status);
+  });
+
+  test("returns admin api message on success", () => {
+    if (res.status === 200) {
+      expect(res.body.message).to.be.a("string");
+    }
+  });
+}

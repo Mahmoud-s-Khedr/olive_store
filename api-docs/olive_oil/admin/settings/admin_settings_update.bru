@@ -1,0 +1,35 @@
+meta {
+  name: admin_settings_update
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{base_url}}/api/admin/settings
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "key": "store_name_en",
+    "value": "Olive Store",
+    "type": "string",
+    "group_name": "general"
+  }
+  
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns settings array", () => {
+    expect(res.body.settings).to.be.an("array");
+  });
+}

@@ -1,0 +1,25 @@
+meta {
+  name: admin_files_delete
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{base_url}}/api/admin/files/{{file_id}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 501", () => {
+    expect(res.status).to.equal(501);
+  });
+
+  test("returns message", () => {
+    expect(res.body.message).to.be.a("string");
+  });
+}

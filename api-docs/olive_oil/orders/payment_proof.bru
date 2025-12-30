@@ -1,0 +1,40 @@
+meta {
+  name: payment_proof
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/api/orders/{{order_number}}/payment-proof
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "r2_key": "orders/ord123/proof.png",
+    "filename": "proof.png",
+    "original_name": "proof.png",
+    "mime_type": "image/png",
+    "size": 12345,
+    "payment_reference": "REF123"
+  }
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+  
+  test("returns order and file dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.file).to.be.an("object");
+    }
+  });
+}

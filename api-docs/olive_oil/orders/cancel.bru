@@ -1,0 +1,35 @@
+meta {
+  name: cancel_order
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/api/orders/{{order_number}}/cancel
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "reason": "Changed my mind"
+  }
+}
+
+tests {
+  test("status is 200 or 400/404", () => {
+    expect([200, 400, 404]).to.include(res.status);
+  });
+  
+  test("returns order dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.order.status).to.equal("cancelled");
+    }
+  });
+}

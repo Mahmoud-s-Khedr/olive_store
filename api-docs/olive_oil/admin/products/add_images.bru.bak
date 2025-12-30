@@ -1,0 +1,32 @@
+meta {
+  name: admin_products_add_images
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/api/admin/products/1/images
+  body: json
+  auth: none
+}
+
+body:json {
+  files: [
+    {
+      r2_key: "products/1/main.png"
+      filename: "main.png"
+      original_name: "main.png"
+      mime_type: "image/png"
+      size: 12345
+      is_primary: true
+      sort_order: 0
+      alt_text_en: "Main"
+      alt_text_ar: "رئيسية"
+    }
+  ]
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

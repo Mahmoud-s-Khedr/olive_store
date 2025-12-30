@@ -1,0 +1,15 @@
+meta {
+  name: admin_products_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/products
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

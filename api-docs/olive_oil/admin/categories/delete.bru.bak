@@ -1,0 +1,15 @@
+meta {
+  name: admin_categories_delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{base_url}}/api/admin/categories/1
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

@@ -1,0 +1,22 @@
+meta {
+  name: files_upload_url
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/files/upload-url
+  body: json
+  auth: none
+}
+
+body:json {
+  file_name: "image.png"
+  content_type: "image/png"
+  key_prefix: "products"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}

@@ -1,0 +1,51 @@
+meta {
+  name: create_order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/orders
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "customer_name": "Test User",
+    "phone": "+200000000000",
+    "address": "123 Street",
+    "city": "Cairo",
+    "postal_code": "12345",
+    "payment_method": "vodafone_cash",
+    "notes": "Call before delivery",
+    "shipping_cost": 50,
+    "discount": 0,
+    "items": [
+      {
+        "product_id": {{product_id}},
+        "quantity": 1,
+        "product_image": null
+      }
+    ]
+  }
+}
+
+tests {
+  test("status is 201 or 400 for validation", () => {
+    expect([201, 400]).to.include(res.status);
+  });
+  
+  test("returns order dto on success", () => {
+    if (res.status === 201) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.order).to.have.property("order_number");
+      expect(res.body.order).to.have.property("total");
+    }
+  });
+}

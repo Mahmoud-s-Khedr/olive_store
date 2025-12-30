@@ -1,0 +1,307 @@
+<!-- Shipping & Returns Page -->
+<div class="max-w-[960px] mx-auto px-4 lg:px-8 py-12">
+
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+            <span class="material-symbols-outlined text-3xl">local_shipping</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4">
+            <%= t('shipping.title', 'الشحن والتوصيل' ) %>
+        </h1>
+        <p class="text-olive-light text-lg">
+            <%= t('shipping.subtitle', 'كل ما تحتاج معرفته عن الشحن والإرجاع' ) %>
+        </p>
+    </div>
+
+    <!-- Content -->
+    <div class="space-y-8">
+
+        <!-- Shipping Methods -->
+        <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">package_2</span>
+                <%= t('shipping.methods.title', 'طرق الشحن' ) %>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">local_shipping</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-olive-dark">
+                                <%= t('shipping.methods.standard.title', 'الشحن العادي' ) %>
+                            </h3>
+                            <p class="text-sm text-primary font-medium">
+                                <%= t('shipping.methods.standard.price', '٥٠ ج.م' ) %>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-olive-light space-y-1">
+                        <li>• <%= t('shipping.methods.standard.delivery', 'التوصيل خلال 3-5 أيام عمل' ) %>
+                        </li>
+                        <li>• <%= t('shipping.methods.standard.coverage', 'متاح لجميع المحافظات' ) %>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-accent">bolt</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-olive-dark">
+                                <%= t('shipping.methods.express.title', 'الشحن السريع' ) %>
+                            </h3>
+                            <p class="text-sm text-accent font-medium">
+                                <%= t('shipping.methods.express.price', '١٠٠ ج.م' ) %>
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-olive-light space-y-1">
+                        <li>• <%= t('shipping.methods.express.delivery', 'التوصيل خلال 1-2 يوم عمل' ) %>
+                        </li>
+                        <li>• <%= t('shipping.methods.express.coverage', 'متاح للقاهرة والجيزة' ) %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-green-50 rounded-xl border border-green-200">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-green-600 text-xl">local_offer</span>
+                    <div>
+                        <h4 class="font-bold text-green-800">
+                            <%= t('shipping.methods.free.title', 'شحن مجاني!' ) %>
+                        </h4>
+                        <p class="text-sm text-green-700">
+                            <%= t('shipping.methods.free.condition', 'للطلبات بقيمة ٥٠٠ ج.م أو أكثر' ) %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Areas -->
+        <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">map</span>
+                <%= t('shipping.areas.title', 'مناطق التوصيل' ) %>
+            </h2>
+
+            <div class="prose prose-stone max-w-none">
+                <p class="text-olive-light">
+                    <%= t('shipping.areas.description', 'نقوم بالتوصيل لجميع محافظات جمهورية مصر العربية:' ) %>
+                </p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.cairo', 'القاهرة' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.giza', 'الجيزة' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.alexandria', 'الإسكندرية' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.dakahlia', 'الدقهلية' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.sharqia', 'الشرقية' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.minya', 'المنيا' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.assiut', 'أسيوط' ) %>
+                    </span>
+                    <span class="bg-gray-50 px-3 py-2 rounded-lg text-center text-sm">
+                        <%= t('shipping.areas.others', '+ باقي المحافظات' ) %>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Times -->
+        <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">schedule</span>
+                <%= t('shipping.times.title', 'مواعيد التوصيل' ) %>
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-100">
+                            <th class="text-right py-3 font-bold text-olive-dark rtl:text-right ltr:text-left">
+                                <%= t('shipping.times.area', 'المنطقة' ) %>
+                            </th>
+                            <th class="text-right py-3 font-bold text-olive-dark rtl:text-right ltr:text-left">
+                                <%= t('shipping.times.standard', 'الشحن العادي' ) %>
+                            </th>
+                            <th class="text-right py-3 font-bold text-olive-dark rtl:text-right ltr:text-left">
+                                <%= t('shipping.times.express', 'الشحن السريع' ) %>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-50">
+                            <td class="py-3 text-olive-dark">
+                                <%= t('shipping.times.cairoGiza', 'القاهرة والجيزة' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">2-3 <%= t('shipping.times.businessDays', 'أيام عمل' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">1-2 <%= t('shipping.times.businessDays', 'أيام عمل' ) %>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-50">
+                            <td class="py-3 text-olive-dark">
+                                <%= t('shipping.times.alexDelta', 'الإسكندرية والدلتا' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">3-4 <%= t('shipping.times.businessDays', 'أيام عمل' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">
+                                <%= t('shipping.times.notAvailable', 'غير متاح' ) %>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-50">
+                            <td class="py-3 text-olive-dark">
+                                <%= t('shipping.times.upperEgypt', 'الصعيد' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">4-5 <%= t('shipping.times.businessDays', 'أيام عمل' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">
+                                <%= t('shipping.times.notAvailable', 'غير متاح' ) %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 text-olive-dark">
+                                <%= t('shipping.times.remote', 'المناطق النائية' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">5-7 <%= t('shipping.times.businessDays', 'أيام عمل' ) %>
+                            </td>
+                            <td class="py-3 text-olive-light">
+                                <%= t('shipping.times.notAvailable', 'غير متاح' ) %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Returns Policy -->
+        <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">assignment_return</span>
+                <%= t('shipping.returns.title', 'سياسة الإرجاع والاستبدال' ) %>
+            </h2>
+
+            <div class="prose prose-stone max-w-none text-olive-light">
+                <ul class="space-y-3">
+                    <li><strong class="text-olive-dark">
+                            <%= t('shipping.returns.period', 'مدة الإرجاع:' ) %>
+                        </strong>
+                        <%= t('shipping.returns.periodDesc', 'يمكنك إرجاع المنتج خلال 7 أيام من تاريخ الاستلام.' ) %>
+                    </li>
+                    <li><strong class="text-olive-dark">
+                            <%= t('shipping.returns.conditions', 'شروط الإرجاع:' ) %>
+                        </strong>
+                        <%= t('shipping.returns.conditionsDesc', 'يجب أن يكون المنتج في حالته الأصلية، غير مفتوح أو مستخدم.'
+                            ) %>
+                    </li>
+                    <li><strong class="text-olive-dark">
+                            <%= t('shipping.returns.exchange', 'الاستبدال:' ) %>
+                        </strong>
+                        <%= t('shipping.returns.exchangeDesc', 'في حالة وجود عيب في المنتج، نقوم باستبداله مجاناً.' ) %>
+                    </li>
+                    <li><strong class="text-olive-dark">
+                            <%= t('shipping.returns.refund', 'استرداد المبلغ:' ) %>
+                        </strong>
+                        <%= t('shipping.returns.refundDesc', 'يتم استرداد المبلغ خلال 7-14 يوم عمل بنفس طريقة الدفع.' )
+                            %>
+                    </li>
+                </ul>
+
+                <div class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-amber-600 text-xl">info</span>
+                        <div>
+                            <h4 class="font-bold text-amber-800">
+                                <%= t('shipping.returns.note', 'ملاحظة مهمة' ) %>
+                            </h4>
+                            <p class="text-sm text-amber-700">
+                                <%= t('shipping.returns.noteDesc', 'المنتجات الغذائية المفتوحة أو المستخدمة لا يمكن إرجاعها لأسباب صحية.'
+                                    ) %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQs -->
+        <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">help</span>
+                <%= t('shipping.faq.title', 'الأسئلة الشائعة' ) %>
+            </h2>
+
+            <div class="space-y-4">
+                <details class="group border border-gray-100 rounded-xl">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                        <%= t('shipping.faq.q1', 'كيف أتتبع طلبي؟' ) %>
+                            <span
+                                class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="px-4 pb-4 text-olive-light text-sm">
+                        <%= t('shipping.faq.a1', 'يمكنك تتبع طلبك من خلال صفحة "طلباتي" في حسابك، أو عبر رابط التتبع المرسل إلى بريدك الإلكتروني.'
+                            ) %>
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-xl">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                        <%= t('shipping.faq.q2', 'هل يمكنني تغيير عنوان التوصيل بعد الطلب؟' ) %>
+                            <span
+                                class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="px-4 pb-4 text-olive-light text-sm">
+                        <%= t('shipping.faq.a2', 'نعم، يمكنك تغيير العنوان قبل شحن الطلب عن طريق التواصل مع خدمة العملاء.'
+                            ) %>
+                    </div>
+                </details>
+
+                <details class="group border border-gray-100 rounded-xl">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                        <%= t('shipping.faq.q3', 'ماذا أفعل إذا وصل المنتج تالفاً؟' ) %>
+                            <span
+                                class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="px-4 pb-4 text-olive-light text-sm">
+                        <%= t('shipping.faq.a3', 'تواصل معنا فوراً مع إرفاق صور للمنتج التالف، وسنقوم باستبداله أو استرداد المبلغ.'
+                            ) %>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section class="bg-primary/10 rounded-2xl p-6 md:p-8 text-center">
+            <h3 class="text-xl font-bold text-olive-dark mb-2">
+                <%= t('shipping.cta.title', 'لديك سؤال؟' ) %>
+            </h3>
+            <p class="text-olive-light mb-4">
+                <%= t('shipping.cta.description', 'فريق خدمة العملاء جاهز لمساعدتك' ) %>
+            </p>
+            <a href="/contact"
+                class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-bold transition-all">
+                <span class="material-symbols-outlined">support_agent</span>
+                <%= t('shipping.cta.button', 'تواصل معنا' ) %>
+            </a>
+        </section>
+    </div>
+</div>

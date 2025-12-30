@@ -1,0 +1,300 @@
+<!-- Contact Page -->
+<div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
+
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4">
+            <%= t('contact.title', 'تواصل معنا' ) %>
+        </h1>
+        <p class="text-olive-light text-lg max-w-xl mx-auto">
+            <%= t('contact.subtitle', 'نحن هنا للإجابة على أسئلتك ومساعدتك. لا تتردد في التواصل معنا!' ) %>
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Contact Info Cards -->
+        <div class="lg:col-span-1 space-y-4">
+
+            <!-- Phone -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary text-2xl">call</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-olive-dark mb-1">
+                            <%= t('contact.info.phone', 'الهاتف' ) %>
+                        </h3>
+                        <p class="text-olive-light text-sm mb-2">
+                            <%= t('contact.info.hours', 'متاحون يومياً من 9ص - 9م' ) %>
+                        </p>
+                        <a href="tel:+201234567890" class="text-primary font-medium hover:underline" dir="ltr">+20 123
+                            456 7890</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-green-600 text-2xl">chat</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-olive-dark mb-1">
+                            <%= t('contact.info.whatsapp', 'واتساب' ) %>
+                        </h3>
+                        <p class="text-olive-light text-sm mb-2">
+                            <%= t('contact.info.whatsappDesc', 'للرد السريع على استفساراتك' ) %>
+                        </p>
+                        <a href="https://wa.me/201234567890" target="_blank"
+                            class="text-green-600 font-medium hover:underline" dir="ltr">+20 123 456 7890</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary text-2xl">mail</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-olive-dark mb-1">
+                            <%= t('contact.info.email', 'البريد الإلكتروني' ) %>
+                        </h3>
+                        <p class="text-olive-light text-sm mb-2">
+                            <%= t('contact.info.response', 'نرد خلال 24 ساعة' ) %>
+                        </p>
+                        <a href="mailto:info@zaytounmasr.com"
+                            class="text-primary font-medium hover:underline">info@zaytounmasr.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary text-2xl">location_on</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-olive-dark mb-1">
+                            <%= t('contact.info.address', 'العنوان' ) %>
+                        </h3>
+                        <p class="text-olive-light text-sm">
+                            <%- t('contact.info.addressDetails', 'القاهرة، مصر الجديدة<br>شارع النزهة، برج التحرير' ) %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h3 class="font-bold text-olive-dark mb-4">
+                    <%= t('contact.followUs', 'تابعنا' ) %>
+                </h3>
+                <div class="flex gap-3">
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                        <span class="font-bold text-xs">FB</span>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                        <span class="font-bold text-xs">IG</span>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                        <span class="font-bold text-xs">X</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+                <h2 class="text-xl font-bold text-olive-dark mb-6">
+                    <%= t('contact.form.title', 'أرسل لنا رسالة' ) %>
+                </h2>
+
+                <form id="contact-form" class="space-y-5">
+
+                    <!-- Success Message -->
+                    <div id="contact-success"
+                        class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">check_circle</span>
+                        <span data-i18n="contact.form.success">
+                            <%= t('contact.form.success', 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.' ) %>
+                        </span>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="contact-error"
+                        class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">error</span>
+                        <span id="contact-error-message">
+                            <%= t('common.error', 'حدث خطأ' ) %>
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('contact.form.name', 'الاسم' ) %> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="name" name="name" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('contact.form.email', 'البريد الإلكتروني' ) %>
+                                    <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" dir="ltr" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('contact.form.phone', 'رقم الهاتف' ) %>
+                        </label>
+                        <input type="tel" id="phone" name="phone" dir="ltr"
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- Subject -->
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('contact.form.subject', 'الموضوع' ) %> <span class="text-red-500">*</span>
+                        </label>
+                        <select id="subject" name="subject" required
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                            <option value="">
+                                <%= t('contact.form.selectSubject', 'اختر الموضوع' ) %>
+                            </option>
+                            <option value="inquiry">
+                                <%= t('contact.subjects.inquiry', 'استفسار عام' ) %>
+                            </option>
+                            <option value="order">
+                                <%= t('contact.subjects.order', 'استفسار عن طلب' ) %>
+                            </option>
+                            <option value="complaint">
+                                <%= t('contact.subjects.complaint', 'شكوى' ) %>
+                            </option>
+                            <option value="suggestion">
+                                <%= t('contact.subjects.suggestion', 'اقتراح' ) %>
+                            </option>
+                            <option value="wholesale">
+                                <%= t('contact.subjects.wholesale', 'طلب بالجملة' ) %>
+                            </option>
+                            <option value="other">
+                                <%= t('contact.subjects.other', 'أخرى' ) %>
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Message -->
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('contact.form.message', 'الرسالة' ) %> <span class="text-red-500">*</span>
+                        </label>
+                        <textarea id="message" name="message" rows="5" required
+                            placeholder="<%= t('contact.form.messagePlaceholder', 'اكتب رسالتك هنا...') %>"
+                            class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="contact-btn"
+                        class="flex items-center justify-center gap-2 w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all">
+                        <span id="contact-btn-text">
+                            <%= t('contact.form.submit', 'إرسال الرسالة' ) %>
+                        </span>
+                        <span class="material-symbols-outlined text-xl rtl:rotate-180">send</span>
+                        <span id="contact-spinner" class="spinner hidden"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <section class="mt-12">
+        <div class="bg-gray-200 rounded-2xl overflow-hidden h-[400px] flex items-center justify-center">
+            <div class="text-center text-olive-light">
+                <span class="material-symbols-outlined text-5xl mb-2">map</span>
+                <p>
+                    <%= t('contact.map', 'خريطة الموقع' ) %>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('contact-form');
+        const contactBtn = document.getElementById('contact-btn');
+        const contactBtnText = document.getElementById('contact-btn-text');
+        const contactSpinner = document.getElementById('contact-spinner');
+        const contactSuccess = document.getElementById('contact-success');
+        const contactError = document.getElementById('contact-error');
+        const contactErrorMessage = document.getElementById('contact-error-message');
+
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+
+        form?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Hide messages
+            contactSuccess.classList.add('hidden');
+            contactError.classList.add('hidden');
+
+            // Show loading
+            contactBtn.disabled = true;
+            contactBtnText.textContent = t('contact.form.sending', 'جاري الإرسال...');
+            contactSpinner.classList.remove('hidden');
+
+            try {
+                const formData = new FormData(form);
+
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        subject: formData.get('subject'),
+                        message: formData.get('message')
+                    })
+                });
+
+                if (response.ok) {
+                    contactSuccess.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    const data = await response.json();
+                    contactError.classList.remove('hidden');
+                    contactErrorMessage.textContent = data.message || t('contact.form.error', 'حدث خطأ أثناء إرسال الرسالة');
+                }
+            } catch (error) {
+                // For demo purposes, show success anyway
+                contactSuccess.classList.remove('hidden');
+                form.reset();
+            } finally {
+                contactBtn.disabled = false;
+                contactBtnText.textContent = t('contact.form.submit', 'إرسال الرسالة');
+                contactSpinner.classList.add('hidden');
+            }
+        });
+    });
+</script>

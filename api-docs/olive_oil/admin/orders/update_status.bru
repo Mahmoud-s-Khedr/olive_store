@@ -1,0 +1,36 @@
+meta {
+  name: admin_orders_update_status
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/api/admin/orders/{{order_id}}/status
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "status": "confirmed",
+    "payment_status": "paid"
+  }
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+  
+  test("returns order dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.order).to.have.property("id");
+    }
+  });
+}

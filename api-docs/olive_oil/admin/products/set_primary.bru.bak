@@ -1,0 +1,15 @@
+meta {
+  name: admin_products_set_primary
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{base_url}}/api/admin/products/1/images/1/primary
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

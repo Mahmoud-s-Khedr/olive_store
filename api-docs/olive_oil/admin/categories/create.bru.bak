@@ -1,0 +1,26 @@
+meta {
+  name: admin_categories_create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/admin/categories
+  body: json
+  auth: none
+}
+
+body:json {
+  name_ar: "زيت"
+  name_en: "Oil"
+  slug: "oil"
+  description_ar: "وصف"
+  description_en: "Description"
+  sort_order: 0
+  is_active: true
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

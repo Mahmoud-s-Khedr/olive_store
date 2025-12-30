@@ -1,0 +1,28 @@
+meta {
+  name: order_detail
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/orders/{{order_number}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+
+  test("returns order dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.items).to.be.an("array");
+    }
+  });
+}

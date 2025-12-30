@@ -1,0 +1,15 @@
+meta {
+  name: admin_customers_orders
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/admin/customers/1/orders
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

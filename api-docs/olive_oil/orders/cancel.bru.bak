@@ -1,0 +1,20 @@
+meta {
+  name: cancel_order
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/api/orders/{{order_number}}/cancel
+  body: json
+  auth: none
+}
+
+body:json {
+  reason: "Changed my mind"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}

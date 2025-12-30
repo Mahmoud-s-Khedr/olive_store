@@ -1,0 +1,37 @@
+meta {
+  name: category_products
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/api/categories/{{category_slug}}/products
+  params: query
+  body: none
+  auth: none
+}
+
+query_params {
+  page: 1
+  limit: 12
+  sort: {{sort}}
+  search: {{search}}
+  min_price: {{min_price}}
+  max_price: {{max_price}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+
+  test("returns category products dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.category).to.be.an("object");
+      expect(res.body.products).to.be.an("array");
+      expect(res.body.total).to.be.a("number");
+      expect(res.body.page).to.be.a("number");
+      expect(res.body.limit).to.be.a("number");
+    }
+  });
+}

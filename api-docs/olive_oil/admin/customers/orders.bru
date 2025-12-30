@@ -1,0 +1,28 @@
+meta {
+  name: admin_customers_orders
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/admin/customers/{{customer_id}}/orders
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+  
+  test("returns user and orders dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.user).to.be.an("object");
+      expect(res.body.orders).to.be.an("array");
+    }
+  });
+}

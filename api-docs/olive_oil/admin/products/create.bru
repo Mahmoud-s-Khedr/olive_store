@@ -1,0 +1,42 @@
+meta {
+  name: admin_products_create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/admin/products
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "name_ar": "زيت",
+    "name_en": "Olive Oil",
+    "price": 100,
+    "category_id": 1,
+    "stock": 10,
+    "description_en": "Nice oil",
+    "description_ar": "زيت ممتاز"
+  }
+}
+
+tests {
+  test("status is 201 or 400", () => {
+    expect([201, 400]).to.include(res.status);
+  });
+  
+  test("returns product dto on success", () => {
+    if (res.status === 201) {
+      expect(res.body.product).to.be.an("object");
+      expect(res.body.product).to.have.property("id");
+      expect(res.body.product).to.have.property("slug");
+    }
+  });
+}

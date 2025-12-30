@@ -1,0 +1,26 @@
+meta {
+  name: admin_products_update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/api/admin/products/1
+  body: json
+  auth: none
+}
+
+body:json {
+  name_ar: "زيت محدث"
+  name_en: "Olive Oil Updated"
+  price: 120
+  category_id: 1
+  stock: 15
+  description_en: "Updated oil"
+  description_ar: "زيت محدث"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

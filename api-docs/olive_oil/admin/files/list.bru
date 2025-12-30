@@ -1,0 +1,25 @@
+meta {
+  name: admin_files_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/files
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns files array", () => {
+    expect(res.body.files).to.be.an("array");
+  });
+}

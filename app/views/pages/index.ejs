@@ -1,0 +1,287 @@
+<!-- Homepage -->
+
+<!-- Hero Section -->
+<section class="relative w-full bg-white">
+    <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
+        <div class="relative rounded-2xl overflow-hidden min-h-[500px] md:min-h-[600px] flex items-center justify-center bg-cover bg-center"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1600&q=80');">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div class="relative z-10 flex flex-col gap-6 text-center max-w-[800px] px-4">
+                <span class="text-white/90 text-lg md:text-xl font-medium tracking-wide">
+                    <%= t('home.hero.subtitle', 'أصالة الأرض المصرية' ) %>
+                </span>
+                <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+                    <%- t('home.hero.title', 'الذهب السائل <br />من قلب مصر' ) %>
+                </h1>
+                <p class="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
+                    <%= t('home.hero.description', 'زيوت زيتون بكر ممتازة، عصرة أولى على البارد. نكهة غنية وجودة لا تضاهى.'
+                        ) %>
+                </p>
+                <div class="pt-4">
+                    <a href="/products"
+                        class="inline-block bg-primary hover:bg-primary-dark text-white text-lg font-bold py-4 px-10 rounded-lg transition-all transform hover:scale-105 shadow-lg">
+                        <%= t('home.hero.cta', 'تسوق الآن' ) %>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="w-full bg-white py-12">
+    <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-olive-dark text-2xl md:text-3xl font-bold">
+                <%= t('home.categories.title', 'تصفح الأقسام' ) %>
+            </h2>
+            <a href="/categories" class="text-primary font-bold text-sm flex items-center gap-1 hover:underline">
+                <%= t('home.categories.viewAll', 'عرض الكل' ) %>
+                    <span class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span>
+            </a>
+        </div>
+
+        <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- Categories will be loaded dynamically -->
+            <div class="skeleton aspect-[3/4] rounded-xl"></div>
+            <div class="skeleton aspect-[3/4] rounded-xl"></div>
+            <div class="skeleton aspect-[3/4] rounded-xl"></div>
+            <div class="skeleton aspect-[3/4] rounded-xl"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="w-full bg-gray-50 py-16">
+    <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-olive-dark text-2xl md:text-3xl font-bold">
+                <%= t('home.featured.title', 'منتجات مميزة' ) %>
+            </h2>
+            <div class="flex gap-2">
+                <button id="products-prev"
+                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+                <button id="products-next"
+                    class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="featured-products" class="flex overflow-x-auto gap-6 pb-4 hide-scrollbar snap-x">
+            <!-- Products will be loaded dynamically -->
+            <div class="min-w-[280px] md:min-w-[300px] skeleton rounded-xl h-[400px]"></div>
+            <div class="min-w-[280px] md:min-w-[300px] skeleton rounded-xl h-[400px]"></div>
+            <div class="min-w-[280px] md:min-w-[300px] skeleton rounded-xl h-[400px]"></div>
+            <div class="min-w-[280px] md:min-w-[300px] skeleton rounded-xl h-[400px]"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Trust Badges Section -->
+<section class="w-full bg-white py-16 border-t border-gray-100">
+    <div class="max-w-[960px] mx-auto px-4 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Badge 1 -->
+            <div class="flex flex-col items-center text-center gap-4">
+                <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                    <span class="material-symbols-outlined text-4xl">eco</span>
+                </div>
+                <h3 class="text-xl font-bold text-olive-dark">
+                    <%= t('home.trust.quality', '100% طبيعي' ) %>
+                </h3>
+                <p class="text-olive-light">
+                    <%= t('home.trust.qualityDesc', 'منتجات خالية من المواد الحافظة، مباشرة من المزرعة إليك.' ) %>
+                </p>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="flex flex-col items-center text-center gap-4">
+                <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                    <span class="material-symbols-outlined text-4xl">local_shipping</span>
+                </div>
+                <h3 class="text-xl font-bold text-olive-dark">
+                    <%= t('home.trust.delivery', 'توصيل سريع' ) %>
+                </h3>
+                <p class="text-olive-light">
+                    <%= t('home.trust.deliveryDesc', 'شحن لجميع محافظات مصر خلال 2-4 أيام عمل.' ) %>
+                </p>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="flex flex-col items-center text-center gap-4">
+                <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                    <span class="material-symbols-outlined text-4xl">verified_user</span>
+                </div>
+                <h3 class="text-xl font-bold text-olive-dark">
+                    <%= t('home.trust.payment', 'دفع آمن' ) %>
+                </h3>
+                <p class="text-olive-light">
+                    <%= t('home.trust.paymentDesc', 'خيارات دفع متعددة وآمنة، بما في ذلك الدفع عند الاستلام.' ) %>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Banner -->
+<section class="w-full bg-[#f9f7f2] py-16">
+    <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-primary font-bold text-sm uppercase tracking-wider">
+                    <%= t('home.about.story', 'قصتنا' ) %>
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold text-olive-dark mt-2 mb-4">
+                    <%= t('home.about.title', 'من قلب واحة سيوة إلى مائدتك' ) %>
+                </h2>
+                <p class="text-olive-light leading-relaxed mb-6">
+                    <%= t('home.about.description', 'نحن نختار بعناية أفضل ثمار الزيتون من مزارع سيوة العريقة، ونعصرها بأحدث التقنيات للحفاظ على كل العناصر الغذائية والنكهة الأصيلة. كل قطرة من زيتنا تحمل معها تاريخاً عريقاً وجودة لا تضاهى.'
+                        ) %>
+                </p>
+                <a href="/about"
+                    class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors">
+                    <%= t('home.about.cta', 'اعرف المزيد عنا' ) %>
+                        <span class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span>
+                </a>
+            </div>
+            <div class="relative">
+                <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1545153177-77e30c36b3c3?w=800&q=80" alt="مزارع الزيتون"
+                        class="w-full h-full object-cover">
+                </div>
+                <div
+                    class="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 hidden md:flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-olive-dark">+١٠</div>
+                        <div class="text-sm text-olive-light">
+                            <%= t('home.about.experience', 'سنوات خبرة' ) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const data = await Api.categories.list();
+
+                if (data.categories) {
+                    const grid = document.getElementById('categories-grid');
+                    const categories = data.categories.slice(0, 4); // Show only 4
+
+                    grid.innerHTML = categories.map(cat => `
+                    <a href="/products?category=${cat.slug}" class="group flex flex-col gap-4 cursor-pointer">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden relative shadow-sm bg-gray-100">
+                            <div class="absolute inset-0 bg-[#f9f7f2] transition-transform duration-500 group-hover:scale-105">
+                                ${cat.image_url ?
+                            `<img src="${cat.image_url}" alt="${lang === 'ar' ? cat.name_ar : cat.name_en}" class="w-full h-full object-cover">` :
+                            `<div class="w-full h-full flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-6xl">category</span>
+                                    </div>`
+                        }
+                            </div>
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-olive-dark text-lg font-bold group-hover:text-primary transition-colors">${lang === 'ar' ? cat.name_ar : cat.name_en}</p>
+                        </div>
+                    </a>
+                `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load featured products
+        async function loadProducts() {
+            try {
+                const data = await Api.products.list({ limit: 8 });
+
+                if (data.products) {
+                    const container = document.getElementById('featured-products');
+
+                    container.innerHTML = data.products.map(product => {
+                        const name = lang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
+                        const desc = lang === 'ar' ? product.short_description_ar : (product.short_description_en || '');
+                        const price = Utils.formatPrice(product.price, lang);
+                        const oldPrice = product.old_price ? Utils.formatPrice(product.old_price, lang) : '';
+
+                        const newBadge = t('products.badge.new', 'جديد');
+                        const saleBadge = t('products.badge.sale', 'خصم');
+
+                        return `
+                        <div class="min-w-[280px] md:min-w-[300px] snap-center bg-white rounded-xl p-4 border border-gray-100 hover:shadow-lg transition-all duration-300 group flex-shrink-0">
+                            <a href="/products/${product.slug}" class="block">
+                                <div class="relative aspect-square rounded-lg bg-gray-50 mb-4 overflow-hidden">
+                                    ${product.is_new ? `<div class="absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} bg-primary/90 backdrop-blur rounded px-2 py-1 text-xs font-bold text-white">${newBadge}</div>` : ''}
+                                    ${product.old_price ? `<div class="absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} bg-red-500 rounded px-2 py-1 text-xs font-bold text-white">${saleBadge}</div>` : ''}
+                                    ${product.primary_image ?
+                                `<img src="${product.primary_image}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` :
+                                `<div class="w-full h-full flex items-center justify-center text-olive-light">
+                                        <span class="material-symbols-outlined text-6xl">inventory_2</span>
+                                    </div>`
+                            }
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <h3 class="font-bold text-lg text-olive-dark group-hover:text-primary transition-colors">${name}</h3>
+                                    <p class="text-olive-light text-sm">${desc}</p>
+                                </div>
+                            </a>
+                            <div class="flex items-center justify-between mt-3">
+                                <div class="flex flex-col">
+                                    ${oldPrice ? `<span class="text-xs text-gray-400 line-through">${oldPrice}</span>` : ''}
+                                    <span class="text-xl font-bold text-primary">${price}</span>
+                                </div>
+                                <button 
+                                    onclick="addToCart(${JSON.stringify({ id: product.id, name: product.name_ar, slug: product.slug, price: product.price, image: product.primary_image || '' }).replace(/"/g, '&quot;')})"
+                                    class="w-10 h-10 rounded-full bg-gray-100 text-olive-dark flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                                    ${product.stock <= 0 ? 'disabled' : ''}
+                                >
+                                    <span class="material-symbols-outlined">${product.stock <= 0 ? 'block' : 'add_shopping_cart'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `}).join('');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        // Initialize
+        loadCategories();
+        loadProducts();
+
+        // Carousel navigation
+        const container = document.getElementById('featured-products');
+        document.getElementById('products-prev')?.addEventListener('click', () => {
+            container.scrollBy({ left: lang === 'ar' ? 320 : -320, behavior: 'smooth' });
+        });
+        document.getElementById('products-next')?.addEventListener('click', () => {
+            container.scrollBy({ left: lang === 'ar' ? -320 : 320, behavior: 'smooth' });
+        });
+    });
+
+    // Add to cart function
+    function addToCart(product) {
+        Cart.addItem(product);
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+        const msg = t('products.addedToCart', 'تمت الإضافة للسلة');
+        Utils.showToast(msg, 'success');
+    }
+</script>

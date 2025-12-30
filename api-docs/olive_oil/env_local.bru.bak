@@ -1,0 +1,15 @@
+meta {
+  name: local
+  type: environment
+  seq: 1
+}
+
+vars {
+  base_url: http://localhost:5000
+  token: ""
+  admin_token: ""
+  email: user@example.com
+  password: password123
+  admin_email: admin@example.com
+  admin_password: admin123
+}

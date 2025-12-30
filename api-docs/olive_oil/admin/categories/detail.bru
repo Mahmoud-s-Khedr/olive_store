@@ -1,0 +1,28 @@
+meta {
+  name: admin_categories_detail
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/api/admin/categories/{{category_id}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+  
+  test("returns category dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.category).to.be.an("object");
+      expect(res.body.category).to.have.property("id");
+    }
+  });
+}

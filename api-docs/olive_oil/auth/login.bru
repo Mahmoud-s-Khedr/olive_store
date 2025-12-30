@@ -1,0 +1,35 @@
+meta {
+  name: login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{email}}",
+    "password": "{{password}}"
+  }
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns token and user dto", () => {
+    expect(res.body.token).to.be.a("string");
+    expect(res.body.user).to.be.an("object");
+    expect(res.body.user).to.have.property("id");
+    expect(res.body.user).to.have.property("email");
+  });
+}

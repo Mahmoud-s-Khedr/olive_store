@@ -1,0 +1,450 @@
+<!-- Products Listing Page -->
+<div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-8">
+
+    <!-- Breadcrumbs -->
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-olive-light mb-6">
+        <a href="/" class="hover:text-primary transition-colors">
+            <%= t('nav.home', 'الرئيسية' ) %>
+        </a>
+        <span class="text-gray-300">/</span>
+        <span class="text-olive-dark font-medium" id="breadcrumb-title">
+            <%= t('products.title', 'جميع المنتجات' ) %>
+        </span>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 border-b border-gray-200 pb-6">
+        <div>
+            <h1 id="page-title" class="text-3xl md:text-4xl font-black text-olive-dark mb-2">
+                <%= t('products.title', 'جميع المنتجات' ) %>
+            </h1>
+            <p class="text-olive-light text-lg">
+                <%= t('products.subtitle', 'Premium Egyptian Olive Oil' ) %>
+            </p>
+        </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-72 flex-shrink-0 space-y-8">
+
+            <!-- Search -->
+            <div>
+                <h3 class="font-bold text-lg mb-4">
+                    <%= t('products.filter.search', 'بحث' ) %>
+                </h3>
+                <div
+                    class="flex items-center w-full rounded-lg bg-white border border-gray-200 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary overflow-hidden h-11 transition-all">
+                    <span class="material-symbols-outlined text-olive-light px-3">search</span>
+                    <input type="text" id="search-input"
+                        placeholder="<%= t('products.filter.searchPlaceholder', 'ابحث عن منتج...') %>"
+                        class="w-full border-none focus:ring-0 text-sm bg-transparent px-0 h-full">
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3 class="font-bold text-lg mb-4">
+                    <%= t('products.filter.categories', 'التصنيفات' ) %>
+                </h3>
+                <div id="categories-filter" class="flex flex-wrap gap-2">
+                    <button
+                        class="category-btn active px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium transition-colors"
+                        data-slug="">
+                        <%= t('products.filter.all', 'الكل' ) %>
+                    </button>
+                    <!-- Categories loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Price Range -->
+            <div>
+                <h3 class="font-bold text-lg mb-4">
+                    <%= t('products.filter.price', 'السعر' ) %>
+                </h3>
+                <div class="flex items-center gap-2">
+                    <input type="number" id="min-price" placeholder="<%= t('products.filter.from', 'من') %>"
+                        class="w-full rounded-lg border-gray-200 bg-white text-sm focus:border-primary focus:ring-primary px-3 py-2">
+                    <span class="text-olive-light">-</span>
+                    <input type="number" id="max-price" placeholder="<%= t('products.filter.to', 'إلى') %>"
+                        class="w-full rounded-lg border-gray-200 bg-white text-sm focus:border-primary focus:ring-primary px-3 py-2">
+                </div>
+                <button id="apply-price"
+                    class="mt-3 w-full h-10 bg-gray-100 hover:bg-gray-200 text-olive-dark font-medium rounded-lg transition-colors text-sm">
+                    <%= t('products.filter.apply', 'تطبيق' ) %>
+                </button>
+            </div>
+
+            <!-- Promo Banner -->
+            <div class="rounded-xl bg-primary/10 p-6 text-center">
+                <span class="material-symbols-outlined text-primary text-4xl mb-2">eco</span>
+                <h4 class="font-bold text-primary mb-1">
+                    <%= t('products.promo.title', 'طبيعي 100%' ) %>
+                </h4>
+                <p class="text-sm text-olive-light">
+                    <%= t('products.promo.desc', 'زيوت معصورة على البارد من قلب واحة سيوة.' ) %>
+                </p>
+            </div>
+        </aside>
+
+        <!-- Products Grid -->
+        <div class="flex-1">
+
+            <!-- Sorting & Results -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <p class="text-olive-light text-sm font-medium">
+                    <%= t('products.showing', 'عرض' ) %> <span id="showing-from"
+                            class="text-olive-dark font-bold">0</span>-<span id="showing-to"
+                            class="text-olive-dark font-bold">0</span>
+                        <%= t('products.of', 'من' ) %> <span id="total-products"
+                                class="text-olive-dark font-bold">0</span>
+                            <%= t('products.product', 'منتج' ) %>
+                </p>
+                <div class="flex items-center gap-2">
+                    <label for="sort" class="text-sm text-olive-light hidden sm:block">
+                        <%= t('products.sort.label', 'ترتيب حسب:' ) %>
+                    </label>
+                    <select id="sort"
+                        class="appearance-none bg-white border border-gray-200 text-olive-dark text-sm rounded-lg focus:ring-primary focus:border-primary block w-48 p-2.5 pr-8 cursor-pointer">
+                        <option value="newest">
+                            <%= t('products.sort.newest', 'الأحدث' ) %>
+                        </option>
+                        <option value="price_asc">
+                            <%= t('products.sort.price_low', 'السعر: من الأقل' ) %>
+                        </option>
+                        <option value="price_desc">
+                            <%= t('products.sort.price_high', 'السعر: من الأعلى' ) %>
+                        </option>
+                        <option value="oldest">
+                            <%= t('products.sort.oldest', 'الأقدم' ) %>
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Products loaded dynamically -->
+                <div class="skeleton rounded-xl h-[350px]"></div>
+                <div class="skeleton rounded-xl h-[350px]"></div>
+                <div class="skeleton rounded-xl h-[350px]"></div>
+                <div class="skeleton rounded-xl h-[350px]"></div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-16">
+                <span class="material-symbols-outlined text-6xl text-olive-light mb-4">inventory_2</span>
+                <h3 class="text-xl font-bold text-olive-dark mb-2">
+                    <%= t('products.empty.title', 'لا توجد منتجات' ) %>
+                </h3>
+                <p class="text-olive-light">
+                    <%= t('products.empty.desc', 'جرب تغيير معايير البحث أو التصفية' ) %>
+                </p>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="mt-12 flex justify-center">
+                <nav class="flex items-center gap-2">
+                    <button id="prev-page"
+                        class="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-olive-light hover:border-primary hover:text-primary transition-colors disabled:opacity-50">
+                        <span class="material-symbols-outlined text-xl rtl:rotate-180">chevron_right</span>
+                    </button>
+                    <div id="page-numbers" class="flex items-center gap-2">
+                        <!-- Page numbers inserted dynamically -->
+                    </div>
+                    <button id="next-page"
+                        class="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-olive-light hover:border-primary hover:text-primary transition-colors disabled:opacity-50">
+                        <span class="material-symbols-outlined text-xl rtl:rotate-180">chevron_left</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : '<%= lang %>';
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+
+        let currentPage = 1;
+        let currentCategory = '';
+        let currentSearch = '';
+        let currentSort = 'newest';
+        let minPrice = '';
+        let maxPrice = '';
+
+        // Get initial params from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        currentCategory = urlParams.get('category') || '';
+        currentSearch = urlParams.get('search') || '';
+        currentPage = parseInt(urlParams.get('page')) || 1;
+
+        // Load categories for filter
+        async function loadCategories() {
+            try {
+                const data = await Api.categories.list();
+
+                if (data.categories) {
+                    const container = document.getElementById('categories-filter');
+
+                    container.innerHTML = `
+                    <button class="category-btn ${!currentCategory ? 'active bg-primary text-white' : 'bg-white border border-gray-200 text-olive-dark hover:border-primary hover:text-primary'} px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-slug="">
+                        ${t('products.filter.all', 'الكل')}
+                    </button>
+                `;
+
+                    data.categories.forEach(cat => {
+                        const isActive = currentCategory === cat.slug;
+                        const name = lang === 'ar' ? cat.name_ar : (cat.name_en || cat.name_ar);
+                        container.innerHTML += `
+                        <button class="category-btn ${isActive ? 'active bg-primary text-white' : 'bg-white border border-gray-200 text-olive-dark hover:border-primary hover:text-primary'} px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-slug="${cat.slug}">
+                            ${name}
+                        </button>
+                    `;
+                    });
+
+                    // Add click handlers
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            currentCategory = this.dataset.slug;
+                            currentPage = 1;
+                            loadProducts();
+
+                            // Update active state
+                            document.querySelectorAll('.category-btn').forEach(b => {
+                                b.classList.remove('active', 'bg-primary', 'text-white');
+                                b.classList.add('bg-white', 'border', 'border-gray-200', 'text-olive-dark');
+                            });
+                            this.classList.add('active', 'bg-primary', 'text-white');
+                            this.classList.remove('bg-white', 'border', 'border-gray-200', 'text-olive-dark');
+                        });
+                    });
+
+                    // Update page title if category selected
+                    if (currentCategory) {
+                        const cat = data.categories.find(c => c.slug === currentCategory);
+                        if (cat) {
+                            const name = lang === 'ar' ? cat.name_ar : (cat.name_en || cat.name_ar);
+                            const titleEl = document.getElementById('page-title');
+                            const breadEl = document.getElementById('breadcrumb-title');
+                            if (titleEl) titleEl.textContent = name;
+                            if (breadEl) breadEl.textContent = name;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load products
+        async function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            // Show loading
+            grid.innerHTML = `
+            <div class="skeleton rounded-xl h-[350px]"></div>
+            <div class="skeleton rounded-xl h-[350px]"></div>
+            <div class="skeleton rounded-xl h-[350px]"></div>
+            <div class="skeleton rounded-xl h-[350px]"></div>
+        `;
+            emptyState.classList.add('hidden');
+
+            try {
+                // Build query params
+                const params = {
+                    page: currentPage,
+                    limit: 12,
+                    sort: currentSort,
+                };
+                if (currentCategory) params.category = currentCategory;
+                if (currentSearch) params.search = currentSearch;
+                if (minPrice) params.min_price = minPrice;
+                if (maxPrice) params.max_price = maxPrice;
+
+                const data = await Api.products.list(params);
+
+                if (data) {
+                    const products = data.products || [];
+                    const total = Number.isFinite(data.total) ? data.total : products.length;
+                    const page = Number.isFinite(data.page) ? data.page : currentPage;
+                    const limit = Number.isFinite(data.limit) ? data.limit : 12;
+                    const totalPages = Math.max(1, Math.ceil(total / limit));
+                    const pagination = { total, page, limit, totalPages };
+
+                    if (products.length === 0) {
+                        grid.innerHTML = '';
+                        emptyState.classList.remove('hidden');
+                        document.getElementById('pagination').classList.add('hidden');
+                    } else {
+                        emptyState.classList.add('hidden');
+                        document.getElementById('pagination').classList.remove('hidden');
+
+                        grid.innerHTML = products.map(product => {
+                            const name = lang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
+                            const price = Utils.formatPrice(product.price, lang);
+                            const oldPrice = product.old_price ? Utils.formatPrice(product.old_price, lang) : null;
+                            const imageUrl = product.primary_image || product.image_url || product.image || '';
+
+                            return `
+                        <div class="group relative flex flex-col rounded-xl bg-white border border-transparent hover:border-gray-100 hover:shadow-lg transition-all duration-300 overflow-hidden">
+                            <a href="/products/${product.slug}" class="block">
+                                <div class="relative aspect-square w-full overflow-hidden bg-gray-50">
+                                    ${imageUrl ?
+                                    `<img src="${imageUrl}" alt="${name}" class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500">` :
+                                    `<div class="h-full w-full flex items-center justify-center text-olive-light">
+                                            <span class="material-symbols-outlined text-6xl">inventory_2</span>
+                                        </div>`
+                                }
+                                    ${product.is_new ? `<div class="absolute top-2 right-2 bg-primary/90 backdrop-blur-sm text-white text-xs font-bold px-2.5 py-1 rounded">${t('products.badge.new', 'جديد')}</div>` : ''}
+                                </div>
+                                <div class="flex flex-col flex-1 p-4">
+                                    <div class="flex items-center gap-1.5 mb-2">
+                                        <div class="h-2 w-2 rounded-full ${product.stock > 0 ? (product.stock <= 5 ? 'bg-amber-500' : 'bg-green-500') : 'bg-red-500'}"></div>
+                                        <span class="text-xs ${product.stock > 0 ? (product.stock <= 5 ? 'text-amber-600' : 'text-green-600') : 'text-red-600'} font-medium">
+                                            ${product.stock > 0 ? (product.stock <= 5 ? t('products.stock.low', 'كمية محدودة') : t('products.stock.in', 'متوفر')) : t('products.stock.out', 'نفذت الكمية')}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-olive-dark leading-tight mb-1 group-hover:text-primary transition-colors">${name}</h3>
+                                </div>
+                            </a>
+                            <div class="mt-auto flex items-end justify-between gap-2 p-4 pt-0">
+                                <div class="flex flex-col">
+                                    ${oldPrice ? `<span class="text-xs text-gray-400 line-through">${oldPrice}</span>` : ''}
+                                    <span class="text-lg font-bold text-primary">${price}</span>
+                                </div>
+                                <button 
+                                    onclick="event.preventDefault(); addToCart(${product.id}, '${name}', ${product.price}, '${imageUrl}')"
+                                    class="flex h-9 w-9 items-center justify-center rounded-full ${product.stock > 0 ? 'bg-accent text-white shadow-md hover:bg-accent-dark hover:scale-105' : 'bg-gray-200 text-gray-400 cursor-not-allowed'} transition-all focus:outline-none"
+                                    ${product.stock <= 0 ? 'disabled' : ''}
+                                >
+                                    <span class="material-symbols-outlined text-xl">${product.stock > 0 ? 'add_shopping_cart' : 'block'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `}).join('');
+
+                        // Update counts
+                        const from = (pagination.page - 1) * pagination.limit + 1;
+                        const to = Math.min(from + products.length - 1, pagination.total);
+
+                        const totalEl = document.getElementById('total-products');
+                        const fromEl = document.getElementById('showing-from');
+                        const toEl = document.getElementById('showing-to');
+
+                        if (totalEl) totalEl.textContent = typeof Utils !== 'undefined' && lang === 'ar' ? Utils.toArabicNumerals(pagination.total) : pagination.total;
+                        if (fromEl) fromEl.textContent = typeof Utils !== 'undefined' && lang === 'ar' ? Utils.toArabicNumerals(from) : from;
+                        if (toEl) toEl.textContent = typeof Utils !== 'undefined' && lang === 'ar' ? Utils.toArabicNumerals(to) : to;
+
+                        // Update pagination
+                        updatePagination(pagination);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-olive-light">${t('common.errorLoading', 'حدث خطأ في تحميل المنتجات')}</div>`;
+            }
+        }
+
+        // Update pagination
+        function updatePagination(pagination) {
+            const totalPages = pagination.totalPages || 1;
+            const page = pagination.page || 1;
+            const pageNumbers = document.getElementById('page-numbers');
+            const paginationWrapper = document.getElementById('pagination');
+
+            if (totalPages <= 1) {
+                if (paginationWrapper) paginationWrapper.classList.add('hidden');
+                pageNumbers.innerHTML = '';
+                return;
+            }
+
+            if (paginationWrapper) paginationWrapper.classList.remove('hidden');
+
+            let html = '';
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                const displayNum = typeof Utils !== 'undefined' && lang === 'ar' ? Utils.toArabicNumerals(i) : i;
+                if (i === page) {
+                    html += `<button class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-sm shadow-md">${displayNum}</button>`;
+                } else {
+                    html += `<button class="page-num flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-olive-dark font-medium text-sm hover:border-primary hover:text-primary transition-colors" data-page="${i}">${displayNum}</button>`;
+                }
+            }
+            pageNumbers.innerHTML = html;
+
+            // Page number clicks
+            document.querySelectorAll('.page-num').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    currentPage = parseInt(this.dataset.page);
+                    loadProducts();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // Prev/Next buttons
+            document.getElementById('prev-page').disabled = page <= 1;
+            document.getElementById('next-page').disabled = page >= totalPages;
+        }
+
+        // Event listeners
+        document.getElementById('sort').addEventListener('change', function () {
+            currentSort = this.value;
+            currentPage = 1;
+            loadProducts();
+        });
+
+        document.getElementById('search-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                currentSearch = this.value;
+                currentPage = 1;
+                loadProducts();
+            }
+        });
+
+        document.getElementById('apply-price').addEventListener('click', function () {
+            minPrice = document.getElementById('min-price').value;
+            maxPrice = document.getElementById('max-price').value;
+            currentPage = 1;
+            loadProducts();
+        });
+
+        document.getElementById('prev-page').addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                loadProducts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', function () {
+            currentPage++;
+            loadProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialize
+        await loadCategories();
+        await loadProducts();
+    });
+
+    // Add to cart function
+    function addToCart(product) {
+        if (typeof product === 'object') {
+            Cart.addItem(product);
+        } else {
+            // Legacy: addToCart(id, name, price, image)
+            Cart.addItem({ id: arguments[0], name: arguments[1], price: arguments[2], image: arguments[3] });
+        }
+
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
+        const msg = typeof I18n !== 'undefined' ? I18n.t('products.addedToCart', 'تمت الإضافة للسلة') : 'Added to cart';
+        if (typeof Utils !== 'undefined') {
+            Utils.showToast(msg, 'success');
+        } else {
+            alert(msg);
+        }
+    }
+</script>

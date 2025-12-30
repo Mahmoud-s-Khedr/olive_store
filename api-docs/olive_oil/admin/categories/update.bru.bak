@@ -1,0 +1,26 @@
+meta {
+  name: admin_categories_update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/api/admin/categories/1
+  body: json
+  auth: none
+}
+
+body:json {
+  name_ar: "زيت محدث"
+  name_en: "Oil Updated"
+  slug: "oil-updated"
+  description_ar: "وصف"
+  description_en: "Description"
+  sort_order: 1
+  is_active: true
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

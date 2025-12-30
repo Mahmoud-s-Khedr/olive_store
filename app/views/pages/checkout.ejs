@@ -1,0 +1,508 @@
+<!-- Checkout Page -->
+<div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-8">
+
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-olive-light mb-6">
+        <a href="/" class="hover:text-primary transition-colors">
+            <%= t('nav.home', 'الرئيسية' ) %>
+        </a>
+        <span class="text-gray-300">/</span>
+        <a href="/cart" class="hover:text-primary transition-colors">
+            <%= t('cart.title', 'سلة التسوق' ) %>
+        </a>
+        <span class="text-gray-300">/</span>
+        <span class="text-olive-dark font-medium">
+            <%= t('checkout.title', 'إتمام الطلب' ) %>
+        </span>
+    </nav>
+
+    <!-- Page Header -->
+    <h1 class="text-2xl md:text-3xl font-bold text-olive-dark mb-8">
+        <%= t('checkout.title', 'إتمام الطلب' ) %>
+    </h1>
+
+    <!-- Empty Cart Redirect -->
+    <div id="empty-cart" class="hidden text-center py-20">
+        <div class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-5xl text-olive-light">shopping_cart</span>
+        </div>
+        <h2 class="text-xl font-bold text-olive-dark mb-2">
+            <%= t('cart.empty', 'السلة فارغة' ) %>
+        </h2>
+        <p class="text-olive-light mb-6">
+            <%= t('checkout.cantCheckoutEmpty', 'لا يمكن إتمام الطلب بدون منتجات' ) %>
+        </p>
+        <a href="/products"
+            class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-bold transition-all">
+            <span class="material-symbols-outlined">storefront</span>
+            <%= t('common.browseProducts', 'تصفح المنتجات' ) %>
+        </a>
+    </div>
+
+    <!-- Checkout Form -->
+    <form id="checkout-form" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column - Forms -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- Shipping Information -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">local_shipping</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark">
+                            <%= t('checkout.shipping.title', 'معلومات الشحن' ) %>
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Full Name -->
+                        <div class="md:col-span-2">
+                            <label for="name" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.name', 'الاسم الكامل' ) %> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="name" name="name" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.email', 'البريد الإلكتروني' ) %>
+                                    <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" dir="ltr" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.phone', 'رقم الهاتف' ) %> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" id="phone" name="phone" dir="ltr" required pattern="[0-9]{10,11}"
+                                placeholder="01xxxxxxxxx"
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Governorate -->
+                        <div>
+                            <label for="governorate" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.governorate', 'المحافظة' ) %>
+                                    <span class="text-red-500">*</span>
+                            </label>
+                            <select id="governorate" name="governorate" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                                <option value="">
+                                    <%= t('checkout.form.selectGovernorate', 'اختر المحافظة' ) %>
+                                </option>
+                                <option value="cairo">
+                                    <%= t('governorates.cairo', 'القاهرة' ) %>
+                                </option>
+                                <option value="giza">
+                                    <%= t('governorates.giza', 'الجيزة' ) %>
+                                </option>
+                                <option value="alexandria">
+                                    <%= t('governorates.alexandria', 'الإسكندرية' ) %>
+                                </option>
+                                <option value="dakahlia">
+                                    <%= t('governorates.dakahlia', 'الدقهلية' ) %>
+                                </option>
+                                <option value="sharqia">
+                                    <%= t('governorates.sharqia', 'الشرقية' ) %>
+                                </option>
+                                <option value="qalyubia">
+                                    <%= t('governorates.qalyubia', 'القليوبية' ) %>
+                                </option>
+                                <option value="gharbia">
+                                    <%= t('governorates.gharbia', 'الغربية' ) %>
+                                </option>
+                                <option value="menoufia">
+                                    <%= t('governorates.menoufia', 'المنوفية' ) %>
+                                </option>
+                                <option value="beheira">
+                                    <%= t('governorates.beheira', 'البحيرة' ) %>
+                                </option>
+                                <option value="kafr_el_sheikh">
+                                    <%= t('governorates.kafr_el_sheikh', 'كفر الشيخ' ) %>
+                                </option>
+                                <option value="damietta">
+                                    <%= t('governorates.damietta', 'دمياط' ) %>
+                                </option>
+                                <option value="port_said">
+                                    <%= t('governorates.port_said', 'بور سعيد' ) %>
+                                </option>
+                                <option value="ismailia">
+                                    <%= t('governorates.ismailia', 'الإسماعيلية' ) %>
+                                </option>
+                                <option value="suez">
+                                    <%= t('governorates.suez', 'السويس' ) %>
+                                </option>
+                                <option value="fayoum">
+                                    <%= t('governorates.fayoum', 'الفيوم' ) %>
+                                </option>
+                                <option value="beni_suef">
+                                    <%= t('governorates.beni_suef', 'بني سويف' ) %>
+                                </option>
+                                <option value="minya">
+                                    <%= t('governorates.minya', 'المنيا' ) %>
+                                </option>
+                                <option value="asyut">
+                                    <%= t('governorates.asyut', 'أسيوط' ) %>
+                                </option>
+                                <option value="sohag">
+                                    <%= t('governorates.sohag', 'سوهاج' ) %>
+                                </option>
+                                <option value="qena">
+                                    <%= t('governorates.qena', 'قنا' ) %>
+                                </option>
+                                <option value="aswan">
+                                    <%= t('governorates.aswan', 'أسوان' ) %>
+                                </option>
+                                <option value="luxor">
+                                    <%= t('governorates.luxor', 'الأقصر' ) %>
+                                </option>
+                                <option value="red_sea">
+                                    <%= t('governorates.red_sea', 'البحر الأحمر' ) %>
+                                </option>
+                                <option value="new_valley">
+                                    <%= t('governorates.new_valley', 'الوادي الجديد' ) %>
+                                </option>
+                                <option value="matrouh">
+                                    <%= t('governorates.matrouh', 'مطروح' ) %>
+                                </option>
+                                <option value="north_sinai">
+                                    <%= t('governorates.north_sinai', 'شمال سيناء' ) %>
+                                </option>
+                                <option value="south_sinai">
+                                    <%= t('governorates.south_sinai', 'جنوب سيناء' ) %>
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- City -->
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.city', 'المدينة' ) %> <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="city" name="city" required
+                                class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Address -->
+                        <div class="md:col-span-2">
+                            <label for="address" class="block text-sm font-medium text-olive-dark mb-2">
+                                <%= t('checkout.form.address', 'العنوان التفصيلي' ) %>
+                                    <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="address" name="address" rows="3" required
+                                placeholder="<%= t('checkout.form.addressPlaceholder', 'الشارع، رقم المبنى، الطابق، علامة مميزة...') %>"
+                                class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">payments</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark">
+                            <%= t('checkout.payment.title', 'طريقة الدفع' ) %>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Cash on Delivery -->
+                        <label
+                            class="payment-option flex items-center gap-4 p-4 border-2 border-primary rounded-xl cursor-pointer bg-primary/5">
+                            <input type="radio" name="payment_method" value="cod" checked
+                                class="text-primary focus:ring-primary">
+                            <div class="flex items-center gap-3 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">local_shipping</span>
+                                <div>
+                                    <span class="font-bold text-olive-dark block">
+                                        <%= t('checkout.payment.cod', 'الدفع عند الاستلام' ) %>
+                                    </span>
+                                    <span class="text-xs text-olive-light">
+                                        <%= t('checkout.payment.codDesc', 'ادفع نقداً عند وصول الطلب' ) %>
+                                    </span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Card Payment -->
+                        <label
+                            class="payment-option flex items-center gap-4 p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="radio" name="payment_method" value="card"
+                                class="text-primary focus:ring-primary">
+                            <div class="flex items-center gap-3 flex-1">
+                                <span class="material-symbols-outlined text-olive-light text-2xl">credit_card</span>
+                                <div>
+                                    <span class="font-bold text-olive-dark block">
+                                        <%= t('checkout.payment.card', 'بطاقة ائتمان' ) %>
+                                    </span>
+                                    <span class="text-xs text-olive-light">Visa, MasterCard, Meeza</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-1">
+                                <div
+                                    class="w-8 h-5 bg-gray-100 rounded text-[8px] flex items-center justify-center font-bold">
+                                    VISA</div>
+                                <div
+                                    class="w-8 h-5 bg-gray-100 rounded text-[8px] flex items-center justify-center font-bold">
+                                    MC</div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Order Notes -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">edit_note</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark">
+                            <%= t('checkout.notes.title', 'ملاحظات الطلب' ) %>
+                        </h2>
+                    </div>
+
+                    <textarea id="notes" name="notes" rows="3"
+                        placeholder="<%= t('checkout.notes.placeholder', 'أي ملاحظات خاصة بالطلب أو التوصيل (اختياري)...') %>"
+                        class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm"></textarea>
+                </section>
+            </div>
+
+            <!-- Right Column - Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 sticky top-24">
+                    <h3 class="text-lg font-bold text-olive-dark mb-6">
+                        <%= t('cart.summary', 'ملخص الطلب' ) %>
+                    </h3>
+
+                    <!-- Order Items -->
+                    <div id="order-items" class="space-y-4 max-h-[300px] overflow-y-auto mb-6">
+                        <!-- Items loaded dynamically -->
+                    </div>
+
+                    <hr class="border-gray-100 mb-6">
+
+                    <!-- Totals -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-olive-light">
+                                <%= t('cart.subtotal', 'المجموع الفرعي' ) %>
+                            </span>
+                            <span id="subtotal" class="text-olive-dark font-medium">0</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-olive-light">
+                                <%= t('cart.shipping', 'الشحن' ) %>
+                            </span>
+                            <span id="shipping" class="text-olive-dark font-medium">50</span>
+                        </div>
+                        <div id="discount-row" class="flex justify-between text-sm hidden">
+                            <span class="text-olive-light">
+                                <%= t('cart.discount', 'الخصم' ) %>
+                            </span>
+                            <span id="discount" class="text-green-600 font-medium">-0</span>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100 mb-6">
+
+                    <div class="flex justify-between mb-6">
+                        <span class="text-olive-dark font-bold text-lg">
+                            <%= t('cart.total', 'الإجمالي' ) %>
+                        </span>
+                        <span id="total" class="text-primary font-bold text-xl">0</span>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="checkout-error"
+                        class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">error</span>
+                        <span id="checkout-error-message">
+                            <%= t('common.error', 'حدث خطأ' ) %>
+                        </span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" form="checkout-form" id="place-order-btn"
+                        class="flex items-center justify-center gap-2 w-full h-12 bg-accent hover:bg-accent-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all">
+                        <span id="place-order-text">
+                            <%= t('checkout.placeOrder', 'تأكيد الطلب' ) %>
+                        </span>
+                        <span id="place-order-spinner" class="spinner hidden"></span>
+                    </button>
+
+                    <p class="text-xs text-olive-light text-center mt-4">
+                        <%= t('checkout.termsAgreement', 'بالضغط على "تأكيد الطلب" أنت توافق على' ) %>
+                            <a href="/terms" class="text-primary underline">
+                                <%= t('checkout.terms', 'الشروط والأحكام' ) %>
+                            </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : '<%= lang %>';
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+        const SHIPPING_COST = 50; // Dynamic later
+
+        // Format price using Utils
+        function formatPrice(price) {
+            if (typeof Utils !== 'undefined' && Utils.formatPrice) {
+                return Utils.formatPrice(price, lang);
+            }
+            return price + ' ' + (lang === 'ar' ? 'ج.م' : 'EGP');
+        }
+
+        // Check if logged in
+        const isLoggedIn = typeof AuthModule !== 'undefined' && AuthModule.isLoggedIn();
+        if (!isLoggedIn) {
+            window.location.href = '/login?redirect=/checkout';
+            return;
+        }
+
+        // Pre-fill user data if logged in
+        if (isLoggedIn) {
+            AuthModule.fetchUser().then(user => {
+                if (user) {
+                    if (user.name) document.getElementById('name').value = user.name;
+                    if (user.email) document.getElementById('email').value = user.email;
+                    if (user.phone) document.getElementById('phone').value = user.phone;
+                }
+            });
+        }
+
+        // Initialize
+        function init() {
+            const cart = Cart.getItems();
+            const emptyCart = document.getElementById('empty-cart');
+            const checkoutForm = document.getElementById('checkout-form');
+
+            if (cart.length === 0) {
+                emptyCart.classList.remove('hidden');
+                checkoutForm.classList.add('hidden');
+                return;
+            }
+
+            emptyCart.classList.add('hidden');
+            checkoutForm.classList.remove('hidden');
+
+            // Render order items
+            const orderItems = document.getElementById('order-items');
+            orderItems.innerHTML = cart.map(item => `
+            <div class="flex gap-3">
+                <div class="w-16 h-16 rounded-lg bg-gray-50 overflow-hidden flex-shrink-0">
+                    ${item.image ?
+                    `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                    `<div class="w-full h-full flex items-center justify-center text-olive-light">
+                            <span class="material-symbols-outlined">inventory_2</span>
+                        </div>`
+                }
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="text-sm font-medium text-olive-dark truncate">${item.name}</h4>
+                    <p class="text-xs text-olive-light">${t('cart.quantity', 'الكمية')}: ${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity, lang) : item.quantity}</p>
+                    <p class="text-sm font-bold text-primary">${formatPrice(item.price * item.quantity)}</p>
+                </div>
+            </div>
+        `).join('');
+
+            // Calculate totals
+            const subtotal = Cart.getTotal();
+            const total = subtotal + SHIPPING_COST;
+
+            document.getElementById('subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('shipping').textContent = formatPrice(SHIPPING_COST);
+            document.getElementById('total').textContent = formatPrice(total);
+        }
+
+        // Payment method styling
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('border-primary', 'bg-primary/5');
+                    opt.classList.add('border-gray-200');
+                });
+                this.closest('.payment-option').classList.add('border-primary', 'bg-primary/5');
+                this.closest('.payment-option').classList.remove('border-gray-200');
+            });
+        });
+
+        // Form submission
+        document.getElementById('checkout-form')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('place-order-btn');
+            const btnText = document.getElementById('place-order-text');
+            const spinner = document.getElementById('place-order-spinner');
+            const errorDiv = document.getElementById('checkout-error');
+            const errorMessage = document.getElementById('checkout-error-message');
+
+            // Hide error
+            errorDiv.classList.add('hidden');
+
+            // Show loading
+            btn.disabled = true;
+            btnText.textContent = t('checkout.placingOrder', 'جاري تأكيد الطلب...');
+            spinner.classList.remove('hidden');
+
+            try {
+                const cart = Cart.getItems();
+                const formData = new FormData(this);
+
+                const governorate = formData.get('governorate');
+                const addressLine = formData.get('address');
+                const combinedAddress = governorate ? `${addressLine} - ${governorate}` : addressLine;
+
+                const orderData = {
+                    customer_name: formData.get('name'),
+                    phone: formData.get('phone'),
+                    address: combinedAddress,
+                    city: formData.get('city'),
+                    notes: formData.get('notes'),
+                    payment_method: formData.get('payment_method'),
+                    shipping_cost: SHIPPING_COST,
+                    items: cart.map(item => ({
+                        product_id: item.id,
+                        quantity: item.quantity,
+                        product_image: item.image
+                    }))
+                };
+
+                const data = await Api.orders.create(orderData);
+
+                // Clear cart
+                Cart.clear();
+
+                // Redirect to success page
+                window.location.href = `/order-success?order=${data.order?.order_number || data.order_number || data.orderId || ''}`;
+            } catch (error) {
+                console.error('Checkout error:', error);
+                errorDiv.classList.remove('hidden');
+                // Try to get error message from response or fallback
+                const errorKey = error.key || 'common.error';
+                const errorMsg = t(errorKey, error.message || 'Error placement order');
+                errorMessage.textContent = errorMsg;
+            } finally {
+                btn.disabled = false;
+                btnText.textContent = t('checkout.placeOrder', 'تأكيد الطلب');
+                spinner.classList.add('hidden');
+            }
+        });
+
+        // Initialize
+        init();
+    });
+</script>

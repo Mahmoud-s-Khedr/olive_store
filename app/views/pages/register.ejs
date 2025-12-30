@@ -1,0 +1,355 @@
+<!-- Registration Page -->
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative overflow-hidden">
+
+    <!-- Background Decorative Elements -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute -top-[10%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]"></div>
+        <div class="absolute top-[40%] -left-[10%] w-[40%] h-[40%] rounded-full bg-accent/5 blur-[100px]"></div>
+    </div>
+
+    <!-- Registration Card -->
+    <div class="w-full max-w-[520px] bg-white rounded-2xl shadow-xl border border-gray-100 relative z-10 p-8 sm:p-10">
+
+        <!-- Card Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-4">
+                <span class="material-symbols-outlined text-3xl">person_add</span>
+            </div>
+            <h1 class="text-2xl font-bold text-olive-dark mb-2">
+                <%= t('auth.register.title', 'إنشاء حساب جديد' ) %>
+            </h1>
+            <p class="text-olive-light text-sm">
+                <%= t('auth.register.subtitle', 'أدخل بياناتك للانضمام إلى عائلة زيتون مصر' ) %>
+            </p>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="register-form" class="space-y-5">
+
+            <!-- Error Alert -->
+            <div id="register-error"
+                class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">error</span>
+                <span id="register-error-message">
+                    <%= t('auth.register.error', 'حدث خطأ أثناء التسجيل' ) %>
+                </span>
+            </div>
+
+            <!-- Success Alert -->
+            <div id="register-success"
+                class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+                <span>
+                    <%= t('auth.register.success', 'تم إنشاء الحساب بنجاح! تحقق من بريدك الإلكتروني.' ) %>
+                </span>
+            </div>
+
+            <!-- Full Name Field -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('auth.register.name', 'الاسم الكامل' ) %>
+                </label>
+                <div class="relative group">
+                    <input type="text" id="name" name="name" required minlength="3"
+                        placeholder="<%= t('auth.register.namePlaceholder', 'أدخل اسمك الكامل') %>"
+                        class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">person</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('auth.register.email', 'البريد الإلكتروني' ) %>
+                </label>
+                <div class="relative group">
+                    <input type="email" id="email" name="email" dir="ltr" required placeholder="example@email.com"
+                        class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">mail</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Field -->
+            <div>
+                <label for="phone" class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('auth.register.phone', 'رقم الهاتف' ) %>
+                </label>
+                <div class="relative flex rounded-lg shadow-sm group">
+                    <div class="relative flex-grow focus-within:z-10">
+                        <input type="tel" id="phone" name="phone" dir="ltr" required pattern="[0-9]{10,11}"
+                            placeholder="1xxxxxxxxx"
+                            class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-r-lg rtl:rounded-r-lg rtl:rounded-l-none ltr:rounded-l-lg ltr:rounded-r-none border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm border-l-0 rtl:border-l-0 ltr:border-r-0">
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                            <span class="material-symbols-outlined text-xl">call</span>
+                        </div>
+                    </div>
+                    <span
+                        class="inline-flex items-center rounded-l-lg rtl:rounded-l-lg rtl:rounded-r-none ltr:rounded-r-lg ltr:rounded-l-none border border-r-0 rtl:border-r-0 ltr:border-l-0 border-gray-200 bg-gray-50 px-4 text-olive-light text-sm"
+                        dir="ltr">
+                        +20
+                    </span>
+                </div>
+                <p class="mt-1 text-xs text-olive-light">
+                    <%= t('auth.register.phoneHint', 'يجب أن يكون رقماً مصرياً صالحاً' ) %>
+                </p>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('auth.register.password', 'كلمة المرور' ) %>
+                </label>
+                <div class="relative group">
+                    <input type="password" id="password" name="password" required minlength="8" placeholder="••••••••"
+                        class="block w-full h-12 pr-12 ltr:pr-12 ltr:pl-12 pl-12 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">lock</span>
+                    </div>
+                    <button type="button" id="toggle-password"
+                        class="absolute inset-y-0 left-0 rtl:left-0 ltr:left-auto ltr:right-0 flex items-center pl-4 ltr:pl-0 ltr:pr-4 text-olive-light hover:text-primary cursor-pointer focus:outline-none">
+                        <span class="material-symbols-outlined text-xl" id="password-icon">visibility</span>
+                    </button>
+                </div>
+
+                <!-- Password Strength Indicator -->
+                <div id="password-strength" class="mt-3 grid grid-cols-4 gap-2 h-1.5">
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="1"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="2"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="3"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="4"></div>
+                </div>
+                <p id="password-strength-text" class="mt-1 text-xs text-olive-light">
+                    <%= t('auth.register.passwordStrength', 'أدخل كلمة مرور قوية' ) %>
+                </p>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('auth.register.confirmPassword', 'تأكيد كلمة المرور' ) %>
+                </label>
+                <div class="relative group">
+                    <input type="password" id="confirm-password" name="confirmPassword" required placeholder="••••••••"
+                        class="block w-full h-12 pr-12 ltr:pr-12 ltr:pl-12 pl-12 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div
+                        class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">lock</span>
+                    </div>
+                    <div id="confirm-password-status"
+                        class="absolute inset-y-0 left-0 rtl:left-0 ltr:left-auto ltr:right-0 flex items-center pl-4 ltr:pl-0 ltr:pr-4 hidden">
+                        <span class="material-symbols-outlined text-xl" id="confirm-password-icon"></span>
+                    </div>
+                </div>
+                <p id="confirm-password-error" class="mt-1 text-sm text-red-600 hidden">
+                    <%= t('validation.passwordMatch', 'كلمتا المرور غير متطابقتين' ) %>
+                </p>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="flex items-start gap-3">
+                <input type="checkbox" id="terms" name="terms" required
+                    class="mt-1 rounded border-gray-300 text-primary focus:ring-primary">
+                <label for="terms" class="text-sm text-olive-light">
+                    <%= t('checkout.termsAgreement', 'أوافق على' ) %>
+                        <a href="/terms" class="text-primary hover:underline">
+                            <%= t('checkout.terms', 'الشروط والأحكام' ) %>
+                        </a>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+                <button type="submit" id="register-btn"
+                    class="flex w-full justify-center items-center gap-2 rounded-lg bg-primary px-4 py-3.5 text-sm font-bold text-white shadow-md hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-200 transform active:scale-[0.99]">
+                    <span id="register-btn-text">
+                        <%= t('auth.register.submit', 'إنشاء الحساب' ) %>
+                    </span>
+                    <span id="register-spinner" class="spinner hidden"></span>
+                </button>
+            </div>
+
+            <!-- Login Link -->
+            <div class="relative flex justify-center text-sm pt-2">
+                <span class="text-olive-light">
+                    <%= t('auth.register.hasAccount', 'لديك حساب بالفعل؟' ) %>
+                        <a href="/login"
+                            class="font-bold text-olive-dark hover:text-primary underline decoration-2 decoration-primary/50 underline-offset-4 hover:decoration-primary transition-all">
+                            <%= t('auth.register.login', 'سجل دخول' ) %>
+                        </a>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+        const form = document.getElementById('register-form');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordIcon = document.getElementById('password-icon');
+        const strengthBars = document.querySelectorAll('.password-strength-bar');
+        const strengthText = document.getElementById('password-strength-text');
+        const confirmStatus = document.getElementById('confirm-password-status');
+        const confirmIcon = document.getElementById('confirm-password-icon');
+        const confirmError = document.getElementById('confirm-password-error');
+        const registerBtn = document.getElementById('register-btn');
+        const registerBtnText = document.getElementById('register-btn-text');
+        const registerSpinner = document.getElementById('register-spinner');
+        const registerError = document.getElementById('register-error');
+        const registerErrorMessage = document.getElementById('register-error-message');
+        const registerSuccess = document.getElementById('register-success');
+
+        // Toggle password visibility
+        togglePassword?.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            confirmPasswordInput.setAttribute('type', type);
+            passwordIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        });
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            return strength;
+        }
+
+        passwordInput?.addEventListener('input', function () {
+            const strength = checkPasswordStrength(this.value);
+            const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500'];
+            const texts = [
+                t('auth.register.strength.veryWeak', 'ضعيفة جداً'),
+                t('auth.register.strength.weak', 'ضعيفة'),
+                t('auth.register.strength.medium', 'متوسطة'),
+                t('auth.register.strength.strong', 'قوية')
+            ];
+
+            strengthBars.forEach((bar, index) => {
+                bar.classList.remove('bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500');
+                if (index < strength) {
+                    bar.classList.add(colors[strength - 1]);
+                } else {
+                    bar.classList.add('bg-gray-200');
+                }
+            });
+
+            if (this.value.length > 0) {
+                strengthText.textContent = t('auth.register.passwordStrengthPrefix', 'قوة كلمة المرور: ') + (texts[strength - 1] || texts[0]);
+            } else {
+                strengthText.textContent = t('auth.register.passwordStrength', 'أدخل كلمة مرور قوية');
+            }
+
+            // Also check confirm password match
+            checkPasswordMatch();
+        });
+
+        // Check password match
+        function checkPasswordMatch() {
+            if (confirmPasswordInput.value.length === 0) {
+                confirmStatus.classList.add('hidden');
+                confirmError.classList.add('hidden');
+                confirmPasswordInput.classList.remove('border-red-300', 'border-green-300');
+                return;
+            }
+
+            confirmStatus.classList.remove('hidden');
+
+            if (passwordInput.value === confirmPasswordInput.value) {
+                confirmIcon.textContent = 'check_circle';
+                confirmIcon.classList.remove('text-red-500');
+                confirmIcon.classList.add('text-green-500');
+                confirmPasswordInput.classList.remove('border-red-300');
+                confirmPasswordInput.classList.add('border-green-300');
+                confirmError.classList.add('hidden');
+            } else {
+                confirmIcon.textContent = 'error';
+                confirmIcon.classList.remove('text-green-500');
+                confirmIcon.classList.add('text-red-500');
+                confirmPasswordInput.classList.remove('border-green-300');
+                confirmPasswordInput.classList.add('border-red-300');
+                confirmError.classList.remove('hidden');
+            }
+        }
+
+        confirmPasswordInput?.addEventListener('input', checkPasswordMatch);
+
+        // Form submission
+        form?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Validate passwords match
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                registerError.classList.remove('hidden');
+                registerErrorMessage.textContent = t('validation.passwordMatch', 'كلمتا المرور غير متطابقتين');
+                return;
+            }
+
+            // Hide previous messages
+            registerError.classList.add('hidden');
+            registerSuccess.classList.add('hidden');
+
+            // Show loading state
+            registerBtn.disabled = true;
+            registerBtnText.textContent = t('auth.register.creating', 'جاري إنشاء الحساب...');
+            registerSpinner.classList.remove('hidden');
+
+            try {
+                const phone = document.getElementById('phone').value;
+                const formattedPhone = phone.startsWith('0') ? phone : '0' + phone;
+
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        phone: formattedPhone,
+                        password: passwordInput.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Show success message
+                    registerSuccess.classList.remove('hidden');
+                    form.reset();
+
+                    // Redirect to verify email page after delay
+                    setTimeout(() => {
+                        window.location.href = '/verify-email?email=' + encodeURIComponent(document.getElementById('email').value);
+                    }, 2000);
+                } else {
+                    // Show error
+                    registerError.classList.remove('hidden');
+                    registerErrorMessage.textContent = data.message || t('auth.register.error', 'حدث خطأ أثناء التسجيل');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                registerError.classList.remove('hidden');
+                registerErrorMessage.textContent = t('common.connectionError', 'حدث خطأ في الاتصال. حاول مرة أخرى.');
+            } finally {
+                // Reset button state
+                registerBtn.disabled = false;
+                registerBtnText.textContent = t('auth.register.submit', 'إنشاء الحساب');
+                registerSpinner.classList.add('hidden');
+            }
+        });
+    });
+</script>

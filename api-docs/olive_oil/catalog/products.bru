@@ -1,0 +1,35 @@
+meta {
+  name: products
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/api/products
+  params: query
+  body: none
+  auth: none
+}
+
+query_params {
+  page: 1
+  limit: 12
+  category: {{category_slug}}
+  sort: {{sort}}
+  search: {{search}}
+  min_price: {{min_price}}
+  max_price: {{max_price}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+
+  test("returns products list dto", () => {
+    expect(res.body.products).to.be.an("array");
+    expect(res.body.total).to.be.a("number");
+    expect(res.body.page).to.be.a("number");
+    expect(res.body.limit).to.be.a("number");
+  });
+}

@@ -1,0 +1,361 @@
+<!-- Profile Page -->
+<div class="max-w-[1000px] mx-auto py-8 px-4">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-olive-dark mb-2">
+            <%= t('profile.title', 'الملف الشخصي' ) %>
+        </h1>
+        <p class="text-olive-light">
+            <%= t('profile.subtitle', 'إدارة معلوماتك الشخصية وإعدادات الحساب' ) %>
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Sidebar Navigation -->
+        <div class="lg:col-span-1">
+            <nav class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                <a href="#personal-info"
+                    class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-dark bg-primary/5 border-r-2 border-primary">
+                    <span class="material-symbols-outlined text-primary">person</span>
+                    <%= t('profile.nav.personalInfo', 'المعلومات الشخصية' ) %>
+                </a>
+                <a href="#change-password"
+                    class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                    <span class="material-symbols-outlined">lock</span>
+                    <%= t('profile.nav.changePassword', 'تغيير كلمة المرور' ) %>
+                </a>
+                <a href="/addresses"
+                    class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                    <span class="material-symbols-outlined">location_on</span>
+                    <%= t('profile.nav.addresses', 'عناويني' ) %>
+                </a>
+                <a href="/my-orders"
+                    class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                    <%= t('profile.nav.orders', 'طلباتي' ) %>
+                </a>
+                <hr class="border-gray-100">
+                <button id="logout-link"
+                    class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors w-full">
+                    <span class="material-symbols-outlined">logout</span>
+                    <%= t('nav.logout', 'تسجيل الخروج' ) %>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-8">
+
+            <!-- Personal Information Section -->
+            <section id="personal-info" class="bg-white rounded-xl border border-gray-100 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-lg font-bold text-olive-dark">
+                            <%= t('profile.personalInfo.title', 'المعلومات الشخصية' ) %>
+                        </h2>
+                        <p class="text-sm text-olive-light">
+                            <%= t('profile.personalInfo.subtitle', 'تحديث اسمك ورقم هاتفك' ) %>
+                        </p>
+                    </div>
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-2xl"
+                        id="user-avatar">
+                        <%= user ? user.name.charAt(0) : 'U' %>
+                    </div>
+                </div>
+
+                <form id="profile-form" class="space-y-5">
+
+                    <!-- Success/Error Messages -->
+                    <div id="profile-success"
+                        class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">check_circle</span>
+                        <span>
+                            <%= t('profile.personalInfo.success', 'تم تحديث المعلومات بنجاح' ) %>
+                        </span>
+                    </div>
+
+                    <div id="profile-error"
+                        class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">error</span>
+                        <span id="profile-error-message">
+                            <%= t('common.error', 'حدث خطأ' ) %>
+                        </span>
+                    </div>
+
+                    <!-- Name Field -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.personalInfo.name', 'الاسم الكامل' ) %>
+                        </label>
+                        <input type="text" id="name" name="name" required
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- Email Field (Read-only) -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.personalInfo.email', 'البريد الإلكتروني' ) %>
+                        </label>
+                        <input type="email" id="email" name="email" dir="ltr" readonly
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-gray-50 text-olive-light cursor-not-allowed text-sm">
+                        <p class="mt-1 text-xs text-olive-light">
+                            <%= t('profile.personalInfo.emailHint', 'لا يمكن تغيير البريد الإلكتروني' ) %>
+                        </p>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.personalInfo.phone', 'رقم الهاتف' ) %>
+                        </label>
+                        <input type="tel" id="phone" name="phone" dir="ltr"
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" id="profile-btn"
+                            class="h-10 px-6 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2">
+                            <span id="profile-btn-text">
+                                <%= t('common.save', 'حفظ التغييرات' ) %>
+                            </span>
+                            <span id="profile-spinner" class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Change Password Section -->
+            <section id="change-password" class="bg-white rounded-xl border border-gray-100 p-6">
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold text-olive-dark">
+                        <%= t('profile.changePassword.title', 'تغيير كلمة المرور' ) %>
+                    </h2>
+                    <p class="text-sm text-olive-light">
+                        <%= t('profile.changePassword.subtitle', 'تحديث كلمة المرور الخاصة بك' ) %>
+                    </p>
+                </div>
+
+                <form id="password-form" class="space-y-5">
+
+                    <!-- Success/Error Messages -->
+                    <div id="password-success"
+                        class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">check_circle</span>
+                        <span>
+                            <%= t('profile.changePassword.success', 'تم تغيير كلمة المرور بنجاح' ) %>
+                        </span>
+                    </div>
+
+                    <div id="password-error"
+                        class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">error</span>
+                        <span id="password-error-message">
+                            <%= t('common.error', 'حدث خطأ' ) %>
+                        </span>
+                    </div>
+
+                    <!-- Current Password -->
+                    <div>
+                        <label for="current-password" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.changePassword.current', 'كلمة المرور الحالية' ) %>
+                        </label>
+                        <input type="password" id="current-password" name="currentPassword" required
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- New Password -->
+                    <div>
+                        <label for="new-password" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.changePassword.new', 'كلمة المرور الجديدة' ) %>
+                        </label>
+                        <input type="password" id="new-password" name="newPassword" required minlength="8"
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- Confirm New Password -->
+                    <div>
+                        <label for="confirm-new-password" class="block text-sm font-medium text-olive-dark mb-2">
+                            <%= t('profile.changePassword.confirm', 'تأكيد كلمة المرور الجديدة' ) %>
+                        </label>
+                        <input type="password" id="confirm-new-password" name="confirmNewPassword" required
+                            class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" id="password-btn"
+                            class="h-10 px-6 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2">
+                            <span id="password-btn-text">
+                                <%= t('profile.changePassword.submit', 'تغيير كلمة المرور' ) %>
+                            </span>
+                            <span id="password-spinner" class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+        const token = localStorage.getItem('token');
+
+        // Redirect if not logged in
+        if (!token) {
+            window.location.href = '/login?redirect=/profile';
+            return;
+        }
+
+        // Load user data
+        try {
+            const response = await fetch('/api/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const user = data.user || data;
+
+                document.getElementById('name').value = user.name || '';
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('phone').value = user.phone || '';
+                document.getElementById('user-avatar').textContent = user.name ? user.name.charAt(0) : 'U';
+            } else if (response.status === 401) {
+                localStorage.removeItem('token');
+                window.location.href = '/login?redirect=/profile';
+            }
+        } catch (error) {
+            console.error('Error loading profile:', error);
+        }
+
+        // Profile form submission
+        document.getElementById('profile-form')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const profileBtn = document.getElementById('profile-btn');
+            const profileBtnText = document.getElementById('profile-btn-text');
+            const profileSpinner = document.getElementById('profile-spinner');
+            const profileSuccess = document.getElementById('profile-success');
+            const profileError = document.getElementById('profile-error');
+            const profileErrorMessage = document.getElementById('profile-error-message');
+
+            // Hide messages
+            profileSuccess.classList.add('hidden');
+            profileError.classList.add('hidden');
+
+            // Show loading
+            profileBtn.disabled = true;
+            profileBtnText.textContent = t('common.saving', 'جاري الحفظ...');
+            profileSpinner.classList.remove('hidden');
+
+            try {
+                const response = await fetch('/api/auth/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        phone: document.getElementById('phone').value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    profileSuccess.classList.remove('hidden');
+                    // Update avatar
+                    document.getElementById('user-avatar').textContent = document.getElementById('name').value.charAt(0);
+                } else {
+                    profileError.classList.remove('hidden');
+                    profileErrorMessage.textContent = data.message || t('profile.personalInfo.error', 'حدث خطأ أثناء التحديث');
+                }
+            } catch (error) {
+                profileError.classList.remove('hidden');
+                profileErrorMessage.textContent = t('common.connectionError', 'حدث خطأ في الاتصال');
+            } finally {
+                profileBtn.disabled = false;
+                profileBtnText.textContent = t('common.save', 'حفظ التغييرات');
+                profileSpinner.classList.add('hidden');
+            }
+        });
+
+        // Password form submission
+        document.getElementById('password-form')?.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const passwordBtn = document.getElementById('password-btn');
+            const passwordBtnText = document.getElementById('password-btn-text');
+            const passwordSpinner = document.getElementById('password-spinner');
+            const passwordSuccess = document.getElementById('password-success');
+            const passwordError = document.getElementById('password-error');
+            const passwordErrorMessage = document.getElementById('password-error-message');
+
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+
+            // Check passwords match
+            if (newPassword !== confirmPassword) {
+                passwordError.classList.remove('hidden');
+                passwordErrorMessage.textContent = t('validation.passwordMatch', 'كلمتا المرور الجديدة غير متطابقتين');
+                return;
+            }
+
+            // Hide messages
+            passwordSuccess.classList.add('hidden');
+            passwordError.classList.add('hidden');
+
+            // Show loading
+            passwordBtn.disabled = true;
+            passwordBtnText.textContent = t('profile.changePassword.changing', 'جاري التغيير...');
+            passwordSpinner.classList.remove('hidden');
+
+            try {
+                const response = await fetch('/api/auth/password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        current_password: document.getElementById('current-password').value,
+                        new_password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    passwordSuccess.classList.remove('hidden');
+                    document.getElementById('password-form').reset();
+                } else {
+                    passwordError.classList.remove('hidden');
+                    passwordErrorMessage.textContent = data.message || t('profile.changePassword.error', 'حدث خطأ أثناء تغيير كلمة المرور');
+                }
+            } catch (error) {
+                passwordError.classList.remove('hidden');
+                passwordErrorMessage.textContent = t('common.connectionError', 'حدث خطأ في الاتصال');
+            } finally {
+                passwordBtn.disabled = false;
+                passwordBtnText.textContent = t('profile.changePassword.submit', 'تغيير كلمة المرور');
+                passwordSpinner.classList.add('hidden');
+            }
+        });
+
+        // Logout
+        document.getElementById('logout-link')?.addEventListener('click', function () {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        });
+    });
+</script>

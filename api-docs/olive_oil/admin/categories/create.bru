@@ -1,0 +1,42 @@
+meta {
+  name: admin_categories_create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/admin/categories
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "name_ar": "زيت",
+    "name_en": "Oil",
+    "slug": "oil3",
+    "description_ar": "وصف",
+    "description_en": "Description",
+    "sort_order": 0,
+    "is_active": true
+  }
+}
+
+tests {
+  test("status is 201 or 400/409", () => {
+    expect([201, 400, 409]).to.include(res.status);
+  });
+  
+  test("returns category dto on success", () => {
+    if (res.status === 201) {
+      expect(res.body.category).to.be.an("object");
+      expect(res.body.category).to.have.property("id");
+      expect(res.body.category).to.have.property("slug");
+    }
+  });
+}

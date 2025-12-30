@@ -1,0 +1,21 @@
+meta {
+  name: admin_orders_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/orders
+  params: query
+  body: none
+  auth: none
+}
+
+query_params {
+  page: 1
+  limit: 50
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

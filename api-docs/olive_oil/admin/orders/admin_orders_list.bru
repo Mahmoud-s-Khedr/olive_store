@@ -1,0 +1,28 @@
+meta {
+  name: admin_orders_list
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/admin/orders/
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+  
+  test("returns order detail dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.order).to.be.an("object");
+      expect(res.body.items).to.be.an("array");
+    }
+  });
+}

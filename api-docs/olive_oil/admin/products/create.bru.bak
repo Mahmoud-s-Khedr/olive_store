@@ -1,0 +1,26 @@
+meta {
+  name: admin_products_create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/admin/products
+  body: json
+  auth: none
+}
+
+body:json {
+  name_ar: "زيت"
+  name_en: "Olive Oil"
+  price: 100
+  category_id: 1
+  stock: 10
+  description_en: "Nice oil"
+  description_ar: "زيت ممتاز"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}

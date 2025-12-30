@@ -1,0 +1,36 @@
+meta {
+  name: admin_orders_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/orders
+  params: query
+  body: none
+  auth: none
+}
+
+query_params {
+  page: 1
+  limit: 50
+  status: {{status}}
+  payment_status: {{payment_status}}
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+
+  test("returns paged orders dto", () => {
+    expect(res.body.items).to.be.an("array");
+    expect(res.body.total).to.be.a("number");
+    expect(res.body.page).to.be.a("number");
+    expect(res.body.limit).to.be.a("number");
+  });
+}

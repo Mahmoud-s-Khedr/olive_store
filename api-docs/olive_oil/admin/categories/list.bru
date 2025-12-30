@@ -1,0 +1,25 @@
+meta {
+  name: admin_categories_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/categories
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns categories array", () => {
+    expect(res.body.categories).to.be.an("array");
+  });
+}

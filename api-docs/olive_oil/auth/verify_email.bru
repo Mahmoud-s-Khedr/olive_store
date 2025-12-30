@@ -1,0 +1,21 @@
+meta {
+  name: verify_email
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{base_url}}/api/auth/verify-email/{{email_token}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("status is 200 or 400", () => {
+    expect([200, 400]).to.include(res.status);
+  });
+  
+  test("returns message", () => {
+    expect(res.body.message).to.be.a("string");
+  });
+}

@@ -1,0 +1,25 @@
+meta {
+  name: admin_products_list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/admin/products
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns products array", () => {
+    expect(res.body.products).to.be.an("array");
+  });
+}

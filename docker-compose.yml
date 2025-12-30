@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      #      - .:/app
+      - /app/node_modules
+
+    networks:
+      - olive-net
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=olive_store
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - olive-net
+
+networks:
+  olive-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

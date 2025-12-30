@@ -1,0 +1,28 @@
+meta {
+  name: me
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/auth/me
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns user dto", () => {
+    expect(res.body.user).to.be.an("object");
+    expect(res.body.user).to.have.property("id");
+    expect(res.body.user).to.have.property("email");
+  });
+}

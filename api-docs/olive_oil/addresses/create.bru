@@ -1,0 +1,36 @@
+meta {
+  name: addresses_create
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/addresses
+  body: json
+  auth: none
+}
+
+body:json {
+  "full_name": "Test User",
+  "phone": "+200000000000",
+  "address_line1": "123 Street",
+  "address_line2": "",
+  "city": "Cairo",
+  "postal_code": "12345"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+tests {
+  test("status is 201", () => {
+    expect(res.status).to.equal(201);
+  });
+
+  test("returns address dto", () => {
+    expect(res.body.address).to.be.an("object");
+    expect(res.body.address).to.have.property("id");
+  });
+}

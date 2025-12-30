@@ -1,0 +1,33 @@
+meta {
+  name: admin_login
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base_url}}/api/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{admin_email}}",
+    "password": "{{admin_password}}"
+  }
+}
+
+tests {
+  test("status is 200", () => {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("returns admin user", () => {
+    expect(res.body.user).to.be.an("object");
+    expect(res.body.user.is_admin).to.equal(true);
+  });
+}

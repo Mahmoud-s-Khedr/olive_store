@@ -1,0 +1,11 @@
+meta {
+  name: product_detail
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/api/products/sample-slug
+  body: none
+  auth: none
+}

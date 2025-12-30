@@ -1,0 +1,327 @@
+<!-- Cart Page -->
+<div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-8 md:py-12">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-olive-light mb-6">
+        <a href="/" class="hover:text-primary transition-colors">
+            <%= t('nav.home', 'الرئيسية' ) %>
+        </a>
+        <span class="text-gray-300">/</span>
+        <span class="text-olive-dark font-medium">
+            <%= t('cart.title', 'سلة التسوق' ) %>
+        </span>
+    </nav>
+
+    <div class="flex items-center justify-between mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-olive-dark">
+            <%= t('cart.title', 'سلة التسوق' ) %>
+        </h1>
+        <span id="items-count" class="text-olive-light text-sm"></span>
+    </div>
+
+    <div id="cart-container" class="grid grid-cols-1 lg:grid-cols-3 gap-8 relative items-start">
+
+        <!-- Empty Cart State -->
+        <div id="empty-cart" class="hidden col-span-3 flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="w-24 h-24 rounded-full bg-gray-50 flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-5xl text-gray-300">shopping_cart_off</span>
+            </div>
+            <h3 class="text-xl font-bold text-olive-dark mb-2">
+                <%= t('cart.empty', 'السلة فارغة' ) %>
+            </h3>
+            <p class="text-olive-light mb-8 max-w-sm mx-auto">
+                <%= t('cart.emptyMessage', 'لم تقم بإضافة أي منتجات للسلة بعد' ) %>
+            </p>
+            <a href="/products"
+                class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined text-xl">store</span>
+                <%= t('cart.continueShopping', 'تابع التسوق' ) %>
+            </a>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cart-content" class="lg:col-span-2 hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <!-- Headers -->
+                <div
+                    class="hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-50 border-b border-gray-100 text-sm font-bold text-olive-light">
+                    <div class="col-span-6">
+                        <%= t('cart.product', 'المنتج' ) %>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <%= t('cart.price', 'السعر' ) %>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <%= t('cart.quantity', 'الكمية' ) %>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <%= t('cart.total', 'الإجمالي' ) %>
+                    </div>
+                </div>
+
+                <div id="cart-items" class="divide-y divide-gray-100">
+                    <!-- Items will be injected here -->
+                </div>
+            </div>
+
+            <!-- Cart Actions -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mt-6">
+                <button id="clear-cart-btn"
+                    class="flex items-center gap-2 text-red-500 hover:text-red-700 font-medium text-sm transition-colors">
+                    <span class="material-symbols-outlined text-lg">delete_sweep</span>
+                    <%= t('cart.clear', 'تفريغ السلة' ) %>
+                </button>
+                <a href="/products"
+                    class="flex items-center gap-2 text-primary hover:text-primary-dark font-medium text-sm transition-colors">
+                    <span class="material-symbols-outlined text-lg rtl:rotate-180">arrow_back</span>
+                    <%= t('cart.continueShopping', 'تابع التسوق' ) %>
+                </a>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div id="order-summary"
+            class="hidden lg:block lg:sticky lg:top-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-xl font-bold text-olive-dark mb-6 pb-4 border-b border-gray-100 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">receipt_long</span>
+                <%= t('cart.summary', 'ملخص الطلب' ) %>
+            </h2>
+
+            <div class="space-y-4 mb-6">
+                <!-- Subtotal -->
+                <div class="flex items-center justify-between text-olive-dark">
+                    <span class="text-olive-light">
+                        <%= t('cart.subtotal', 'المجموع الفرعي' ) %>
+                    </span>
+                    <span class="font-bold font-mono" id="summary-subtotal">0</span>
+                </div>
+
+                <!-- Shipping -->
+                <div class="flex items-center justify-between text-olive-dark">
+                    <span class="text-olive-light">
+                        <%= t('cart.shipping', 'الشحن' ) %>
+                    </span>
+                    <!-- You might want to make this dynamic later based on logic -->
+                    <span class="font-medium text-green-600 free-shipping hidden">
+                        <%= t('shipping.free', 'شحن مجاني' ) %>
+                    </span>
+                    <span class="font-medium text-olive-light shipping-calc" id="shipping">
+                        <%= t('common.later', 'يحدد لاحقاً' ) %>
+                    </span>
+                </div>
+
+                <!-- Divider -->
+                <div class="border-t border-dashed border-gray-200 my-4"></div>
+
+                <!-- Total -->
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-bold text-olive-dark">
+                        <%= t('cart.total', 'الإجمالي' ) %>
+                    </span>
+                    <span class="text-2xl font-black text-primary font-mono" id="summary-total">0</span>
+                </div>
+            </div>
+
+            <!-- Coupon Code -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-olive-dark mb-2">
+                    <%= t('cart.coupon.label', 'كود الخصم' ) %>
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="coupon-code"
+                        placeholder="<%= t('cart.coupon.placeholder', 'أدخل كود الخصم') %>"
+                        class="flex-1 rounded-lg border-gray-200 bg-gray-50 focus:bg-white focus:border-primary focus:ring-primary text-sm transition-colors px-3">
+                    <button id="apply-coupon"
+                        class="bg-olive-dark hover:bg-olive-light text-white px-4 py-2 rounded-lg font-bold text-sm transition-colors">
+                        <%= t('cart.coupon.apply', 'تطبيق' ) %>
+                    </button>
+                </div>
+                <p id="coupon-message" class="mt-2 text-xs hidden"></p>
+            </div>
+
+            <!-- Checkout Button -->
+            <a href="/checkout"
+                class="block w-full bg-primary hover:bg-primary-dark text-white text-center font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transform hover:-translate-y-0.5 transition-all text-lg mb-4">
+                <%= t('cart.checkout', 'إتمام الشراء' ) %>
+            </a>
+
+            <!-- Trust Badges Small -->
+            <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="flex flex-col items-center p-2 rounded-lg bg-gray-50">
+                    <span class="material-symbols-outlined text-olive-light mb-1">lock</span>
+                    <span class="text-[10px] text-olive-light font-medium">
+                        <%= t('cart.securePayment', 'دفع آمن ومشفر' ) %>
+                    </span>
+                </div>
+                <div class="flex flex-col items-center p-2 rounded-lg bg-gray-50">
+                    <span class="material-symbols-outlined text-olive-light mb-1">local_shipping</span>
+                    <span class="text-[10px] text-olive-light font-medium">
+                        <%= t('cart.fastShipping', 'شحن سريع لجميع المحافظات' ) %>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : '<%= lang %>';
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+
+        // Update formatPrice to use Utils or I18n
+        function formatPrice(amount) {
+            if (typeof Utils !== 'undefined' && Utils.formatPrice) {
+                return Utils.formatPrice(amount, lang);
+            }
+            return amount + ' ' + (lang === 'ar' ? 'ج.م' : 'EGP');
+        }
+
+        renderCart();
+
+        // Listen for cart updates - if your Cart system emits events
+        // window.addEventListener('cart-updated', () => { renderCart(); });
+
+        function renderCart() {
+            const cart = Cart.getItems(); // Assuming Cart.getItems() exists based on previous file content
+            const container = document.getElementById('cart-items');
+            const emptyState = document.getElementById('empty-cart');
+            const cartContent = document.getElementById('cart-content');
+            const summary = document.getElementById('order-summary');
+            const itemsCount = document.getElementById('items-count');
+
+            // Update header count
+            if (itemsCount) {
+                const count = Cart.getCount();
+                const countLabel = t('cart.itemUnit', 'منتج');
+                itemsCount.textContent = `${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(count, lang) : count} ${countLabel}`;
+            }
+
+            if (cart.length === 0) {
+                cartContent.classList.add('hidden');
+                summary.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+                return;
+            }
+
+            // Show items
+            cartContent.classList.remove('hidden');
+            summary.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            emptyState.classList.remove('flex');
+
+            let subtotal = 0;
+
+            container.innerHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                return `
+                    <div class="p-4 md:p-6 flex flex-col md:grid md:grid-cols-12 gap-4 items-center group hover:bg-gray-50/50 transition-colors">
+                        <!-- Product Info -->
+                        <div class="w-full md:col-span-6 flex items-center gap-4">
+                            <div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-gray-100 flex-shrink-0 overflow-hidden border border-gray-200">
+                                 ${item.image ?
+                        `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                        `<div class="w-full h-full flex items-center justify-center text-gray-300">
+                                        <span class="material-symbols-outlined text-3xl">image</span>
+                                     </div>`
+                    }
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-bold text-olive-dark text-lg truncate mb-1">
+                                    <a href="/products/${item.slug}" class="hover:text-primary transition-colors">${item.name}</a>
+                                </h3>
+                                <div class="text-sm text-olive-light mb-2 flex items-center gap-2">
+                                    <span class="md:hidden font-medium">${t('cart.price', 'السعر')}:</span>
+                                    ${formatPrice(item.price)}
+                                </div>
+                                <button onclick="removeItem('${item.id}')" class="text-red-500 hover:text-red-700 text-sm font-medium flex items-center gap-1 transition-colors">
+                                    <span class="material-symbols-outlined text-base">delete</span>
+                                    ${t('cart.remove', 'حذف')}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Price (Desktop) -->
+                        <div class="hidden md:block col-span-2 text-center font-bold text-olive-dark">
+                            ${formatPrice(item.price)}
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="w-full md:col-span-2 flex justify-center">
+                            <div class="flex items-center border border-gray-200 rounded-lg bg-white h-10 w-32 shadow-sm">
+                                <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" 
+                                    class="w-10 h-full flex items-center justify-center text-olive-light hover:bg-gray-50 hover:text-primary transition-colors rounded-r-lg">
+                                    <span class="material-symbols-outlined text-sm">remove</span>
+                                </button>
+                                <input type="text" value="${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity, lang) : item.quantity}" readonly 
+                                    class="w-12 h-full border-none text-center font-bold text-olive-dark focus:ring-0 p-0 text-sm bg-transparent">
+                                <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})"
+                                    class="w-10 h-full flex items-center justify-center text-olive-light hover:bg-gray-50 hover:text-primary transition-colors rounded-l-lg">
+                                    <span class="material-symbols-outlined text-sm">add</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Total -->
+                        <div class="w-full md:col-span-2 text-center flex justify-between md:justify-center items-center md:items-start text-lg">
+                            <span class="md:hidden font-bold text-olive-light text-sm">${t('cart.total', 'الإجمالي')}:</span>
+                            <span class="font-bold text-primary">${formatPrice(itemTotal)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update Summary
+            const subtotalEl = document.getElementById('summary-subtotal');
+            const totalEl = document.getElementById('summary-total');
+            if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+            if (totalEl) totalEl.textContent = formatPrice(subtotal);
+
+            // Shipping logic placeholder
+            const shippingEl = document.getElementById('shipping');
+            if (shippingEl) {
+                // Keep "Calculated later" or similar for now
+            }
+        }
+
+        window.updateQuantity = function (id, newQty) {
+            if (newQty < 1) return;
+            Cart.updateQuantity(id, newQty);
+            renderCart();
+        }
+
+        window.removeItem = function (id) {
+            Cart.removeItem(id);
+            renderCart();
+            Utils.showToast(t('cart.removed', 'تم حذف المنتج من السلة'), 'info');
+        }
+
+        document.getElementById('clear-cart-btn')?.addEventListener('click', function () {
+            if (confirm(t('cart.confirmClear', 'هل أنت متأكد من إفراغ السلة؟'))) {
+                Cart.clear();
+                renderCart();
+                Utils.showToast(t('cart.cleared', 'تم إفراغ السلة'), 'success');
+            }
+        });
+
+        // Apply coupon
+        document.getElementById('apply-coupon')?.addEventListener('click', function () {
+            const code = document.getElementById('coupon-code').value.trim();
+            const message = document.getElementById('coupon-message');
+
+            if (!code) {
+                message.textContent = t('cart.enterCoupon', 'الرجاء إدخال كود الخصم');
+                message.classList.remove('hidden', 'text-green-600');
+                message.classList.add('text-red-600');
+                return;
+            }
+
+            // Mock validation
+            message.textContent = t('cart.couponInvalid', 'كود الخصم غير صالح');
+            message.classList.remove('hidden', 'text-green-600');
+            message.classList.add('text-red-600');
+        });
+    });
+</script>

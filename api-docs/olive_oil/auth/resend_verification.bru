@@ -1,0 +1,31 @@
+meta {
+  name: resend_verification
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/api/auth/resend-verification
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+      "email": "{{email}}"
+  }
+}
+
+tests {
+  test("status is 200 or 400 when already verified", () => {
+    expect([200, 400]).to.include(res.status);
+  });
+  
+  test("returns message", () => {
+    expect(res.body.message).to.be.a("string");
+  });
+}

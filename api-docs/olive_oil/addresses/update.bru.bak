@@ -1,0 +1,25 @@
+meta {
+  name: addresses_update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{base_url}}/api/addresses/1
+  body: json
+  auth: none
+}
+
+body:json {
+  full_name: "Test User"
+  phone: "+200000000000"
+  address_line1: "123 Street Updated"
+  address_line2: ""
+  city: "Cairo"
+  postal_code: "12345"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}

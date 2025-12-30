@@ -1,0 +1,395 @@
+<!-- Admin Order Detail -->
+
+<!-- Page Header -->
+<div class="mb-8">
+    <nav class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+        <a href="/admin" class="hover:text-primary">
+            <%= t('admin.dashboard.title', 'لوحة التحكم' ) %>
+        </a>
+        <span>/</span>
+        <a href="/admin/orders" class="hover:text-primary">
+            <%= t('admin.orders.title', 'الطلبات' ) %>
+        </a>
+        <span>/</span>
+        <span id="breadcrumb-order" class="text-slate-700">
+            <%= t('admin.orderDetail.breadcrumb', 'تفاصيل الطلب' ) %>
+        </span>
+    </nav>
+
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+            <h1 id="order-title" class="text-2xl font-bold text-slate-900">
+                <%= t('admin.orderDetail.title', 'طلب' ) %> #---
+            </h1>
+            <span id="order-status"
+                class="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">---</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()"
+                class="h-10 px-4 border border-gray-200 rounded-lg text-slate-600 hover:bg-gray-50 text-sm font-medium flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">print</span>
+                <%= t('admin.orderDetail.print', 'طباعة' ) %>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Loading State -->
+<div id="loading-state" class="space-y-6">
+    <div class="skeleton h-48 rounded-xl"></div>
+    <div class="skeleton h-64 rounded-xl"></div>
+</div>
+
+<!-- Order Content -->
+<div id="order-content" class="hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- Order Items -->
+            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
+                    <h2 class="font-bold text-slate-900">
+                        <%= t('admin.orderDetail.items', 'المنتجات' ) %>
+                    </h2>
+                </div>
+                <div id="order-items" class="divide-y divide-gray-50">
+                    <!-- Items loaded dynamically -->
+                </div>
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                    <div class="flex justify-end gap-8">
+                        <div class="text-sm">
+                            <span class="text-slate-500">
+                                <%= t('admin.orderDetail.subtotal', 'المجموع الفرعي' ) %>:
+                            </span>
+                            <span id="subtotal" class="font-medium text-slate-900 mr-2">---</span>
+                        </div>
+                        <div class="text-sm">
+                            <span class="text-slate-500">
+                                <%= t('admin.orderDetail.shipping', 'الشحن' ) %>:
+                            </span>
+                            <span id="shipping" class="font-medium text-slate-900 mr-2">---</span>
+                        </div>
+                        <div class="text-lg">
+                            <span class="text-slate-700 font-medium">
+                                <%= t('admin.orderDetail.total', 'الإجمالي' ) %>:
+                            </span>
+                            <span id="total" class="font-bold text-primary mr-2">---</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Update -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.updateStatus', 'تحديث حالة الطلب' ) %>
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        class="status-btn px-4 py-2 rounded-lg border-2 border-amber-500 text-amber-700 hover:bg-amber-50 text-sm font-medium transition-colors"
+                        data-status="pending">
+                        <%= t('admin.orders.status.pending', 'قيد الانتظار' ) %>
+                    </button>
+                    <button
+                        class="status-btn px-4 py-2 rounded-lg border-2 border-blue-500 text-blue-700 hover:bg-blue-50 text-sm font-medium transition-colors"
+                        data-status="processing">
+                        <%= t('admin.orders.status.processing', 'جاري التجهيز' ) %>
+                    </button>
+                    <button
+                        class="status-btn px-4 py-2 rounded-lg border-2 border-purple-500 text-purple-700 hover:bg-purple-50 text-sm font-medium transition-colors"
+                        data-status="shipped">
+                        <%= t('admin.orders.status.shipped', 'تم الشحن' ) %>
+                    </button>
+                    <button
+                        class="status-btn px-4 py-2 rounded-lg border-2 border-green-500 text-green-700 hover:bg-green-50 text-sm font-medium transition-colors"
+                        data-status="delivered">
+                        <%= t('admin.orders.status.delivered', 'تم التوصيل' ) %>
+                    </button>
+                    <button
+                        class="status-btn px-4 py-2 rounded-lg border-2 border-red-500 text-red-700 hover:bg-red-50 text-sm font-medium transition-colors"
+                        data-status="cancelled">
+                        <%= t('admin.orders.status.cancelled', 'ملغي' ) %>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div id="notes-section" class="bg-white rounded-xl border border-gray-100 p-6 hidden">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.customerNotes', 'ملاحظات العميل' ) %>
+                </h2>
+                <p id="order-notes" class="text-slate-600"></p>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+
+            <!-- Customer -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.customer', 'العميل' ) %>
+                </h2>
+                <div id="customer-info" class="space-y-3">
+                    <!-- Customer info loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.shippingAddress', 'عنوان الشحن' ) %>
+                </h2>
+                <div id="shipping-address" class="text-slate-600 text-sm space-y-1">
+                    <!-- Address loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Payment -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.payment', 'الدفع' ) %>
+                </h2>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 text-sm">
+                            <%= t('admin.orderDetail.paymentMethod', 'طريقة الدفع' ) %>
+                        </span>
+                        <span id="payment-method" class="text-slate-900 font-medium text-sm">---</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-500 text-sm">
+                            <%= t('admin.orderDetail.paymentStatus', 'حالة الدفع' ) %>
+                        </span>
+                        <span id="payment-status"
+                            class="px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">---</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="bg-white rounded-xl border border-gray-100 p-6">
+                <h2 class="font-bold text-slate-900 mb-4">
+                    <%= t('admin.orderDetail.timeline', 'سجل الطلب' ) %>
+                </h2>
+                <div id="order-timeline" class="space-y-4">
+                    <!-- Timeline loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
+        const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
+
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin/login';
+            return;
+        }
+
+        const pathParts = window.location.pathname.split('/');
+        const orderId = pathParts[pathParts.length - 1];
+
+        // Convert to Arabic numerals
+        function toArabicNum(num) {
+            if (lang !== 'ar') return num;
+            const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return String(num).split('').map(d => arabicNums[parseInt(d)] || d).join('');
+        }
+
+        function formatPrice(price) {
+            if (lang !== 'ar') {
+                return parseFloat(price || 0).toFixed(2) + ' EGP';
+            }
+            return toArabicNum(parseFloat(price || 0).toFixed(0)) + ' ج.م';
+        }
+
+        function formatDate(dateStr) {
+            const locale = lang === 'ar' ? 'ar-EG' : 'en-US';
+            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateStr).toLocaleDateString(locale, options);
+        }
+
+        function getStatusInfo(status) {
+            const statuses = {
+                'pending': { label: t('admin.orders.status.pending', 'قيد الانتظار'), class: 'bg-amber-100 text-amber-800' },
+                'processing': { label: t('admin.orders.status.processing', 'جاري التجهيز'), class: 'bg-blue-100 text-blue-800' },
+                'shipped': { label: t('admin.orders.status.shipped', 'تم الشحن'), class: 'bg-purple-100 text-purple-800' },
+                'delivered': { label: t('admin.orders.status.delivered', 'تم التوصيل'), class: 'bg-green-100 text-green-800' },
+                'cancelled': { label: t('admin.orders.status.cancelled', 'ملغي'), class: 'bg-red-100 text-red-800' }
+            };
+            return statuses[status] || statuses['pending'];
+        }
+
+        let orderData = null;
+
+        // Load order
+        async function loadOrder() {
+            try {
+                const response = await fetch(`/api/admin/orders/${orderId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    window.location.href = '/admin/orders';
+                    return;
+                }
+
+                const data = await response.json();
+                orderData = data.order || data;
+
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('order-content').classList.remove('hidden');
+
+                // Header
+                document.getElementById('breadcrumb-order').textContent = `${t('admin.orderDetail.title', 'طلب')} #${orderData.id}`;
+                document.getElementById('order-title').textContent = `${t('admin.orderDetail.title', 'طلب')} #${orderData.id}`;
+
+                const statusInfo = getStatusInfo(orderData.status);
+                const statusBadge = document.getElementById('order-status');
+                statusBadge.textContent = statusInfo.label;
+                statusBadge.className = `px-3 py-1 rounded-full text-xs font-medium ${statusInfo.class}`;
+
+                // Items
+                const itemsContainer = document.getElementById('order-items');
+                if (orderData.items && orderData.items.length > 0) {
+                    itemsContainer.innerHTML = orderData.items.map(item => `
+                    <div class="flex items-center gap-4 p-4">
+                        <div class="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+                            ${item.image || item.product?.image ?
+                            `<img src="${item.image || item.product?.image}" alt="" class="w-full h-full object-cover">` :
+                            `<div class="w-full h-full flex items-center justify-center text-slate-400">
+                                    <span class="material-symbols-outlined">inventory_2</span>
+                                </div>`
+                        }
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-medium text-slate-900">${item.name || item.product?.name || t('admin.orders.messages.product', 'منتج')}</p>
+                            <p class="text-sm text-slate-500">${t('admin.orderDetail.quantity', 'الكمية')}: ${toArabicNum(item.quantity)}</p>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold text-slate-900">${formatPrice(item.price * item.quantity)}</p>
+                            <p class="text-xs text-slate-500">${formatPrice(item.price)} × ${toArabicNum(item.quantity)}</p>
+                        </div>
+                    </div>
+                `).join('');
+                }
+
+                // Totals
+                const subtotal = orderData.subtotal || (orderData.total - (orderData.shipping_cost || 0));
+                document.getElementById('subtotal').textContent = formatPrice(subtotal);
+                document.getElementById('shipping').textContent = formatPrice(orderData.shipping_cost || 0);
+                document.getElementById('total').textContent = formatPrice(orderData.total);
+
+                // Customer
+                const address = orderData.shipping_address || {
+                    name: orderData.customer_name,
+                    email: orderData.email,
+                    phone: orderData.phone,
+                    address: orderData.address,
+                    city: orderData.city,
+                    governorate: orderData.governorate
+                };
+                const cityLine = [address.city, address.governorate].filter(Boolean).join(', ');
+                document.getElementById('customer-info').innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                        ${(address.name || 'U').charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <p class="font-medium text-slate-900">${address.name || t('admin.orders.messages.unknown', 'غير معروف')}</p>
+                        <p class="text-xs text-slate-500" dir="ltr">${address.email || ''}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="material-symbols-outlined text-slate-400 text-lg">call</span>
+                    <span class="text-slate-600" dir="ltr">${address.phone || '-'}</span>
+                </div>
+            `;
+
+                // Address
+                document.getElementById('shipping-address').innerHTML = `
+                <p>${address.address || ''}</p>
+                <p>${cityLine}</p>
+            `;
+
+                // Payment
+                const paymentLabels = {
+                    'cod': t('admin.orders.payment.cod', 'عند الاستلام'),
+                    'card': t('admin.orders.payment.card', 'بطاقة')
+                };
+                document.getElementById('payment-method').textContent = paymentLabels[orderData.payment_method] || orderData.payment_method;
+
+                const paymentStatusEl = document.getElementById('payment-status');
+                if (orderData.payment_method === 'cod') {
+                    paymentStatusEl.textContent = orderData.status === 'delivered' ? t('admin.orderDetail.paymentPaid', 'مدفوع') : t('admin.orders.payment.cod', 'عند الاستلام');
+                    paymentStatusEl.className = `px-2 py-0.5 rounded-full text-xs font-medium ${orderData.status === 'delivered' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`;
+                } else {
+                    paymentStatusEl.textContent = t('admin.orderDetail.paymentPaid', 'مدفوع');
+                    paymentStatusEl.className = 'px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800';
+                }
+
+                // Notes
+                if (orderData.notes) {
+                    document.getElementById('notes-section').classList.remove('hidden');
+                    document.getElementById('order-notes').textContent = orderData.notes;
+                }
+
+                // Timeline
+                document.getElementById('order-timeline').innerHTML = `
+                <div class="flex gap-3">
+                    <div class="w-2 h-2 rounded-full bg-primary mt-2"></div>
+                    <div>
+                        <p class="text-sm font-medium text-slate-900">${t('admin.orderDetail.created', 'تم إنشاء الطلب')}</p>
+                        <p class="text-xs text-slate-500">${formatDate(orderData.created_at)}</p>
+                    </div>
+                </div>
+            `;
+
+                // Highlight current status button
+                document.querySelectorAll('.status-btn').forEach(btn => {
+                    if (btn.dataset.status === orderData.status) {
+                        btn.classList.add('ring-2', 'ring-offset-2');
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error loading order:', error);
+            }
+        }
+
+        // Status update
+        document.querySelectorAll('.status-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                const newStatus = this.dataset.status;
+                if (newStatus === orderData.status) return;
+
+                try {
+                    const response = await fetch(`/api/admin/orders/${orderId}/status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    });
+
+                    if (response.ok) {
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error updating status:', error);
+                }
+            });
+        });
+
+        // Initialize
+        loadOrder();
+    });
+</script>

@@ -1,0 +1,25 @@
+meta {
+  name: payment_proof
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/api/orders/{{order_number}}/payment-proof
+  body: json
+  auth: none
+}
+
+body:json {
+  r2_key: "orders/ord123/proof.png"
+  filename: "proof.png"
+  original_name: "proof.png"
+  mime_type: "image/png"
+  size: 12345
+  payment_reference: "REF123"
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}

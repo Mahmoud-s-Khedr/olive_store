@@ -1,0 +1,28 @@
+meta {
+  name: admin_products_set_primary
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{base_url}}/api/admin/products/{{product_id}}/images/{{product_image_id}}/primary
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+tests {
+  test("status is 200 or 404", () => {
+    expect([200, 404]).to.include(res.status);
+  });
+
+  test("returns image dto on success", () => {
+    if (res.status === 200) {
+      expect(res.body.image).to.be.an("object");
+      expect(res.body.image.is_primary).to.equal(true);
+    }
+  });
+}

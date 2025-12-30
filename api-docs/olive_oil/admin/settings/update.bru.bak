@@ -1,0 +1,25 @@
+meta {
+  name: admin_settings_update
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{base_url}}/api/admin/settings
+  body: json
+  auth: none
+}
+
+body:json [
+  {
+    key: "store_name_en"
+    value: "Olive Store"
+    type: "string"
+    group_name: "general"
+  }
+]
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{admin_token}}
+}
