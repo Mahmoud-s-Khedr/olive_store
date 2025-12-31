@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html class="light" lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب - زيتون مصر</title>
+    <meta name="description" content="متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans Arabic', 'Tajawal', sans-serif;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-dropdown {
+            min-width: 120px;
+        }
+    </style>
+
+    <!-- i18n Setup (before page load) -->
+    <script>
+        (function () {
+            const lang = localStorage.getItem('lang') || 'ar';
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            document.documentElement.dir = dir;
+        })();
+    </script>
+</head>
+
+<body class="bg-background-light text-olive-dark min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 text-olive-dark hover:opacity-90 transition-opacity">
+                    <div class="w-8 h-8 text-primary">
+                        <span class="material-symbols-outlined text-3xl">water_drop</span>
+                    </div>
+                    <h1 class="text-xl lg:text-2xl font-bold tracking-tight" data-i18n="common.brand">زيتون مصر</h1>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.products">المتجر</a>
+                    <a href="categories.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.categories">الأقسام</a>
+                    <a href="about.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.contact">تواصل معنا</a>
+                </nav>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-2 lg:gap-4">
+
+                    <!-- Search Bar (Desktop) -->
+                    <div class="hidden md:flex w-64 lg:w-80 relative">
+                        <input type="text" id="search-input" placeholder="ابحث عن منتج..." data-i18n="[placeholder]nav.search" class="w-full bg-gray-50 border-none rounded-lg pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all">
+                        <span class="material-symbols-outlined absolute right-3 top-2.5 text-olive-light">search</span>
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <div class="relative" id="lang-menu-container">
+                        <button id="lang-menu-btn" class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                            <span id="current-lang-flag" data-current-flag>🇪🇬</span>
+                            <span id="current-lang-name" class="hidden sm:inline text-olive-dark" data-current-lang data-i18n="lang.ar">العربية</span>
+                            <span class="material-symbols-outlined text-olive-light text-lg">expand_more</span>
+                        </button>
+                        <div id="lang-dropdown" class="hidden absolute left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 lang-dropdown">
+                            <button class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors" data-lang="ar">
+                                <span>🇪🇬</span>
+                                <span data-i18n="lang.ar">العربية</span>
+                            </button>
+                            <button class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors" data-lang="en">
+                                <span>🇬🇧</span>
+                                <span data-i18n="lang.en">English</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cart Button -->
+                    <a href="cart.html" class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <span class="material-symbols-outlined text-olive-dark">shopping_cart</span>
+                        <span id="cart-badge" class="cart-badge absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full hidden">0</span>
+                    </a>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="user-menu-container">
+                        <button id="user-menu-btn" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                            <span class="material-symbols-outlined text-olive-dark">account_circle</span>
+                        </button>
+
+                        <!-- User Dropdown (Hidden by default) -->
+                        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50">
+                            <!-- Logged Out State -->
+                            <div id="logged-out-menu">
+                                <a href="login.html" class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">login</span>
+                                    <span data-i18n="nav.login">تسجيل الدخول</span>
+                                </a>
+                                <a href="register.html" class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">person_add</span>
+                                    <span data-i18n="nav.register">إنشاء حساب</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Checkout Page -->
+<div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-8">
+
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-olive-light mb-6">
+        <a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+        <span class="text-gray-300">/</span>
+        <a href="cart.html" class="hover:text-primary transition-colors" data-i18n="cart.title">سلة التسوق</a>
+        <span class="text-gray-300">/</span>
+        <span class="text-olive-dark font-medium" data-i18n="checkout.title">إتمام الطلب</span>
+    </nav>
+
+    <!-- Page Header -->
+    <h1 class="text-2xl md:text-3xl font-bold text-olive-dark mb-8" data-i18n="checkout.title">إتمام الطلب</h1>
+
+    <!-- Empty Cart Redirect -->
+    <div id="empty-cart" class="hidden text-center py-20">
+        <div class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-5xl text-olive-light">shopping_cart</span>
+        </div>
+        <h2 class="text-xl font-bold text-olive-dark mb-2" data-i18n="cart.empty">السلة فارغة</h2>
+        <p class="text-olive-light mb-6" data-i18n="checkout.cantCheckoutEmpty">لا يمكن إتمام الطلب بدون منتجات</p>
+        <a href="products.html" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-bold transition-all">
+            <span class="material-symbols-outlined">storefront</span>
+            <span data-i18n="common.browseProducts">تصفح المنتجات</span>
+        </a>
+    </div>
+
+    <!-- Checkout Form -->
+    <form id="checkout-form" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column - Forms -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- Shipping Information -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">local_shipping</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark" data-i18n="checkout.shipping.title">معلومات الشحن</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Full Name -->
+                        <div class="md:col-span-2">
+                            <label for="name" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.name">الاسم الكامل <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.email">البريد الإلكتروني <span class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" dir="ltr" required class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.phone">رقم الهاتف <span class="text-red-500">*</span></label>
+                            <input type="tel" id="phone" name="phone" dir="ltr" required pattern="[0-9]{10,11}" placeholder="01xxxxxxxxx" class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Governorate -->
+                        <div>
+                            <label for="governorate" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.governorate">المحافظة <span class="text-red-500">*</span></label>
+                            <select id="governorate" name="governorate" required class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                                <option value="" data-i18n="checkout.form.selectGovernorate">اختر المحافظة</option>
+                                <option value="cairo" data-i18n="governorates.cairo">القاهرة</option>
+                                <option value="giza" data-i18n="governorates.giza">الجيزة</option>
+                                <option value="alexandria" data-i18n="governorates.alexandria">الإسكندرية</option>
+                                <option value="dakahlia" data-i18n="governorates.dakahlia">الدقهلية</option>
+                                <option value="sharqia" data-i18n="governorates.sharqia">الشرقية</option>
+                                <option value="qalyubia" data-i18n="governorates.qalyubia">القليوبية</option>
+                                <option value="gharbia" data-i18n="governorates.gharbia">الغربية</option>
+                                <option value="menoufia" data-i18n="governorates.menoufia">المنوفية</option>
+                                <option value="beheira" data-i18n="governorates.beheira">البحيرة</option>
+                                <option value="kafr_el_sheikh" data-i18n="governorates.kafr_el_sheikh">كفر الشيخ</option>
+                                <option value="damietta" data-i18n="governorates.damietta">دمياط</option>
+                                <option value="port_said" data-i18n="governorates.port_said">بور سعيد</option>
+                                <option value="ismailia" data-i18n="governorates.ismailia">الإسماعيلية</option>
+                                <option value="suez" data-i18n="governorates.suez">السويس</option>
+                                <option value="fayoum" data-i18n="governorates.fayoum">الفيوم</option>
+                                <option value="beni_suef" data-i18n="governorates.beni_suef">بني سويف</option>
+                                <option value="minya" data-i18n="governorates.minya">المنيا</option>
+                                <option value="asyut" data-i18n="governorates.asyut">أسيوط</option>
+                                <option value="sohag" data-i18n="governorates.sohag">سوهاج</option>
+                                <option value="qena" data-i18n="governorates.qena">قنا</option>
+                                <option value="aswan" data-i18n="governorates.aswan">أسوان</option>
+                                <option value="luxor" data-i18n="governorates.luxor">الأقصر</option>
+                                <option value="red_sea" data-i18n="governorates.red_sea">البحر الأحمر</option>
+                                <option value="new_valley" data-i18n="governorates.new_valley">الوادي الجديد</option>
+                                <option value="matrouh" data-i18n="governorates.matrouh">مطروح</option>
+                                <option value="north_sinai" data-i18n="governorates.north_sinai">شمال سيناء</option>
+                                <option value="south_sinai" data-i18n="governorates.south_sinai">جنوب سيناء</option>
+                            </select>
+                        </div>
+
+                        <!-- City -->
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.city">المدينة <span class="text-red-500">*</span></label>
+                            <input type="text" id="city" name="city" required class="block w-full h-12 px-4 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm">
+                        </div>
+
+                        <!-- Address -->
+                        <div class="md:col-span-2">
+                            <label for="address" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="checkout.form.address">العنوان التفصيلي <span class="text-red-500">*</span></label>
+                            <textarea id="address" name="address" rows="3" required placeholder="الشارع، رقم المبنى، الطابق، علامة مميزة..." data-i18n="[placeholder]checkout.form.addressPlaceholder" class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Method -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">payments</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark" data-i18n="checkout.payment.title">طريقة الدفع</h2>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- Cash on Delivery -->
+                        <label class="payment-option flex items-center gap-4 p-4 border-2 border-primary rounded-xl cursor-pointer bg-primary/5">
+                            <input type="radio" name="payment_method" value="cod" checked class="text-primary focus:ring-primary">
+                            <div class="flex items-center gap-3 flex-1">
+                                <span class="material-symbols-outlined text-primary text-2xl">local_shipping</span>
+                                <div>
+                                    <span class="font-bold text-olive-dark block" data-i18n="checkout.payment.cod">الدفع عند الاستلام</span>
+                                    <span class="text-xs text-olive-light" data-i18n="checkout.payment.codDesc">ادفع نقداً عند وصول الطلب</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Card Payment -->
+                        <label class="payment-option flex items-center gap-4 p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="radio" name="payment_method" value="card" class="text-primary focus:ring-primary">
+                            <div class="flex items-center gap-3 flex-1">
+                                <span class="material-symbols-outlined text-olive-light text-2xl">credit_card</span>
+                                <div>
+                                    <span class="font-bold text-olive-dark block" data-i18n="checkout.payment.card">بطاقة ائتمان</span>
+                                    <span class="text-xs text-olive-light">Visa, MasterCard, Meeza</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-1">
+                                <div class="w-8 h-5 bg-gray-100 rounded text-[8px] flex items-center justify-center font-bold">VISA</div>
+                                <div class="w-8 h-5 bg-gray-100 rounded text-[8px] flex items-center justify-center font-bold">MC</div>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Order Notes -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">edit_note</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-olive-dark" data-i18n="checkout.notes.title">ملاحظات الطلب</h2>
+                    </div>
+
+                    <textarea id="notes" name="notes" rows="3" placeholder="أي ملاحظات خاصة بالطلب أو التوصيل (اختياري)..." data-i18n="[placeholder]checkout.notes.placeholder" class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:border-primary focus:ring-primary text-sm"></textarea>
+                </section>
+            </div>
+
+            <!-- Right Column - Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 sticky top-24">
+                    <h3 class="text-lg font-bold text-olive-dark mb-6" data-i18n="cart.summary">ملخص الطلب</h3>
+
+                    <!-- Order Items -->
+                    <div id="order-items" class="space-y-4 max-h-[300px] overflow-y-auto mb-6">
+                        <!-- Items loaded dynamically -->
+                    </div>
+
+                    <hr class="border-gray-100 mb-6">
+
+                    <!-- Totals -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-olive-light" data-i18n="cart.subtotal">المجموع الفرعي</span>
+                            <span id="subtotal" class="text-olive-dark font-medium">0</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-olive-light" data-i18n="cart.shipping">الشحن</span>
+                            <span id="shipping" class="text-olive-dark font-medium">50</span>
+                        </div>
+                        <div id="discount-row" class="flex justify-between text-sm hidden">
+                            <span class="text-olive-light" data-i18n="cart.discount">الخصم</span>
+                            <span id="discount" class="text-green-600 font-medium">-0</span>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100 mb-6">
+
+                    <div class="flex justify-between mb-6">
+                        <span class="text-olive-dark font-bold text-lg" data-i18n="cart.total">الإجمالي</span>
+                        <span id="total" class="text-primary font-bold text-xl">0</span>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="checkout-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">error</span>
+                        <span id="checkout-error-message" data-i18n="common.error">حدث خطأ</span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" form="checkout-form" id="place-order-btn" class="flex items-center justify-center gap-2 w-full h-12 bg-accent hover:bg-accent-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all">
+                        <span id="place-order-text" data-i18n="checkout.placeOrder">تأكيد الطلب</span>
+                        <span id="place-order-spinner" class="spinner hidden"></span>
+                    </button>
+
+                    <p class="text-xs text-olive-light text-center mt-4">
+                        <span data-i18n="checkout.termsAgreement">بالضغط على "تأكيد الطلب" أنت توافق على</span>
+                        <a href="terms.html" class="text-primary underline" data-i18n="checkout.terms">الشروط والأحكام</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#2c3325] text-[#f9f7f2] pt-16 pb-8 mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+                <!-- Brand Column -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-3xl text-primary">water_drop</span>
+                        <span class="text-2xl font-bold" data-i18n="footer.brand">زيتون مصر</span>
+                    </div>
+                    <p class="text-[#b0b8a6] text-sm leading-relaxed" data-i18n="footer.description">نقدم أفخر أنواع زيت الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.</p>
+                    <div class="flex gap-3 mt-2">
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">facebook</span>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">instagram</span>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">twitter</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.quickLinks">روابط سريعة</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li><a href="about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a></li>
+                        <li><a href="products.html" class="hover:text-primary transition-colors" data-i18n="nav.products">المتجر</a></li>
+                        <li><a href="categories.html" class="hover:text-primary transition-colors" data-i18n="nav.categories">الأقسام</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">تواصل معنا</a></li>
+                        <li><a href="shipping.html" class="hover:text-primary transition-colors" data-i18n="footer.shipping">الشحن والإرجاع</a></li>
+                        <li><a href="payment-info.html" class="hover:text-primary transition-colors" data-i18n="footer.payment">طرق الدفع</a></li>
+                    </ul>
+                </div>
+
+                <!-- Products -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.products">المنتجات</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li><a href="products.html?category=oil" class="hover:text-primary transition-colors" data-i18n="footer.oliveOil">زيت زيتون</a></li>
+                        <li><a href="products.html?category=care" class="hover:text-primary transition-colors" data-i18n="footer.careProducts">منتجات العناية</a></li>
+                        <li><a href="products.html?category=gifts" class="hover:text-primary transition-colors" data-i18n="footer.giftsAndSets">هدايا ومجموعات</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.contact">تواصل معنا</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                            <span data-i18n="footer.address">القاهرة، مصر الجديدة</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">phone</span>
+                            <span dir="ltr" data-i18n="footer.phone">+20 123 456 7890</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">mail</span>
+                            <span data-i18n="footer.email">info@zaytounmasr.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-[#3d4536] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-[#b0b8a6] text-sm" data-i18n="footer.copyright">© 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+                <div class="flex items-center gap-3 opacity-60">
+                    <span class="text-xs text-[#b0b8a6]">🇪🇬</span>
+                    <span class="text-xs text-[#b0b8a6]">Made with ❤️ in Egypt</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/checkout.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof AuthModule !== 'undefined') {
+                AuthModule.init();
+            }
+            if (typeof Cart !== 'undefined') {
+                Cart.updateBadge();
+            }
+
+            // Language switcher
+            document.getElementById('lang-menu-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('lang-dropdown').classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    if (typeof I18n !== 'undefined') {
+                        I18n.setLanguage(lang);
+                    } else {
+                        localStorage.setItem('lang', lang);
+                        location.reload();
+                    }
+                    document.getElementById('lang-dropdown').classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                const langDropdown = document.getElementById('lang-dropdown');
+                const langContainer = document.getElementById('lang-menu-container');
+                if (langDropdown && langContainer && !langContainer.contains(e.target)) {
+                    langDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

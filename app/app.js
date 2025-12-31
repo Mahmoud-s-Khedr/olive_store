@@ -4,7 +4,6 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const crypto = require('crypto');
-const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/auth');
@@ -19,18 +18,12 @@ const viewsRoutes = require('./routes/views');
 
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
-const i18nMiddleware = require('./middleware/i18n');
 const { checkServices } = require('./utils/serviceHealth');
 
 const app = express();
 
-// View Engine Setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(expressLayouts);
-app.set('layout', 'layouts/main');
-app.set('layout extractScripts', true);
-app.set('layout extractStyles', true);
+// Static files
+app.use(express.static(path.join(__dirname, '../public')));
 
 const authLimiter = rateLimit({
   windowMs: Number(process.env.RATE_LIMIT_AUTH_WINDOW_MS || 15 * 60 * 1000),
@@ -49,7 +42,6 @@ const writeLimiter = rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(i18nMiddleware);
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Helmet with CSP allowing CDN resources

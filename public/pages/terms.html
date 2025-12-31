@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشروط والأحكام - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .prose { max-width: none; }
+        .prose p { margin-bottom: 1rem; }
+        .prose ul { list-style: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .prose ol { list-style: decimal; margin-left: 1.5rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">store</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark">زيتون مصر</span>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-olive-dark hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="/pages/products.html" class="text-olive-dark hover:text-primary transition-colors">المتجر</a>
+                    <a href="/pages/categories.html" class="text-olive-dark hover:text-primary transition-colors">التصنيفات</a>
+                    <a href="/pages/about.html" class="text-olive-dark hover:text-primary transition-colors">من نحن</a>
+                    <a href="/pages/contact.html" class="text-olive-dark hover:text-primary transition-colors">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search -->
+                    <button class="p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="/pages/cart.html" class="relative p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-btn" class="p-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                        <div id="account-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 hidden">
+                            <a href="/pages/profile.html" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">الملف الشخصي</a>
+                            <a href="/pages/my-orders.html" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">طلباتي</a>
+                            <a href="/pages/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">تسجيل الخروج</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[960px] mx-auto px-4 lg:px-8 py-12">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+                <span class="material-symbols-outlined text-3xl">gavel</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4">الشروط والأحكام</h1>
+            <p class="text-olive-light text-lg">يرجى قراءة الشروط والأحكام بعناية قبل استخدام الموقع</p>
+        </div>
+
+        <!-- Content -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 space-y-10">
+            <!-- Introduction -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">info</span>
+                    مقدمة
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <p>
+                        مرحباً بكم في زيتون مصر. تحكم هذه الشروط والأحكام استخدامكم لموقعنا وخدماتنا. باستخدامكم للموقع، فإنكم توافقون على هذه الشروط بالكامل.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Account -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">person</span>
+                    حساب المستخدم
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <p>
+                        عند إنشاء حساب، يجب عليكم تزويدنا بمعلومات دقيقة وكاملة. أنتم مسؤولون عن الحفاظ على سرية حسابكم وكلمة المرور، وعن تقييد الوصول إلى جهاز الكمبيوتر الخاص بكم.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Orders & Pricing -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">shopping_cart</span>
+                    الطلبات والأسعار
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <ul class="space-y-2 list-disc list-inside">
+                        <li>
+                            نحتفظ بالحق في رفض أو إلغاء أي طلب لأي سبب، بما في ذلك عدم توفر المنتج أو أخطاء في التسعير.
+                        </li>
+                        <li>
+                            الأسعار المعروضة شاملة الضرائب ما لم ينص على خلاف ذلك. قد تتغير الأسعار في أي وقت دون إشعار مسبق.
+                        </li>
+                        <li>
+                            يجب دفع ثمن المنتجات بالكامل قبل الشحن (في حالة الدفع الإلكتروني) أو عند الاستلام.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Intellectual Property -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">copyright</span>
+                    حقوق الملكية الفكرية
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <p>
+                        جميع المحتويات الموجودة على هذا الموقع، بما في ذلك النصوص والرسومات والشعارات والصور، هي ملك لزيتون مصر ومحمية بموجب قوانين حقوق النشر.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Privacy -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">security</span>
+                    الخصوصية والأمان
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <p>
+                        نحن نأخذ خصوصيتكم بجدية. يرجى مراجعة سياسة الخصوصية الخاصة بنا لفهم ممارساتنا فيما يتعلق ببياناتكم الشخصية.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Changes -->
+            <section>
+                <h2 class="text-xl font-bold text-olive-dark mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">update</span>
+                    التغييرات على الشروط
+                </h2>
+                <div class="prose prose-stone max-w-none text-olive-light">
+                    <p>
+                        نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم نشر التغييرات على هذه الصفحة، ويعتبر استمرار استخدامكم للموقع قبولاً لهذه التغييرات.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="mt-12 text-center">
+            <p class="text-olive-light mb-4">
+                إذا كان لديكم أي استفسارات حول الشروط والأحكام، يرجى التواصل معنا.
+            </p>
+            <a href="/pages/contact.html" class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                اتصل بنا
+                <span class="material-symbols-outlined text-sm rtl:rotate-180">arrow_forward</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">store</span>
+                        </div>
+                        <span class="font-bold text-xl">زيتون مصر</span>
+                    </div>
+                    <p class="text-olive-light text-sm">متجر إلكتروني متخصص في بيع منتجات الزيتون الأصلية والطبيعية</p>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/pages/about.html" class="hover:text-primary transition-colors">من نحن</a></li>
+                        <li><a href="/pages/products.html" class="hover:text-primary transition-colors">المنتجات</a></li>
+                        <li><a href="/pages/contact.html" class="hover:text-primary transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">الدعم</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/pages/shipping.html" class="hover:text-primary transition-colors">الشحن والتوصيل</a></li>
+                        <li><a href="/pages/returns.html" class="hover:text-primary transition-colors">الإرجاع والاستبدال</a></li>
+                        <li><a href="/pages/faq.html" class="hover:text-primary transition-colors">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">تواصل معنا</h3>
+                    <div class="space-y-2 text-sm text-olive-light">
+                        <p>📧 info@zaitonmisr.com</p>
+                        <p>📱 +20 123 456 7890</p>
+                        <p>📍 القاهرة، مصر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-olive-light/20 mt-8 pt-8 text-center text-sm text-olive-light">
+                <p>&copy; 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/terms.js"></script>
+</body>
+</html>

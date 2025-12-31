@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المنتج - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Topbar -->
+    <div class="bg-white border-b border-gray-200 px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="flex items-center gap-2 text-sm text-slate-600">
+                    <a href="/admin/dashboard" class="hover:text-primary transition-colors">لوحة التحكم</a>
+                    <span>/</span>
+                    <a href="/admin/products" class="hover:text-primary transition-colors">المنتجات</a>
+                    <span>/</span>
+                    <span id="breadcrumb-current" class="text-slate-700">منتج جديد</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="logout-btn" class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    <span>تسجيل الخروج</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed right-0 top-0 h-full w-64 bg-white border-l border-gray-200 transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">store</span>
+                </div>
+                <div>
+                    <h1 class="font-bold text-slate-900">متجر الزيتون</h1>
+                    <p class="text-xs text-slate-500">لوحة التحكم</p>
+                </div>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="/admin/products" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary transition-colors">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <span>المنتجات</span>
+                </a>
+                <a href="/admin/categories" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">category</span>
+                    <span>الفئات</span>
+                </a>
+                <a href="/admin/orders" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span>الطلبات</span>
+                </a>
+                <a href="/admin/customers" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">people</span>
+                    <span>العملاء</span>
+                </a>
+                <a href="/admin/files" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">folder</span>
+                    <span>الملفات</span>
+                </a>
+                <a href="/admin/settings" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 pointer-events-none transition-opacity duration-300 z-40"></div>
+
+    <!-- Main Content -->
+    <div class="p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 id="page-title" class="text-2xl font-bold text-slate-900">إضافة منتج جديد</h1>
+            </div>
+
+            <form id="product-form" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <input type="hidden" id="product-id">
+
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Basic Info -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">المعلومات الأساسية</h2>
+
+                        <div class="space-y-5">
+                            <!-- Arabic Name -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    اسم المنتج بالعربية <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="name-ar" name="name_ar" required
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right">
+                            </div>
+
+                            <!-- English Name -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    اسم المنتج بالإنجليزية
+                                </label>
+                                <input type="text" id="name-en" name="name_en" dir="ltr"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+
+                            <!-- Slug -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    Slug
+                                </label>
+                                <input type="text" id="slug" name="slug" dir="ltr"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-gray-50"
+                                    placeholder="auto-generated">
+                            </div>
+
+                            <!-- Short Description -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    وصف مختصر
+                                </label>
+                                <textarea id="short-desc-ar" name="short_description_ar" rows="2"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
+                                    placeholder="وصف مختصر يظهر في قوائم المنتجات"></textarea>
+                            </div>
+
+                            <!-- Full Description -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    الوصف الكامل
+                                </label>
+                                <textarea id="desc-ar" name="description_ar" rows="5"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
+                                    placeholder="وصف تفصيلي للمنتج"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Images -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">الصور</h2>
+
+                        <div class="space-y-4">
+                            <!-- Primary Image -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    الصورة الرئيسية <span class="text-red-500">*</span>
+                                </label>
+                                <input type="url" id="primary-image" name="primary_image" dir="ltr" required
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm"
+                                    placeholder="https://...">
+                            </div>
+
+                            <!-- Image Preview -->
+                            <div id="image-preview" class="hidden w-32 h-32 rounded-lg border border-gray-200 overflow-hidden">
+                                <img id="preview-img" src="" alt="" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Additional Images -->
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    صور إضافية (سطر لكل رابط)
+                                </label>
+                                <textarea id="additional-images" name="images" rows="3" dir="ltr"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm font-mono text-xs"
+                                    placeholder="https://image1.jpg&#10;https://image2.jpg"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Publish -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">النشر</h2>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="is-active" name="is_active" checked
+                                    class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <label for="is-active" class="text-sm text-slate-700">
+                                    منتج نشط
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="is-featured" name="is_featured"
+                                    class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <label for="is-featured" class="text-sm text-slate-700">
+                                    منتج مميز
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="is-new" name="is_new"
+                                    class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <label for="is-new" class="text-sm text-slate-700">
+                                    منتج جديد
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Error -->
+                        <div id="form-error"
+                            class="hidden mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
+
+                        <div class="mt-6 flex gap-3">
+                            <a href="/admin/products"
+                                class="flex-1 h-11 border border-gray-200 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center">
+                                إلغاء
+                            </a>
+                            <button type="submit" id="submit-btn"
+                                class="flex-1 h-11 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold transition-colors flex items-center justify-center gap-2">
+                                <span id="submit-text">حفظ</span>
+                                <div id="submit-spinner" class="spinner hidden"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">الفئة</h2>
+                        <select id="category" name="category_id"
+                            class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right">
+                            <option value="">بدون فئة</option>
+                        </select>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">التسعير</h2>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    السعر (ج.م) <span class="text-red-500">*</span>
+                                </label>
+                                <input type="number" id="price" name="price" required min="0" step="0.01"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    السعر القديم (للخصم)
+                                </label>
+                                <input type="number" id="old-price" name="old_price" min="0" step="0.01"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">المخزون</h2>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    الكمية <span class="text-red-500">*</span>
+                                </label>
+                                <input type="number" id="stock" name="stock" required min="0"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    SKU
+                                </label>
+                                <input type="text" id="sku" name="sku" dir="ltr"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping -->
+                    <div class="bg-white rounded-xl border border-gray-100 p-6">
+                        <h2 class="font-bold text-slate-900 mb-5">الشحن</h2>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    الوزن (كجم)
+                                </label>
+                                <input type="text" id="weight" name="weight"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">
+                                    الأبعاد
+                                </label>
+                                <input type="text" id="dimensions" name="dimensions"
+                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
+                                    placeholder="الطول × العرض × الارتفاع">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/admin-product-form.js"></script>
+</body>
+</html>

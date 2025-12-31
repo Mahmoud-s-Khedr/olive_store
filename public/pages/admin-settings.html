@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - متجر الزيتون</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        'primary-dark': '#6B4423',
+                        'primary-light': '#B67B4A',
+                        secondary: '#D4AF37',
+                        'secondary-dark': '#B8941F',
+                        accent: '#F4F1E8',
+                        'text-main': '#2C1810',
+                        'text-secondary': '#8B7355',
+                        'text-muted': '#B8A089',
+                        'border-color': '#E8DCC0',
+                        'bg-primary': '#FEFCF8',
+                        'bg-secondary': '#F9F6F0',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'error': '#EF4444'
+                    },
+                    fontFamily: {
+                        'sans': ['Work Sans', 'system-ui', 'sans-serif'],
+                        'arabic': ['Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-open {
+            transform: translateX(0);
+        }
+        .sidebar-closed {
+            transform: translateX(100%);
+        }
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-bg-primary font-sans text-text-main">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg sidebar-transition sidebar-closed md:sidebar-open">
+        <div class="flex flex-col h-full">
+            <!-- Logo -->
+            <div class="flex items-center justify-center h-16 px-4 bg-primary">
+                <h1 class="text-xl font-bold text-white">متجر الزيتون</h1>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">dashboard</span>
+                    لوحة التحكم
+                </a>
+                <a href="admin-products.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">inventory_2</span>
+                    المنتجات
+                </a>
+                <a href="admin-categories.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">category</span>
+                    الفئات
+                </a>
+                <a href="admin-orders.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">shopping_cart</span>
+                    الطلبات
+                </a>
+                <a href="admin-customers.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">people</span>
+                    العملاء
+                </a>
+                <a href="admin-files.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">folder</span>
+                    الملفات
+                </a>
+                <a href="admin-settings.html" class="flex items-center px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">settings</span>
+                    الإعدادات
+                </a>
+            </nav>
+
+            <!-- Logout -->
+            <div class="p-4 border-t border-border-color">
+                <button id="logout-btn" class="flex items-center w-full px-4 py-3 text-text-secondary hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">logout</span>
+                    تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="md:mr-64">
+        <!-- Topbar -->
+        <header class="bg-white shadow-sm border-b border-border-color">
+            <div class="flex items-center justify-between px-4 py-3">
+                <!-- Mobile menu button -->
+                <button id="sidebar-toggle" class="md:hidden p-2 text-text-secondary hover:bg-gray-100 rounded-lg">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <div class="flex-1"></div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2">
+                    <button id="save-settings-btn" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">save</span>
+                        حفظ الإعدادات
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-text-main mb-2">الإعدادات</h2>
+                <p class="text-text-secondary">إدارة إعدادات المتجر والنظام</p>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="bg-white rounded-lg shadow-sm border border-border-color">
+                <!-- Tab Navigation -->
+                <div class="border-b border-border-color">
+                    <nav class="flex">
+                        <button class="tab-btn active px-6 py-4 text-sm font-medium border-b-2 border-primary text-primary" data-tab="general">
+                            عام
+                        </button>
+                        <button class="tab-btn px-6 py-4 text-sm font-medium text-text-secondary hover:text-primary" data-tab="store">
+                            المتجر
+                        </button>
+                        <button class="tab-btn px-6 py-4 text-sm font-medium text-text-secondary hover:text-primary" data-tab="shipping">
+                            الشحن
+                        </button>
+                        <button class="tab-btn px-6 py-4 text-sm font-medium text-text-secondary hover:text-primary" data-tab="payment">
+                            الدفع
+                        </button>
+                        <button class="tab-btn px-6 py-4 text-sm font-medium text-text-secondary hover:text-primary" data-tab="email">
+                            البريد الإلكتروني
+                        </button>
+                        <button class="tab-btn px-6 py-4 text-sm font-medium text-text-secondary hover:text-primary" data-tab="security">
+                            الأمان
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="p-6">
+                    <!-- General Settings -->
+                    <div id="general-tab" class="tab-content active">
+                        <h3 class="text-lg font-bold text-text-main mb-4">الإعدادات العامة</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="site-title" class="block text-sm font-medium text-text-main mb-2">عنوان الموقع</label>
+                                <input type="text" id="site-title" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="site-description" class="block text-sm font-medium text-text-main mb-2">وصف الموقع</label>
+                                <input type="text" id="site-description" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="admin-email" class="block text-sm font-medium text-text-main mb-2">بريد المدير</label>
+                                <input type="email" id="admin-email" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="admin-phone" class="block text-sm font-medium text-text-main mb-2">هاتف المدير</label>
+                                <input type="tel" id="admin-phone" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="timezone" class="block text-sm font-medium text-text-main mb-2">المنطقة الزمنية</label>
+                                <select id="timezone" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="Africa/Cairo">مصر (Cairo)</option>
+                                    <option value="Asia/Riyadh">السعودية (Riyadh)</option>
+                                    <option value="Asia/Dubai">الإمارات (Dubai)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="language" class="block text-sm font-medium text-text-main mb-2">اللغة الافتراضية</label>
+                                <select id="language" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="ar">العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Store Settings -->
+                    <div id="store-tab" class="tab-content">
+                        <h3 class="text-lg font-bold text-text-main mb-4">إعدادات المتجر</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="store-name" class="block text-sm font-medium text-text-main mb-2">اسم المتجر</label>
+                                <input type="text" id="store-name" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="store-address" class="block text-sm font-medium text-text-main mb-2">عنوان المتجر</label>
+                                <input type="text" id="store-address" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="store-phone" class="block text-sm font-medium text-text-main mb-2">هاتف المتجر</label>
+                                <input type="tel" id="store-phone" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="store-email" class="block text-sm font-medium text-text-main mb-2">بريد المتجر</label>
+                                <input type="email" id="store-email" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="store-description" class="block text-sm font-medium text-text-main mb-2">وصف المتجر</label>
+                                <textarea id="store-description" rows="4" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                            </div>
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="store-active" class="rounded border-border-color text-primary focus:ring-primary">
+                                    <span class="mr-2 text-sm text-text-main">المتجر نشط</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="maintenance-mode" class="rounded border-border-color text-primary focus:ring-primary">
+                                    <span class="mr-2 text-sm text-text-main">وضع الصيانة</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Settings -->
+                    <div id="shipping-tab" class="tab-content">
+                        <h3 class="text-lg font-bold text-text-main mb-4">إعدادات الشحن</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="free-shipping-threshold" class="block text-sm font-medium text-text-main mb-2">حد الشحن المجاني (ج.م)</label>
+                                <input type="number" id="free-shipping-threshold" min="0" step="0.01" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="default-shipping-cost" class="block text-sm font-medium text-text-main mb-2">تكلفة الشحن الافتراضية (ج.م)</label>
+                                <input type="number" id="default-shipping-cost" min="0" step="0.01" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="shipping-zones" class="block text-sm font-medium text-text-main mb-2">مناطق الشحن</label>
+                                <textarea id="shipping-zones" rows="4" placeholder="أدخل مناطق الشحن والتكاليف (كل منطقة في سطر منفصل)" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                            </div>
+                            <div>
+                                <label for="estimated-delivery" class="block text-sm font-medium text-text-main mb-2">وقت التوصيل المقدر</label>
+                                <input type="text" id="estimated-delivery" placeholder="مثال: 2-5 أيام عمل" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Settings -->
+                    <div id="payment-tab" class="tab-content">
+                        <h3 class="text-lg font-bold text-text-main mb-4">إعدادات الدفع</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-medium text-text-main mb-3">طرق الدفع المتاحة</h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="payment-cash" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">الدفع عند الاستلام</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="payment-card" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">بطاقة الائتمان</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="payment-bank" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">التحويل البنكي</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="currency" class="block text-sm font-medium text-text-main mb-2">العملة</label>
+                                    <select id="currency" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        <option value="EGP">جنيه مصري (EGP)</option>
+                                        <option value="SAR">ريال سعودي (SAR)</option>
+                                        <option value="AED">درهم إماراتي (AED)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="tax-rate" class="block text-sm font-medium text-text-main mb-2">معدل الضريبة (%)</label>
+                                    <input type="number" id="tax-rate" min="0" max="100" step="0.01" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Settings -->
+                    <div id="email-tab" class="tab-content">
+                        <h3 class="text-lg font-bold text-text-main mb-4">إعدادات البريد الإلكتروني</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="smtp-host" class="block text-sm font-medium text-text-main mb-2">خادم SMTP</label>
+                                <input type="text" id="smtp-host" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="smtp-port" class="block text-sm font-medium text-text-main mb-2">منفذ SMTP</label>
+                                <input type="number" id="smtp-port" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="smtp-username" class="block text-sm font-medium text-text-main mb-2">اسم المستخدم</label>
+                                <input type="text" id="smtp-username" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="smtp-password" class="block text-sm font-medium text-text-main mb-2">كلمة المرور</label>
+                                <input type="password" id="smtp-password" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="email-notifications" class="rounded border-border-color text-primary focus:ring-primary">
+                                    <span class="mr-2 text-sm text-text-main">تفعيل إشعارات البريد الإلكتروني</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div id="security-tab" class="tab-content">
+                        <h3 class="text-lg font-bold text-text-main mb-4">إعدادات الأمان</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-medium text-text-main mb-3">كلمات المرور</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="min-password-length" class="block text-sm font-medium text-text-main mb-2">الحد الأدنى لطول كلمة المرور</label>
+                                        <input type="number" id="min-password-length" min="6" max="50" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="password-expiry" class="block text-sm font-medium text-text-main mb-2">انتهاء صلاحية كلمة المرور (أيام)</label>
+                                        <input type="number" id="password-expiry" min="0" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-text-main mb-3">الحماية</h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="two-factor-auth" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">تفعيل المصادقة الثنائية</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="login-attempts" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">تقييد محاولات تسجيل الدخول</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" id="ip-whitelist" class="rounded border-border-color text-primary focus:ring-primary">
+                                        <span class="mr-2 text-sm text-text-main">قائمة IP المسموحة</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="session-timeout" class="block text-sm font-medium text-text-main mb-2">انتهاء الجلسة (دقائق)</label>
+                                <input type="number" id="session-timeout" min="5" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/admin-settings.js"></script>
+</body>
+</html>

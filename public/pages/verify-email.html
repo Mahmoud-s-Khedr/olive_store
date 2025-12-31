@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد البريد الإلكتروني - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37',
+                        accent: '#8B5A2B'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">store</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark">زيتون مصر</span>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-olive-dark hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="/pages/products.html" class="text-olive-dark hover:text-primary transition-colors">المتجر</a>
+                    <a href="/pages/categories.html" class="text-olive-dark hover:text-primary transition-colors">التصنيفات</a>
+                    <a href="/pages/about.html" class="text-olive-dark hover:text-primary transition-colors">من نحن</a>
+                    <a href="/pages/contact.html" class="text-olive-dark hover:text-primary transition-colors">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search -->
+                    <button class="p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="/pages/cart.html" class="relative p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-btn" class="p-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                        <div id="account-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 hidden">
+                            <a href="/pages/profile.html" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">الملف الشخصي</a>
+                            <a href="/pages/my-orders.html" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">طلباتي</a>
+                            <a href="/pages/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">تسجيل الخروج</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative overflow-hidden">
+        <!-- Background Decorative Elements -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute -top-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[100px]"></div>
+        </div>
+
+        <!-- Card -->
+        <div class="w-full max-w-[520px] bg-white rounded-2xl shadow-xl border border-gray-100 relative z-10 overflow-hidden p-8 sm:p-10 text-center">
+            <!-- Pending State -->
+            <div id="verify-pending" class="">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 text-amber-600 mb-6">
+                    <span class="material-symbols-outlined text-4xl">mark_email_unread</span>
+                </div>
+                <h1 class="text-2xl font-bold text-olive-dark mb-3">تحقق من بريدك الإلكتروني</h1>
+                <p class="text-olive-light mb-6">
+                    لقد أرسلنا رسالة تأكيد إلى بريدك الإلكتروني. الرجاء الضغط على الرابط في الرسالة لتفعيل حسابك.
+                </p>
+
+                <div id="email-display" class="bg-gray-50 rounded-lg p-4 mb-6 hidden">
+                    <p class="text-sm text-olive-light mb-1">تم الإرسال إلى:</p>
+                    <p class="text-olive-dark font-medium" dir="ltr" id="user-email"></p>
+                </div>
+
+                <div class="space-y-4">
+                    <button type="button" id="resend-btn"
+                        class="w-full h-12 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-xl">send</span>
+                        <span id="resend-btn-text">إعادة إرسال رسالة التأكيد</span>
+                        <span id="resend-spinner" class="spinner hidden"></span>
+                    </button>
+
+                    <a href="/pages/login.html" class="block text-primary hover:text-accent text-sm font-medium transition-colors">
+                        العودة لتسجيل الدخول
+                    </a>
+                </div>
+
+                <!-- Resend Success Message -->
+                <div id="resend-success"
+                    class="hidden mt-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">check_circle</span>
+                    <span>تم إرسال رسالة جديدة بنجاح!</span>
+                </div>
+
+                <!-- Resend Error Message -->
+                <div id="resend-error"
+                    class="hidden mt-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-lg">error</span>
+                    <span id="resend-error-message">حدث خطأ</span>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="verify-success" class="hidden">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-green-600 mb-6">
+                    <span class="material-symbols-outlined text-4xl">verified</span>
+                </div>
+                <h1 class="text-2xl font-bold text-olive-dark mb-3">تم تأكيد بريدك الإلكتروني!</h1>
+                <p class="text-olive-light mb-6">
+                    مرحباً بك في زيتون مصر! يمكنك الآن تسجيل الدخول والبدء في التسوق.
+                </p>
+
+                <a href="/pages/login.html"
+                    class="inline-flex items-center justify-center gap-2 h-12 px-8 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all">
+                    <span>تسجيل الدخول</span>
+                    <span class="material-symbols-outlined text-xl">login</span>
+                </a>
+            </div>
+
+            <!-- Error State -->
+            <div id="verify-error" class="hidden">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-100 text-red-600 mb-6">
+                    <span class="material-symbols-outlined text-4xl">error</span>
+                </div>
+                <h1 class="text-2xl font-bold text-olive-dark mb-3">تعذر تأكيد البريد الإلكتروني</h1>
+                <p class="text-olive-light mb-6" id="error-message">
+                    الرابط غير صالح أو منتهي الصلاحية. حاول طلب رابط جديد.
+                </p>
+
+                <div class="space-y-4">
+                    <button type="button" id="resend-btn-error"
+                        class="w-full h-12 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-xl">send</span>
+                        <span>طلب رابط جديد</span>
+                    </button>
+
+                    <a href="/pages/register.html" class="block text-primary hover:text-accent text-sm font-medium transition-colors">
+                        إنشاء حساب جديد
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">store</span>
+                        </div>
+                        <span class="font-bold text-xl">زيتون مصر</span>
+                    </div>
+                    <p class="text-olive-light text-sm">متجر إلكتروني متخصص في بيع منتجات الزيتون الأصلية والطبيعية</p>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/pages/about.html" class="hover:text-primary transition-colors">من نحن</a></li>
+                        <li><a href="/pages/products.html" class="hover:text-primary transition-colors">المنتجات</a></li>
+                        <li><a href="/pages/contact.html" class="hover:text-primary transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">الدعم</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/pages/shipping.html" class="hover:text-primary transition-colors">الشحن والتوصيل</a></li>
+                        <li><a href="/pages/returns.html" class="hover:text-primary transition-colors">الإرجاع والاستبدال</a></li>
+                        <li><a href="/pages/faq.html" class="hover:text-primary transition-colors">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">تواصل معنا</h3>
+                    <div class="space-y-2 text-sm text-olive-light">
+                        <p>📧 info@zaitonmisr.com</p>
+                        <p>📱 +20 123 456 7890</p>
+                        <p>📍 القاهرة، مصر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-olive-light/20 mt-8 pt-8 text-center text-sm text-olive-light">
+                <p>&copy; 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/verify-email.js"></script>
+</body>
+</html>

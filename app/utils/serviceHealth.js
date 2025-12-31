@@ -13,8 +13,8 @@ function baseResult() {
 
 async function checkDatabase() {
   const result = baseResult();
-  if (!process.env.DATABASE_URL) {
-    result.details = 'DATABASE_URL is not set';
+  if (!process.env.DB_NAME) {
+    result.details = 'DB_NAME is not set';
     return result;
   }
   result.configured = true;

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="profile.pageTitle">الملف الشخصي - متجر زيت الزيتون</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/cart.js"></script>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="font-cairo bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">oil_barrel</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark" data-i18n="nav.logo">زيت الزيتون</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.products">المنتجات</a>
+                    <a href="about.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.contact">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Switcher -->
+                    <button id="lang-switcher" class="flex items-center gap-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                        <span class="text-sm font-medium" data-i18n="nav.lang">العربية</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="user-menu">
+                        <button id="user-menu-button" class="flex items-center gap-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-xl">person</span>
+                        </button>
+                        <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 hidden">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-olive-light hover:bg-gray-50" data-i18n="nav.profile">الملف الشخصي</a>
+                            <a href="orders.html" class="block px-4 py-2 text-sm text-olive-light hover:bg-gray-50" data-i18n="nav.orders">طلباتي</a>
+                            <a href="login.html" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50" data-i18n="nav.logout">تسجيل الخروج</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="lg:hidden text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-xl">menu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="lg:hidden border-t border-gray-100 py-4 hidden">
+                <nav class="flex flex-col gap-4">
+                    <a href="index.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.products">المنتجات</a>
+                    <a href="about.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-primary font-medium" data-i18n="nav.contact">اتصل بنا</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-8">
+        <!-- Profile Page -->
+        <div class="max-w-[1000px] mx-auto px-4">
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-olive-dark mb-2" data-i18n="profile.title">الملف الشخصي</h1>
+                <p class="text-olive-light" data-i18n="profile.subtitle">إدارة معلوماتك الشخصية وإعدادات الحساب</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Sidebar Navigation -->
+                <div class="lg:col-span-1">
+                    <nav class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                        <a href="#personal-info" class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-dark bg-primary/5 border-r-2 border-primary">
+                            <span class="material-symbols-outlined text-primary">person</span>
+                            <span data-i18n="profile.nav.personalInfo">المعلومات الشخصية</span>
+                        </a>
+                        <a href="#change-password" class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                            <span class="material-symbols-outlined">lock</span>
+                            <span data-i18n="profile.nav.changePassword">تغيير كلمة المرور</span>
+                        </a>
+                        <a href="addresses.html" class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                            <span class="material-symbols-outlined">location_on</span>
+                            <span data-i18n="profile.nav.addresses">عناويني</span>
+                        </a>
+                        <a href="orders.html" class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-olive-light hover:bg-gray-50 hover:text-olive-dark transition-colors">
+                            <span class="material-symbols-outlined">shopping_bag</span>
+                            <span data-i18n="profile.nav.orders">طلباتي</span>
+                        </a>
+                        <hr class="border-gray-100">
+                        <button id="logout-link" class="profile-nav-item flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors w-full">
+                            <span class="material-symbols-outlined">logout</span>
+                            <span data-i18n="nav.logout">تسجيل الخروج</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-2 space-y-8">
+
+                    <!-- Personal Information Section -->
+                    <section id="personal-info" class="bg-white rounded-xl border border-gray-100 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-olive-dark" data-i18n="profile.personalInfo.title">المعلومات الشخصية</h2>
+                                <p class="text-sm text-olive-light" data-i18n="profile.personalInfo.subtitle">تحديث اسمك ورقم هاتفك</p>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-2xl" id="user-avatar">U</div>
+                        </div>
+
+                        <form id="profile-form" class="space-y-5">
+
+                            <!-- Success/Error Messages -->
+                            <div id="profile-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">check_circle</span>
+                                <span data-i18n="profile.personalInfo.success">تم تحديث المعلومات بنجاح</span>
+                            </div>
+
+                            <div id="profile-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">error</span>
+                                <span id="profile-error-message" data-i18n="common.error">حدث خطأ</span>
+                            </div>
+
+                            <!-- Name Field -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.personalInfo.name">الاسم الكامل</label>
+                                <input type="text" id="name" name="name" required class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                            </div>
+
+                            <!-- Email Field (Read-only) -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.personalInfo.email">البريد الإلكتروني</label>
+                                <input type="email" id="email" name="email" dir="ltr" readonly class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-gray-50 text-olive-light cursor-not-allowed text-sm">
+                                <p class="mt-1 text-xs text-olive-light" data-i18n="profile.personalInfo.emailHint">لا يمكن تغيير البريد الإلكتروني</p>
+                            </div>
+
+                            <!-- Phone Field -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.personalInfo.phone">رقم الهاتف</label>
+                                <input type="tel" id="phone" name="phone" dir="ltr" class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="flex justify-end pt-2">
+                                <button type="submit" id="profile-btn" class="h-10 px-6 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2">
+                                    <span id="profile-btn-text" data-i18n="common.save">حفظ التغييرات</span>
+                                    <span id="profile-spinner" class="spinner hidden"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Change Password Section -->
+                    <section id="change-password" class="bg-white rounded-xl border border-gray-100 p-6">
+                        <div class="mb-6">
+                            <h2 class="text-lg font-bold text-olive-dark" data-i18n="profile.changePassword.title">تغيير كلمة المرور</h2>
+                            <p class="text-sm text-olive-light" data-i18n="profile.changePassword.subtitle">تحديث كلمة المرور الخاصة بك</p>
+                        </div>
+
+                        <form id="password-form" class="space-y-5">
+
+                            <!-- Success/Error Messages -->
+                            <div id="password-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">check_circle</span>
+                                <span data-i18n="profile.changePassword.success">تم تغيير كلمة المرور بنجاح</span>
+                            </div>
+
+                            <div id="password-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">error</span>
+                                <span id="password-error-message" data-i18n="common.error">حدث خطأ</span>
+                            </div>
+
+                            <!-- Current Password -->
+                            <div>
+                                <label for="current-password" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.changePassword.current">كلمة المرور الحالية</label>
+                                <input type="password" id="current-password" name="currentPassword" required class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                            </div>
+
+                            <!-- New Password -->
+                            <div>
+                                <label for="new-password" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.changePassword.new">كلمة المرور الجديدة</label>
+                                <input type="password" id="new-password" name="newPassword" required minlength="8" class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                            </div>
+
+                            <!-- Confirm New Password -->
+                            <div>
+                                <label for="confirm-new-password" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="profile.changePassword.confirm">تأكيد كلمة المرور الجديدة</label>
+                                <input type="password" id="confirm-new-password" name="confirmNewPassword" required class="block w-full h-12 px-4 rounded-lg border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="flex justify-end pt-2">
+                                <button type="submit" id="password-btn" class="h-10 px-6 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all flex items-center justify-center gap-2">
+                                    <span id="password-btn-text" data-i18n="profile.changePassword.submit">تغيير كلمة المرور</span>
+                                    <span id="password-spinner" class="spinner hidden"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white py-12">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-xl">oil_barrel</span>
+                        </div>
+                        <span class="font-bold text-xl" data-i18n="footer.brand">زيت الزيتون</span>
+                    </div>
+                    <p class="text-olive-light text-sm leading-relaxed" data-i18n="footer.description">نقدم أفضل أنواع زيت الزيتون المصري الأصيل من واحة سيوة، مع الحفاظ على الجودة والنكهة الطبيعية.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4" data-i18n="footer.quickLinks">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.about">من نحن</a></li>
+                        <li><a href="products.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.products">المنتجات</a></li>
+                        <li><a href="shipping.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.shipping">الشحن والإرجاع</a></li>
+                        <li><a href="contact.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4" data-i18n="footer.customerService">خدمة العملاء</h3>
+                    <ul class="space-y-2">
+                        <li><a href="profile.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.account">حسابي</a></li>
+                        <li><a href="orders.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.orders">طلباتي</a></li>
+                        <li><a href="cart.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.cart">سلة التسوق</a></li>
+                        <li><a href="faq.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.faq">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="font-bold text-lg mb-4" data-i18n="footer.contactInfo">معلومات الاتصال</h3>
+                    <div class="space-y-2 text-sm text-olive-light">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">phone</span>
+                            <span>+20 123 456 7890</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">email</span>
+                            <span>info@oliveoil.com</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">location_on</span>
+                            <span data-i18n="footer.address">سيوة، مصر</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-olive-light/20 mt-8 pt-8 text-center">
+                <p class="text-olive-light text-sm" data-i18n="footer.copyright">&copy; 2024 زيت الزيتون. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+</html>

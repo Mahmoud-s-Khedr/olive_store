@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="paymentInfo.pageTitle">طرق الدفع - متجر زيت الزيتون</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/cart.js"></script>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="font-cairo bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-xl">oil_barrel</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark" data-i18n="nav.logo">زيت الزيتون</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.products">المنتجات</a>
+                    <a href="about.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.contact">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Language Switcher -->
+                    <button id="lang-switcher" class="flex items-center gap-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-lg">language</span>
+                        <span class="text-sm font-medium" data-i18n="nav.lang">العربية</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="cart.html" class="relative text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="user-menu">
+                        <button id="user-menu-button" class="flex items-center gap-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-xl">person</span>
+                        </button>
+                        <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 hidden">
+                            <a href="login.html" class="block px-4 py-2 text-sm text-olive-light hover:bg-gray-50" data-i18n="nav.login">تسجيل الدخول</a>
+                            <a href="register.html" class="block px-4 py-2 text-sm text-olive-light hover:bg-gray-50" data-i18n="nav.register">إنشاء حساب</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="lg:hidden text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-xl">menu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="lg:hidden border-t border-gray-100 py-4 hidden">
+                <nav class="flex flex-col gap-4">
+                    <a href="index.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.products">المنتجات</a>
+                    <a href="about.html" class="text-olive-light hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-primary font-medium" data-i18n="nav.contact">اتصل بنا</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-12">
+        <!-- Payment Info Page -->
+        <div class="max-w-[960px] mx-auto px-4 lg:px-8">
+
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
+                    <span class="material-symbols-outlined text-3xl">payments</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4" data-i18n="paymentInfo.title">طرق الدفع</h1>
+                <p class="text-olive-light text-lg" data-i18n="paymentInfo.subtitle">طرق دفع آمنة ومتعددة لتناسب احتياجاتك</p>
+            </div>
+
+            <!-- Content -->
+            <div class="space-y-8">
+
+                <!-- Payment Methods -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">credit_card</span>
+                        <span data-i18n="paymentInfo.methods.title">طرق الدفع المتاحة</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <!-- Cash on Delivery -->
+                        <div class="bg-gray-50 rounded-xl p-5 border-2 border-primary">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-2xl">local_shipping</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.methods.cod.title">الدفع عند الاستلام</h3>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full" data-i18n="paymentInfo.methods.cod.badge">الأكثر شيوعاً</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-olive-light" data-i18n="paymentInfo.methods.cod.description">ادفع نقداً عند وصول الطلب لباب منزلك. لا حاجة لبطاقة ائتمان.</p>
+                        </div>
+
+                        <!-- Credit Card -->
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-blue-600 text-2xl">credit_card</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.methods.card.title">بطاقة ائتمان</h3>
+                                </div>
+                            </div>
+                            <p class="text-sm text-olive-light mb-3" data-i18n="paymentInfo.methods.card.description">نقبل جميع البطاقات البنكية الرئيسية</p>
+                            <div class="flex gap-2">
+                                <div class="w-12 h-7 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-blue-800">VISA</div>
+                                <div class="w-12 h-7 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-red-600">MC</div>
+                                <div class="w-12 h-7 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-green-700">Meeza</div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Wallet -->
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-purple-600 text-2xl">phone_android</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.methods.wallet.title">المحافظ الإلكترونية</h3>
+                                </div>
+                            </div>
+                            <p class="text-sm text-olive-light mb-3" data-i18n="paymentInfo.methods.wallet.description">ادفع من محفظتك الإلكترونية بسهولة</p>
+                            <div class="flex gap-2">
+                                <div class="w-16 h-7 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-red-600">Vodafone</div>
+                                <div class="w-14 h-7 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-orange-600">Fawry</div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-green-600 text-2xl">account_balance</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.methods.transfer.title">تحويل بنكي</h3>
+                                </div>
+                            </div>
+                            <p class="text-sm text-olive-light" data-i18n="paymentInfo.methods.transfer.description">حول المبلغ مباشرة إلى حسابنا البنكي. للطلبات الكبيرة.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">shield</span>
+                        <span data-i18n="paymentInfo.security.title">أمان الدفع</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
+                                <span class="material-symbols-outlined text-green-600 text-2xl">lock</span>
+                            </div>
+                            <h3 class="font-bold text-olive-dark mb-1" data-i18n="paymentInfo.security.ssl.title">تشفير SSL</h3>
+                            <p class="text-sm text-olive-light" data-i18n="paymentInfo.security.ssl.description">جميع البيانات مشفرة بأحدث تقنيات الأمان</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
+                                <span class="material-symbols-outlined text-blue-600 text-2xl">verified_user</span>
+                            </div>
+                            <h3 class="font-bold text-olive-dark mb-1" data-i18n="paymentInfo.security.secure3d.title">3D Secure</h3>
+                            <p class="text-sm text-olive-light" data-i18n="paymentInfo.security.secure3d.description">حماية إضافية لبطاقتك الائتمانية</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-3">
+                                <span class="material-symbols-outlined text-purple-600 text-2xl">privacy_tip</span>
+                            </div>
+                            <h3 class="font-bold text-olive-dark mb-1" data-i18n="paymentInfo.security.privacy.title">خصوصية تامة</h3>
+                            <p class="text-sm text-olive-light" data-i18n="paymentInfo.security.privacy.description">لا نحتفظ ببيانات بطاقتك</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment Process -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">checklist</span>
+                        <span data-i18n="paymentInfo.steps.title">خطوات الدفع</span>
+                    </h2>
+
+                    <div class="relative">
+                        <div class="absolute top-0 right-[19px] h-full w-0.5 bg-gray-100"></div>
+
+                        <div class="space-y-6">
+                            <div class="flex gap-4 relative">
+                                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center z-10 text-sm font-bold">1</div>
+                                <div class="pt-2">
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.steps.step1.title">أضف المنتجات للسلة</h3>
+                                    <p class="text-sm text-olive-light" data-i18n="paymentInfo.steps.step1.description">تصفح المنتجات وأضف ما تريد شراءه</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 relative">
+                                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center z-10 text-sm font-bold">2</div>
+                                <div class="pt-2">
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.steps.step2.title">أدخل بيانات الشحن</h3>
+                                    <p class="text-sm text-olive-light" data-i18n="paymentInfo.steps.step2.description">أدخل عنوانك ومعلومات التواصل</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 relative">
+                                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center z-10 text-sm font-bold">3</div>
+                                <div class="pt-2">
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.steps.step3.title">اختر طريقة الدفع</h3>
+                                    <p class="text-sm text-olive-light" data-i18n="paymentInfo.steps.step3.description">اختر الطريقة المناسبة لك من الخيارات المتاحة</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 relative">
+                                <div class="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center z-10">
+                                    <span class="material-symbols-outlined">check</span>
+                                </div>
+                                <div class="pt-2">
+                                    <h3 class="font-bold text-olive-dark" data-i18n="paymentInfo.steps.step4.title">أكد الطلب</h3>
+                                    <p class="text-sm text-olive-light" data-i18n="paymentInfo.steps.step4.description">راجع الطلب وأكده. ستصلك رسالة تأكيد.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQs -->
+                <section class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+                    <h2 class="text-xl font-bold text-olive-dark mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">help</span>
+                        <span data-i18n="paymentInfo.faq.title">الأسئلة الشائعة</span>
+                    </h2>
+
+                    <div class="space-y-4">
+                        <details class="group border border-gray-100 rounded-xl">
+                            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                                <span data-i18n="paymentInfo.faq.q1">هل الدفع آمن على موقعكم؟</span>
+                                <span class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-4 pb-4 text-olive-light text-sm" data-i18n="paymentInfo.faq.a1">نعم، نستخدم أحدث تقنيات التشفير SSL وبوابات دفع موثوقة. لا نحتفظ ببيانات بطاقتك الائتمانية.</div>
+                        </details>
+
+                        <details class="group border border-gray-100 rounded-xl">
+                            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                                <span data-i18n="paymentInfo.faq.q2">متى يُخصم المبلغ من حسابي؟</span>
+                                <span class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-4 pb-4 text-olive-light text-sm" data-i18n="paymentInfo.faq.a2">يتم خصم المبلغ فور تأكيد الطلب للبطاقات الائتمانية. أما الدفع عند الاستلام فيتم الدفع نقداً عند وصول الطلب.</div>
+                        </details>
+
+                        <details class="group border border-gray-100 rounded-xl">
+                            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                                <span data-i18n="paymentInfo.faq.q3">كيف أحصل على فاتورة؟</span>
+                                <span class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-4 pb-4 text-olive-light text-sm" data-i18n="paymentInfo.faq.a3">يتم إرسال الفاتورة إلى بريدك الإلكتروني تلقائياً، ويمكنك أيضاً تحميلها من صفحة تفاصيل الطلب.</div>
+                        </details>
+
+                        <details class="group border border-gray-100 rounded-xl">
+                            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-olive-dark">
+                                <span data-i18n="paymentInfo.faq.q4">ماذا لو فشلت عملية الدفع؟</span>
+                                <span class="material-symbols-outlined text-olive-light group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-4 pb-4 text-olive-light text-sm" data-i18n="paymentInfo.faq.a4">تأكد من صحة بيانات البطاقة والرصيد المتاح. إذا استمرت المشكلة، جرب طريقة دفع أخرى أو تواصل مع بنكك.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <!-- Contact CTA -->
+                <section class="bg-primary/10 rounded-2xl p-6 md:p-8 text-center">
+                    <h3 class="text-xl font-bold text-olive-dark mb-2" data-i18n="paymentInfo.cta.title">تحتاج مساعدة في الدفع؟</h3>
+                    <p class="text-olive-light mb-4" data-i18n="paymentInfo.cta.description">فريقنا جاهز لمساعدتك على مدار الساعة</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="contact.html" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-bold transition-all">
+                            <span class="material-symbols-outlined">support_agent</span>
+                            <span data-i18n="paymentInfo.cta.button">تواصل معنا</span>
+                        </a>
+                        <a href="tel:+201234567890" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-olive-dark px-6 py-3 rounded-lg font-bold transition-all border border-gray-200">
+                            <span class="material-symbols-outlined">call</span>
+                            <span dir="ltr">+20 123 456 7890</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white py-12">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white text-xl">oil_barrel</span>
+                    </div>
+                    <span class="font-bold text-xl" data-i18n="footer.brand">زيت الزيتون</span>
+                </div>
+                <p class="text-olive-light text-sm leading-relaxed" data-i18n="footer.description">نقدم أفضل أنواع زيت الزيتون المصري الأصيل من واحة سيوة، مع الحفاظ على الجودة والنكهة الطبيعية.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="font-bold text-lg mb-4" data-i18n="footer.quickLinks">روابط سريعة</h3>
+                <ul class="space-y-2">
+                    <li><a href="about.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.about">من نحن</a></li>
+                    <li><a href="products.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.products">المنتجات</a></li>
+                    <li><a href="shipping.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.shipping">الشحن والإرجاع</a></li>
+                    <li><a href="contact.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.contact">اتصل بنا</a></li>
+                </ul>
+            </div>
+
+            <!-- Customer Service -->
+            <div>
+                <h3 class="font-bold text-lg mb-4" data-i18n="footer.customerService">خدمة العملاء</h3>
+                <ul class="space-y-2">
+                    <li><a href="profile.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.account">حسابي</a></li>
+                    <li><a href="orders.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.orders">طلباتي</a></li>
+                    <li><a href="cart.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.cart">سلة التسوق</a></li>
+                    <li><a href="faq.html" class="text-olive-light hover:text-white transition-colors text-sm" data-i18n="footer.faq">الأسئلة الشائعة</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h3 class="font-bold text-lg mb-4" data-i18n="footer.contactInfo">معلومات الاتصال</h3>
+                <div class="space-y-2 text-sm text-olive-light">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">phone</span>
+                        <span>+20 123 456 7890</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">email</span>
+                        <span>info@oliveoil.com</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">location_on</span>
+                        <span data-i18n="footer.address">سيوة، مصر</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-olive-light/20 mt-8 pt-8 text-center">
+            <p class="text-olive-light text-sm" data-i18n="footer.copyright">&copy; 2024 زيت الزيتون. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html class="light" lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - زيتون مصر</title>
+    <meta name="description" content="متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Theme Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans Arabic', 'Tajawal', sans-serif;
+        }
+
+        html[dir="ltr"] body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-dropdown {
+            min-width: 120px;
+        }
+    </style>
+
+    <!-- i18n Setup (before page load) -->
+    <script>
+        (function () {
+            const lang = localStorage.getItem('lang') || 'ar';
+            const dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            document.documentElement.dir = dir;
+        })();
+    </script>
+</head>
+
+<body class="bg-background-light text-olive-dark min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-3 text-olive-dark hover:opacity-90 transition-opacity">
+                    <div class="w-8 h-8 text-primary">
+                        <span class="material-symbols-outlined text-3xl">water_drop</span>
+                    </div>
+                    <h1 class="text-xl lg:text-2xl font-bold tracking-tight" data-i18n="common.brand">زيتون مصر</h1>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="index.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.home">الرئيسية</a>
+                    <a href="products.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.products">المتجر</a>
+                    <a href="categories.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.categories">الأقسام</a>
+                    <a href="about.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
+                    <a href="contact.html" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.contact">تواصل معنا</a>
+                </nav>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center gap-2 lg:gap-4">
+
+                    <!-- Search Bar (Desktop) -->
+                    <div class="hidden md:flex w-64 lg:w-80 relative">
+                        <input type="text" id="search-input" placeholder="ابحث عن منتج..." data-i18n="[placeholder]nav.search" class="w-full bg-gray-50 border-none rounded-lg pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all">
+                        <span class="material-symbols-outlined absolute right-3 top-2.5 text-olive-light">search</span>
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <div class="relative" id="lang-menu-container">
+                        <button id="lang-menu-btn" class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                            <span id="current-lang-flag" data-current-flag>🇪🇬</span>
+                            <span id="current-lang-name" class="hidden sm:inline text-olive-dark" data-current-lang data-i18n="lang.ar">العربية</span>
+                            <span class="material-symbols-outlined text-olive-light text-lg">expand_more</span>
+                        </button>
+                        <div id="lang-dropdown" class="hidden absolute left-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50 lang-dropdown">
+                            <button class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors" data-lang="ar">
+                                <span>🇪🇬</span>
+                                <span data-i18n="lang.ar">العربية</span>
+                            </button>
+                            <button class="lang-option flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-gray-50 transition-colors" data-lang="en">
+                                <span>🇬🇧</span>
+                                <span data-i18n="lang.en">English</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cart Button -->
+                    <a href="cart.html" class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                        <span class="material-symbols-outlined text-olive-dark">shopping_cart</span>
+                        <span id="cart-badge" class="cart-badge absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full hidden">0</span>
+                    </a>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="user-menu-container">
+                        <button id="user-menu-btn" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+                            <span class="material-symbols-outlined text-olive-dark">account_circle</span>
+                        </button>
+
+                        <!-- User Dropdown (Hidden by default) -->
+                        <div id="user-dropdown" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50">
+                            <!-- Logged Out State -->
+                            <div id="logged-out-menu">
+                                <a href="login.html" class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">login</span>
+                                    <span data-i18n="nav.login">تسجيل الدخول</span>
+                                </a>
+                                <a href="register.html" class="flex items-center gap-2 px-4 py-2 text-sm text-olive-dark hover:bg-gray-50 transition-colors">
+                                    <span class="material-symbols-outlined text-lg">person_add</span>
+                                    <span data-i18n="nav.register">إنشاء حساب</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Registration Page -->
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 relative overflow-hidden">
+
+    <!-- Background Decorative Elements -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute -top-[10%] -right-[10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px]"></div>
+        <div class="absolute top-[40%] -left-[10%] w-[40%] h-[40%] rounded-full bg-accent/5 blur-[100px]"></div>
+    </div>
+
+    <!-- Registration Card -->
+    <div class="w-full max-w-[520px] bg-white rounded-2xl shadow-xl border border-gray-100 relative z-10 p-8 sm:p-10">
+
+        <!-- Card Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-4">
+                <span class="material-symbols-outlined text-3xl">person_add</span>
+            </div>
+            <h1 class="text-2xl font-bold text-olive-dark mb-2" data-i18n="auth.register.title">إنشاء حساب جديد</h1>
+            <p class="text-olive-light text-sm" data-i18n="auth.register.subtitle">أدخل بياناتك للانضمام إلى عائلة زيتون مصر</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="register-form" class="space-y-5">
+
+            <!-- Error Alert -->
+            <div id="register-error" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">error</span>
+                <span id="register-error-message" data-i18n="auth.register.error">حدث خطأ أثناء التسجيل</span>
+            </div>
+
+            <!-- Success Alert -->
+            <div id="register-success" class="hidden bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">check_circle</span>
+                <span data-i18n="auth.register.success">تم إنشاء الحساب بنجاح! تحقق من بريدك الإلكتروني.</span>
+            </div>
+
+            <!-- Full Name Field -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="auth.register.name">الاسم الكامل</label>
+                <div class="relative group">
+                    <input type="text" id="name" name="name" required minlength="3" placeholder="أدخل اسمك الكامل" data-i18n="[placeholder]auth.register.namePlaceholder" class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">person</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="auth.register.email">البريد الإلكتروني</label>
+                <div class="relative group">
+                    <input type="email" id="email" name="email" dir="ltr" required placeholder="example@email.com" class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">mail</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Field -->
+            <div>
+                <label for="phone" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="auth.register.phone">رقم الهاتف</label>
+                <div class="relative flex rounded-lg shadow-sm group">
+                    <div class="relative flex-grow focus-within:z-10">
+                        <input type="tel" id="phone" name="phone" dir="ltr" required pattern="[0-9]{10,11}" placeholder="1xxxxxxxxx" class="block w-full h-12 pr-12 ltr:pr-4 ltr:pl-12 pl-4 rounded-r-lg rtl:rounded-r-lg rtl:rounded-l-none ltr:rounded-l-lg ltr:rounded-r-none border-gray-200 bg-white text-olive-dark focus:border-primary focus:ring-primary text-sm border-l-0 rtl:border-l-0 ltr:border-r-0">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                            <span class="material-symbols-outlined text-xl">call</span>
+                        </div>
+                    </div>
+                    <span class="inline-flex items-center rounded-l-lg rtl:rounded-l-lg rtl:rounded-r-none ltr:rounded-r-lg ltr:rounded-l-none border border-r-0 rtl:border-r-0 ltr:border-l-0 border-gray-200 bg-gray-50 px-4 text-olive-light text-sm" dir="ltr">
+                        +20
+                    </span>
+                </div>
+                <p class="mt-1 text-xs text-olive-light" data-i18n="auth.register.phoneHint">يجب أن يكون رقماً مصرياً صالحاً</p>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="auth.register.password">كلمة المرور</label>
+                <div class="relative group">
+                    <input type="password" id="password" name="password" required minlength="8" placeholder="••••••••" class="block w-full h-12 pr-12 ltr:pr-12 ltr:pl-12 pl-12 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">lock</span>
+                    </div>
+                    <button type="button" id="toggle-password" class="absolute inset-y-0 left-0 rtl:left-0 ltr:left-auto ltr:right-0 flex items-center pl-4 ltr:pl-0 ltr:pr-4 text-olive-light hover:text-primary cursor-pointer focus:outline-none">
+                        <span class="material-symbols-outlined text-xl" id="password-icon">visibility</span>
+                    </button>
+                </div>
+
+                <!-- Password Strength Indicator -->
+                <div id="password-strength" class="mt-3 grid grid-cols-4 gap-2 h-1.5">
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="1"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="2"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="3"></div>
+                    <div class="password-strength-bar h-full rounded-full bg-gray-200" data-level="4"></div>
+                </div>
+                <p id="password-strength-text" class="mt-1 text-xs text-olive-light" data-i18n="auth.register.passwordStrength">أدخل كلمة مرور قوية</p>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium text-olive-dark mb-2" data-i18n="auth.register.confirmPassword">تأكيد كلمة المرور</label>
+                <div class="relative group">
+                    <input type="password" id="confirm-password" name="confirmPassword" required placeholder="••••••••" class="block w-full h-12 pr-12 ltr:pr-12 ltr:pl-12 pl-12 rounded-lg border-gray-200 bg-white text-olive-dark shadow-sm focus:border-primary focus:ring-primary text-sm">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 rtl:right-0 ltr:right-auto ltr:left-0 pr-4 ltr:pl-4 ltr:pr-0 flex items-center text-olive-light">
+                        <span class="material-symbols-outlined text-xl">lock</span>
+                    </div>
+                    <div id="confirm-password-status" class="absolute inset-y-0 left-0 rtl:left-0 ltr:left-auto ltr:right-0 flex items-center pl-4 ltr:pl-0 ltr:pr-4 hidden">
+                        <span class="material-symbols-outlined text-xl" id="confirm-password-icon"></span>
+                    </div>
+                </div>
+                <p id="confirm-password-error" class="mt-1 text-sm text-red-600 hidden" data-i18n="validation.passwordMatch">كلمتا المرور غير متطابقتين</p>
+            </div>
+
+            <!-- Terms Checkbox -->
+            <div class="flex items-start gap-3">
+                <input type="checkbox" id="terms" name="terms" required class="mt-1 rounded border-gray-300 text-primary focus:ring-primary">
+                <label for="terms" class="text-sm text-olive-light">
+                    <span data-i18n="checkout.termsAgreement">أوافق على</span>
+                    <a href="terms.html" class="text-primary hover:underline" data-i18n="checkout.terms">الشروط والأحكام</a>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+                <button type="submit" id="register-btn" class="flex w-full justify-center items-center gap-2 rounded-lg bg-primary px-4 py-3.5 text-sm font-bold text-white shadow-md hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-200 transform active:scale-[0.99]">
+                    <span id="register-btn-text" data-i18n="auth.register.submit">إنشاء الحساب</span>
+                    <span id="register-spinner" class="spinner hidden"></span>
+                </button>
+            </div>
+
+            <!-- Login Link -->
+            <div class="relative flex justify-center text-sm pt-2">
+                <span class="text-olive-light">
+                    <span data-i18n="auth.register.hasAccount">لديك حساب بالفعل؟</span>
+                    <a href="login.html" class="font-bold text-olive-dark hover:text-primary underline decoration-2 decoration-primary/50 underline-offset-4 hover:decoration-primary transition-all" data-i18n="auth.register.login">سجل دخول</a>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#2c3325] text-[#f9f7f2] pt-16 pb-8 mt-auto">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+
+                <!-- Brand Column -->
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-3xl text-primary">water_drop</span>
+                        <span class="text-2xl font-bold" data-i18n="footer.brand">زيتون مصر</span>
+                    </div>
+                    <p class="text-[#b0b8a6] text-sm leading-relaxed" data-i18n="footer.description">نقدم أفخر أنواع زيت الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.</p>
+                    <div class="flex gap-3 mt-2">
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">facebook</span>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">instagram</span>
+                        </a>
+                        <a href="#" class="w-8 h-8 bg-[#3d4536] rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <span class="material-symbols-outlined text-sm">twitter</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.quickLinks">روابط سريعة</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li><a href="about.html" class="hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a></li>
+                        <li><a href="products.html" class="hover:text-primary transition-colors" data-i18n="nav.products">المتجر</a></li>
+                        <li><a href="categories.html" class="hover:text-primary transition-colors" data-i18n="nav.categories">الأقسام</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">تواصل معنا</a></li>
+                        <li><a href="shipping.html" class="hover:text-primary transition-colors" data-i18n="footer.shipping">الشحن والإرجاع</a></li>
+                        <li><a href="payment-info.html" class="hover:text-primary transition-colors" data-i18n="footer.payment">طرق الدفع</a></li>
+                    </ul>
+                </div>
+
+                <!-- Products -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.products">المنتجات</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li><a href="products.html?category=oil" class="hover:text-primary transition-colors" data-i18n="footer.oliveOil">زيت زيتون</a></li>
+                        <li><a href="products.html?category=care" class="hover:text-primary transition-colors" data-i18n="footer.careProducts">منتجات العناية</a></li>
+                        <li><a href="products.html?category=gifts" class="hover:text-primary transition-colors" data-i18n="footer.giftsAndSets">هدايا ومجموعات</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold text-lg" data-i18n="footer.contact">تواصل معنا</h4>
+                    <ul class="flex flex-col gap-3 text-[#b0b8a6] text-sm">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                            <span data-i18n="footer.address">القاهرة، مصر الجديدة</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">phone</span>
+                            <span dir="ltr" data-i18n="footer.phone">+20 123 456 7890</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">mail</span>
+                            <span data-i18n="footer.email">info@zaytounmasr.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-[#3d4536] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-[#b0b8a6] text-sm" data-i18n="footer.copyright">© 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+                <div class="flex items-center gap-3 opacity-60">
+                    <span class="text-xs text-[#b0b8a6]">🇪🇬</span>
+                    <span class="text-xs text-[#b0b8a6]">Made with ❤️ in Egypt</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/register.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof AuthModule !== 'undefined') {
+                AuthModule.init();
+            }
+            if (typeof Cart !== 'undefined') {
+                Cart.updateBadge();
+            }
+
+            // Language switcher
+            document.getElementById('lang-menu-btn')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('lang-dropdown').classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    if (typeof I18n !== 'undefined') {
+                        I18n.setLanguage(lang);
+                    } else {
+                        localStorage.setItem('lang', lang);
+                        location.reload();
+                    }
+                    document.getElementById('lang-dropdown').classList.add('hidden');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                const langDropdown = document.getElementById('lang-dropdown');
+                const langContainer = document.getElementById('lang-menu-container');
+                if (langDropdown && langContainer && !langContainer.contains(e.target)) {
+                    langDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

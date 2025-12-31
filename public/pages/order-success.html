@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم تأكيد الطلب - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">store</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark">زيتون مصر</span>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-olive-dark hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="/products" class="text-olive-dark hover:text-primary transition-colors">المتجر</a>
+                    <a href="/categories" class="text-olive-dark hover:text-primary transition-colors">التصنيفات</a>
+                    <a href="/about" class="text-olive-dark hover:text-primary transition-colors">من نحن</a>
+                    <a href="/contact" class="text-olive-dark hover:text-primary transition-colors">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search -->
+                    <button class="p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="/cart" class="relative p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-btn" class="p-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                        <div id="account-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 hidden">
+                            <a href="/profile" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">الملف الشخصي</a>
+                            <a href="/my-orders" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">طلباتي</a>
+                            <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">تسجيل الخروج</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[600px] mx-auto px-4 py-16 text-center">
+        <!-- Success Animation -->
+        <div class="relative w-32 h-32 mx-auto mb-8">
+            <div class="absolute inset-0 bg-green-100 rounded-full animate-pulse"></div>
+            <div class="relative w-full h-full rounded-full bg-green-500 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-6xl">check</span>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <h1 class="text-3xl md:text-4xl font-bold text-olive-dark mb-4">تم تأكيد طلبك بنجاح!</h1>
+        <p class="text-olive-light text-lg mb-8">
+            شكراً لك على طلبك. سنقوم بالتواصل معك قريباً لتأكيد التفاصيل.
+        </p>
+
+        <!-- Order Details Card -->
+        <div id="order-details" class="bg-white rounded-2xl border border-gray-100 p-6 mb-8 text-right">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
+                <span class="text-olive-light">رقم الطلب</span>
+                <span id="order-number" class="font-bold text-olive-dark">#---</span>
+            </div>
+
+            <div class="space-y-3 text-sm">
+                <div class="flex items-center justify-between">
+                    <span class="text-olive-light">حالة الطلب</span>
+                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        قيد المعالجة
+                    </span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-olive-light">طريقة الدفع</span>
+                    <span id="payment-method" class="text-olive-dark">الدفع عند الاستلام</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-olive-light">تاريخ الطلب</span>
+                    <span id="order-date" class="text-olive-dark">---</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Next -->
+        <div class="bg-primary/5 rounded-2xl p-6 mb-8 text-right">
+            <h3 class="font-bold text-olive-dark mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">info</span>
+                ماذا بعد؟
+            </h3>
+            <ul class="space-y-3 text-sm text-olive-light">
+                <li class="flex items-start gap-2">
+                    <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                    <span>ستصلك رسالة تأكيد على بريدك الإلكتروني</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                    <span>سنتواصل معك لتأكيد موعد التوصيل</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                    <span>التوصيل خلال 2-4 أيام عمل</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/pages/my-orders.html" class="flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-8 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg transition-all">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <span>متابعة طلباتي</span>
+            </a>
+            <a href="/pages/products.html" class="flex items-center justify-center gap-2 w-full sm:w-auto h-12 px-8 border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold rounded-lg transition-all">
+                <span class="material-symbols-outlined">storefront</span>
+                <span>متابعة التسوق</span>
+            </a>
+        </div>
+
+        <!-- Contact Support -->
+        <p class="text-olive-light text-sm mt-12">
+            هل لديك استفسار؟
+            <a href="/pages/contact.html" class="text-primary font-medium hover:underline">تواصل معنا</a>
+            أو اتصل على
+            <a href="tel:+201234567890" class="text-primary font-medium hover:underline" dir="ltr">+20 123 456 7890</a>
+        </p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">store</span>
+                        </div>
+                        <span class="font-bold text-xl">زيتون مصر</span>
+                    </div>
+                    <p class="text-olive-light text-sm">متجر إلكتروني متخصص في بيع منتجات الزيتون الأصلية والطبيعية</p>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/about" class="hover:text-primary transition-colors">من نحن</a></li>
+                        <li><a href="/products" class="hover:text-primary transition-colors">المنتجات</a></li>
+                        <li><a href="/contact" class="hover:text-primary transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">الدعم</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/shipping" class="hover:text-primary transition-colors">الشحن والتوصيل</a></li>
+                        <li><a href="/returns" class="hover:text-primary transition-colors">الإرجاع والاستبدال</a></li>
+                        <li><a href="/faq" class="hover:text-primary transition-colors">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">تواصل معنا</h3>
+                    <div class="space-y-2 text-sm text-olive-light">
+                        <p>📧 info@zaitonmisr.com</p>
+                        <p>📱 +20 123 456 7890</p>
+                        <p>📍 القاهرة، مصر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-olive-light/20 mt-8 pt-8 text-center text-sm text-olive-light">
+                <p>&copy; 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/order-success.js"></script>
+</body>
+</html>

@@ -17,7 +17,11 @@ async function runSql(filePath) {
   }
 
   const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
   });
   console.log('DEBUG run.js: Connecting with:', {
     user: client.user,
@@ -37,8 +41,8 @@ async function runSql(filePath) {
 }
 
 async function main() {
-  if (!process.env.DATABASE_URL) {
-    console.error('DATABASE_URL is not set');
+  if (!process.env.DB_NAME) {
+    console.error('Database environment variables (DB_NAME, etc.) are not set');
     process.exit(1);
   }
 

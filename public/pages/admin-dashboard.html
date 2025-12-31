@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>لوحة تحكم المسؤول - زيتون مصر</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6e8137",
+                        "primary-dark": "#5a6b2c",
+                        "accent": "#61896f",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#1a2e22",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "Work Sans", "sans-serif"],
+                        "body": ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for earthy feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3af;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 font-body min-h-screen flex overflow-hidden">
+    <!-- Sidebar Navigation -->
+    <aside class="w-72 bg-white dark:bg-surface-dark border-l border-gray-100 dark:border-gray-800 flex-shrink-0 hidden lg:flex flex-col h-screen overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-center bg-no-repeat bg-cover rounded-xl w-12 h-12 shadow-sm" data-alt="Golden olive oil drop logo on white background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYx5WQbT_k1mFeUG-bQB3Tcz1WKKV1i0SOJkA9kDXEKv5j65bxGhXBRufJ64jHetk7zELQjvGf6BSYvCxkY8H9uB1ouSpHMkV27BCOEWyk5Mm5npvQwFY6Tr6u0qYu0cBYdEJjQvMG-Ok4PgfkqRBEakLQwzIyiOFALi8NoNlaslcfBntsE1EWG7IiuX94iZapRXqZ9DEY_lTiQ6-D74xv6b4SmH0tHprOymjywYKRxptuwafvrCD3oXpWLDlv0teHa6RORNDNTqk");'></div>
+                <div class="flex flex-col">
+                    <h1 class="text-slate-900 dark:text-white text-lg font-bold leading-none mb-1">زيوت مصر</h1>
+                    <p class="text-accent dark:text-emerald-400 text-xs font-medium">لوحة تحكم المسؤول</p>
+                </div>
+            </div>
+            <nav class="flex flex-col gap-1.5">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-300" href="admin-dashboard.html">
+                    <span class="material-symbols-outlined fill text-emerald-600 dark:text-primary">dashboard</span>
+                    <span class="text-sm font-bold">لوحة التحكم</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-products.html">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <span class="text-sm font-medium">المنتجات</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-categories.html">
+                    <span class="material-symbols-outlined">folder</span>
+                    <span class="text-sm font-medium">الفئات</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-orders.html">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                    <span class="text-sm font-medium">الطلبات</span>
+                    <span class="mr-auto bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-customers.html">
+                    <span class="material-symbols-outlined">group</span>
+                    <span class="text-sm font-medium">العملاء</span>
+                </a>
+                <div class="h-px bg-gray-100 dark:bg-gray-800 my-2 mx-4"></div>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-settings.html">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="text-sm font-medium">الإعدادات</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-colors" href="admin-files.html">
+                    <span class="material-symbols-outlined">folder_open</span>
+                    <span class="text-sm font-medium">الملفات</span>
+                </a>
+            </nav>
+        </div>
+        <div class="mt-auto p-6 border-t border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-white/5">
+                <div class="w-10 h-10 rounded-full bg-cover bg-center" data-alt="User profile photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDp5OgAjFlqqRjPxJ9pP321tS2iWmDWh3hGTef6TqnTbbNZ5YTpB7zVhAPVbC6kCdUYApzpo6d1NXogEXe-Ltbaw6rPRZzSqHoSiQGgPBHwDP1isQMA9wfkA1QoWmjCBwiNl14F_YI87QYxRxP1rUa63iHhDc-g-Drj9zBV46ZjD3H4TeQ_M6HppGjtokmMfmwqMi0hRA5OwxRr_asmgnvlaT_huiA-vZB4W3Pcc4KgekEvarkehMYidEWfShASZzsJl_aqV2ZiwgA");'></div>
+                <div class="flex flex-col overflow-hidden">
+                    <span class="text-sm font-bold text-slate-900 dark:text-white truncate">أحمد محمد</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400 truncate">ahmed@ziout.eg</span>
+                </div>
+                <button class="mr-auto text-slate-400 hover:text-red-500 transition-colors" onclick="logout()">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        <!-- Top Navbar -->
+        <header class="flex items-center justify-between px-8 py-5 bg-white dark:bg-surface-dark border-b border-gray-100 dark:border-gray-800 shrink-0 z-20">
+            <!-- Mobile Menu Toggle (Visible on small screens) -->
+            <button class="lg:hidden p-2 text-slate-600" onclick="toggleMobileSidebar()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <!-- Search Bar -->
+            <div class="hidden md:flex flex-1 max-w-md relative">
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                <input class="w-full bg-gray-50 dark:bg-white/5 border-none rounded-lg py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-emerald-500/20 text-slate-900 dark:text-white placeholder-slate-400" placeholder="بحث عام..." type="text"/>
+            </div>
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4 mr-auto">
+                <button class="relative p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+                </button>
+                <div class="h-8 w-px bg-gray-200 dark:bg-gray-700 mx-1 hidden sm:block"></div>
+                <button class="flex items-center gap-2 bg-primary text-slate-900 hover:bg-primary-dark hover:text-white px-4 py-2 rounded-lg font-bold text-sm transition-all shadow-sm shadow-emerald-500/20" onclick="window.location.href='/admin/products'">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span class="hidden sm:inline">منتج جديد</span>
+                </button>
+            </div>
+        </header>
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto p-8 scroll-smooth">
+            <div class="max-w-[1400px] mx-auto space-y-8">
+                <!-- Page Heading -->
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">لوحة التحكم</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">نظرة عامة على أداء المتجر والإحصائيات الرئيسية.</p>
+                </div>
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Total Sales -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">إجمالي المبيعات</p>
+                                <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1" id="total-sales">ج.م 0</p>
+                            </div>
+                            <div class="bg-emerald-100 dark:bg-emerald-900/20 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">attach_money</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-emerald-600 dark:text-emerald-400 text-sm font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                +12.5%
+                            </span>
+                            <span class="text-slate-400 text-sm">من الشهر الماضي</span>
+                        </div>
+                    </div>
+                    <!-- Total Orders -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">إجمالي الطلبات</p>
+                                <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1" id="total-orders">0</p>
+                            </div>
+                            <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">shopping_cart</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-blue-600 dark:text-blue-400 text-sm font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                +8.2%
+                            </span>
+                            <span class="text-slate-400 text-sm">من الشهر الماضي</span>
+                        </div>
+                    </div>
+                    <!-- Total Customers -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">إجمالي العملاء</p>
+                                <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1" id="total-customers">0</p>
+                            </div>
+                            <div class="bg-purple-100 dark:bg-purple-900/20 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-purple-600 dark:text-purple-400">group</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-purple-600 dark:text-purple-400 text-sm font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                +15.3%
+                            </span>
+                            <span class="text-slate-400 text-sm">من الشهر الماضي</span>
+                        </div>
+                    </div>
+                    <!-- Total Products -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">إجمالي المنتجات</p>
+                                <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1" id="total-products">0</p>
+                            </div>
+                            <div class="bg-orange-100 dark:bg-orange-900/20 p-3 rounded-lg">
+                                <span class="material-symbols-outlined text-orange-600 dark:text-orange-400">inventory_2</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-orange-600 dark:text-orange-400 text-sm font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                +5.1%
+                            </span>
+                            <span class="text-slate-400 text-sm">من الشهر الماضي</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Charts and Tables Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Recent Orders -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">الطلبات الأخيرة</h3>
+                            <a class="text-primary hover:text-primary-dark text-sm font-medium transition-colors" href="admin-orders.html">عرض الكل</a>
+                        </div>
+                        <div class="space-y-4" id="recent-orders">
+                            <!-- Orders will be populated here -->
+                        </div>
+                    </div>
+                    <!-- Top Products -->
+                    <div class="bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">المنتجات الأكثر مبيعاً</h3>
+                            <a class="text-primary hover:text-primary-dark text-sm font-medium transition-colors" href="admin-products.html">عرض الكل</a>
+                        </div>
+                        <div class="space-y-4" id="top-products">
+                            <!-- Products will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">store</span>
+                    </div>
+                    <span class="font-bold text-xl text-olive-dark">زيتون مصر</span>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-olive-dark hover:text-primary transition-colors">الرئيسية</a>
+                    <a href="/products" class="text-olive-dark hover:text-primary transition-colors">المتجر</a>
+                    <a href="/categories" class="text-olive-dark hover:text-primary transition-colors">التصنيفات</a>
+                    <a href="/about" class="text-olive-dark hover:text-primary transition-colors">من نحن</a>
+                    <a href="/contact" class="text-olive-dark hover:text-primary transition-colors">اتصل بنا</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search -->
+                    <button class="p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="/cart" class="relative p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+
+                    <!-- Account -->
+                    <div class="relative">
+                        <button id="account-btn" class="p-2 text-olive-light hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                        <div id="account-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 hidden">
+                            <a href="/profile" class="block px-4 py-2 text-sm text-olive-dark hover:bg-gray-50">الملف الشخصي</a>
+                            <a href="/my-orders" class="block px-4 py-2 text-sm text-primary font-medium">طلباتي</a>
+                            <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">تسجيل الخروج</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden p-2 text-olive-light hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[1000px] mx-auto px-4 py-8">
+        <!-- Breadcrumbs -->
+        <nav class="flex items-center gap-2 text-sm text-olive-light mb-6">
+            <a href="/" class="hover:text-primary transition-colors">الرئيسية</a>
+            <span class="text-gray-300">/</span>
+            <span class="text-olive-dark font-medium">طلباتي</span>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-olive-dark">طلباتي</h1>
+                <p class="text-olive-light mt-1">تتبع ومراجعة طلباتك السابقة</p>
+            </div>
+            <a href="/pages/products.html" class="hidden sm:flex items-center gap-2 text-primary hover:text-primary-dark text-sm font-medium transition-colors">
+                <span class="material-symbols-outlined text-lg">add</span>
+                طلب جديد
+            </a>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="space-y-4">
+            <div class="skeleton h-32 rounded-xl"></div>
+            <div class="skeleton h-32 rounded-xl"></div>
+            <div class="skeleton h-32 rounded-xl"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-5xl text-olive-light">shopping_bag</span>
+            </div>
+            <h2 class="text-xl font-bold text-olive-dark mb-2">لا توجد طلبات</h2>
+            <p class="text-olive-light mb-6">لم تقم بأي طلبات بعد. ابدأ التسوق الآن!</p>
+            <a href="/pages/products.html" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-bold transition-all">
+                <span class="material-symbols-outlined">storefront</span>
+                تصفح المنتجات
+            </a>
+        </div>
+
+        <!-- Orders List -->
+        <div id="orders-list" class="hidden space-y-4">
+            <!-- Orders loaded dynamically -->
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="hidden mt-8 flex justify-center">
+            <nav class="flex items-center gap-2">
+                <button id="prev-page" class="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-olive-light hover:border-primary hover:text-primary transition-colors disabled:opacity-50">
+                    <span class="material-symbols-outlined text-xl rtl:rotate-180">chevron_right</span>
+                </button>
+                <div id="page-numbers" class="flex items-center gap-2"></div>
+                <button id="next-page" class="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-olive-light hover:border-primary hover:text-primary transition-colors disabled:opacity-50">
+                    <span class="material-symbols-outlined text-xl rtl:rotate-180">chevron_left</span>
+                </button>
+            </nav>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-olive-dark text-white mt-16">
+        <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">store</span>
+                        </div>
+                        <span class="font-bold text-xl">زيتون مصر</span>
+                    </div>
+                    <p class="text-olive-light text-sm">متجر إلكتروني متخصص في بيع منتجات الزيتون الأصلية والطبيعية</p>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/about" class="hover:text-primary transition-colors">من نحن</a></li>
+                        <li><a href="/products" class="hover:text-primary transition-colors">المنتجات</a></li>
+                        <li><a href="/contact" class="hover:text-primary transition-colors">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">الدعم</h3>
+                    <ul class="space-y-2 text-sm text-olive-light">
+                        <li><a href="/shipping" class="hover:text-primary transition-colors">الشحن والتوصيل</a></li>
+                        <li><a href="/returns" class="hover:text-primary transition-colors">الإرجاع والاستبدال</a></li>
+                        <li><a href="/faq" class="hover:text-primary transition-colors">الأسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">تواصل معنا</h3>
+                    <div class="space-y-2 text-sm text-olive-light">
+                        <p>📧 info@zaitonmisr.com</p>
+                        <p>📱 +20 123 456 7890</p>
+                        <p>📍 القاهرة، مصر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-olive-light/20 mt-8 pt-8 text-center text-sm text-olive-light">
+                <p>&copy; 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/my-orders.js"></script>
+</body>
+</html>

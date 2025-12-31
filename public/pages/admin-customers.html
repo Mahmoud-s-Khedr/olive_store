@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة العملاء - متجر الزيتون</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        'primary-dark': '#6B4423',
+                        'primary-light': '#B67B4A',
+                        secondary: '#D4AF37',
+                        'secondary-dark': '#B8941F',
+                        accent: '#F4F1E8',
+                        'text-main': '#2C1810',
+                        'text-secondary': '#8B7355',
+                        'text-muted': '#B8A089',
+                        'border-color': '#E8DCC0',
+                        'bg-primary': '#FEFCF8',
+                        'bg-secondary': '#F9F6F0',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'error': '#EF4444'
+                    },
+                    fontFamily: {
+                        'sans': ['Work Sans', 'system-ui', 'sans-serif'],
+                        'arabic': ['Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-open {
+            transform: translateX(0);
+        }
+        .sidebar-closed {
+            transform: translateX(100%);
+        }
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-bg-primary font-sans text-text-main">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg sidebar-transition sidebar-closed md:sidebar-open">
+        <div class="flex flex-col h-full">
+            <!-- Logo -->
+            <div class="flex items-center justify-center h-16 px-4 bg-primary">
+                <h1 class="text-xl font-bold text-white">متجر الزيتون</h1>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">dashboard</span>
+                    لوحة التحكم
+                </a>
+                <a href="admin-products.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">inventory_2</span>
+                    المنتجات
+                </a>
+                <a href="admin-categories.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">category</span>
+                    الفئات
+                </a>
+                <a href="admin-orders.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">shopping_cart</span>
+                    الطلبات
+                </a>
+                <a href="admin-customers.html" class="flex items-center px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">people</span>
+                    العملاء
+                </a>
+                <a href="admin-files.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">folder</span>
+                    الملفات
+                </a>
+                <a href="admin-settings.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">settings</span>
+                    الإعدادات
+                </a>
+            </nav>
+
+            <!-- Logout -->
+            <div class="p-4 border-t border-border-color">
+                <button id="logout-btn" class="flex items-center w-full px-4 py-3 text-text-secondary hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined ml-3">logout</span>
+                    تسجيل الخروج
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="md:mr-64">
+        <!-- Topbar -->
+        <header class="bg-white shadow-sm border-b border-border-color">
+            <div class="flex items-center justify-between px-4 py-3">
+                <!-- Mobile menu button -->
+                <button id="sidebar-toggle" class="md:hidden p-2 text-text-secondary hover:bg-gray-100 rounded-lg">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <!-- Search -->
+                <div class="flex-1 max-w-md mx-4">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary">search</span>
+                        <input type="text" id="search-input" placeholder="البحث في العملاء..." class="w-full pr-10 pl-4 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2">
+                    <button id="export-btn" class="flex items-center gap-2 px-4 py-2 border border-border-color text-text-main rounded-lg hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">download</span>
+                        تصدير
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-text-main mb-2">إدارة العملاء</h2>
+                <p class="text-text-secondary">مراقبة وإدارة حسابات العملاء</p>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-border-color overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-bg-secondary border-b border-border-color">
+                            <tr>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">العميل</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">البريد الإلكتروني</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">الهاتف</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">عدد الطلبات</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">إجمالي المشتريات</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">تاريخ التسجيل</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">الحالة</th>
+                                <th class="px-6 py-3 text-right text-xs font-bold text-text-secondary uppercase tracking-wider">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-tbody" class="divide-y divide-border-color">
+                            <!-- Customers will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination-container" class="mt-6">
+                <!-- Pagination will be loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-12">
+                <span class="material-symbols-outlined text-6xl text-text-muted mb-4">people</span>
+                <h3 class="text-xl font-bold text-text-main mb-2">لا يوجد عملاء</h3>
+                <p class="text-text-secondary">لم يتم العثور على أي عملاء تطابق معايير البحث</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Customer Detail Modal -->
+    <div id="customer-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-text-main">تفاصيل العميل: <span id="customer-name"></span></h3>
+                    <button id="close-customer-modal" class="p-2 text-text-secondary hover:bg-gray-100 rounded-lg">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <div id="customer-details">
+                    <!-- Customer details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/admin-customers.js"></script>
+</body>
+</html>

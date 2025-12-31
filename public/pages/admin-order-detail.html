@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الطلب - متجر الزيتون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B',
+                        secondary: '#D4AF37'
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Loading State -->
+    <div id="loading-state" class="min-h-screen flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p class="text-slate-600">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="order-content" class="hidden min-h-screen">
+        <!-- Topbar -->
+        <div class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <div class="flex items-center gap-2 text-sm text-slate-600">
+                        <a href="/admin/orders" class="hover:text-primary transition-colors">الطلبات</a>
+                        <span>/</span>
+                        <span id="breadcrumb-order">طلب #---</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="logout-btn" class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                        <span class="material-symbols-outlined text-lg">logout</span>
+                        <span>تسجيل الخروج</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="fixed right-0 top-0 h-full w-64 bg-white border-l border-gray-200 transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">store</span>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-slate-900">متجر الزيتون</h1>
+                        <p class="text-xs text-slate-500">لوحة التحكم</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-2">
+                    <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span>لوحة التحكم</span>
+                    </a>
+                    <a href="/admin/products" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">inventory_2</span>
+                        <span>المنتجات</span>
+                    </a>
+                    <a href="/admin/categories" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">category</span>
+                        <span>الفئات</span>
+                    </a>
+                    <a href="/admin/orders" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary transition-colors">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span>الطلبات</span>
+                    </a>
+                    <a href="/admin/customers" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">people</span>
+                        <span>العملاء</span>
+                    </a>
+                    <a href="/admin/files" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">folder</span>
+                        <span>الملفات</span>
+                    </a>
+                    <a href="/admin/settings" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                        <span class="material-symbols-outlined">settings</span>
+                        <span>الإعدادات</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 pointer-events-none transition-opacity duration-300 z-40"></div>
+
+        <!-- Main Content -->
+        <div class="p-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- Header -->
+                <div class="mb-6">
+                    <h1 id="order-title" class="text-2xl font-bold text-slate-900 mb-2">طلب #---</h1>
+                    <div class="flex items-center gap-4">
+                        <span id="order-status" class="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">قيد الانتظار</span>
+                        <div class="flex gap-2">
+                            <button class="status-btn px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 transition-colors" data-status="pending">قيد الانتظار</button>
+                            <button class="status-btn px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 transition-colors" data-status="processing">جاري التجهيز</button>
+                            <button class="status-btn px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 transition-colors" data-status="shipped">تم الشحن</button>
+                            <button class="status-btn px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 transition-colors" data-status="delivered">تم التوصيل</button>
+                            <button class="status-btn px-4 py-2 rounded-lg text-sm font-medium bg-white border border-gray-200 hover:bg-gray-50 transition-colors text-red-600 border-red-200 hover:bg-red-50" data-status="cancelled">ملغي</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Order Items -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">منتجات الطلب</h2>
+                            <div id="order-items" class="space-y-4">
+                                <!-- Items loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Order Summary -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">ملخص الطلب</h2>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-600">المجموع الفرعي</span>
+                                    <span id="subtotal" class="font-medium">---</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-600">الشحن</span>
+                                    <span id="shipping" class="font-medium">---</span>
+                                </div>
+                                <div class="border-t border-gray-200 pt-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-bold text-slate-900">المجموع الكلي</span>
+                                        <span id="total" class="font-bold text-slate-900">---</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <div id="notes-section" class="bg-white rounded-xl border border-gray-100 p-6 hidden">
+                            <h2 class="font-bold text-slate-900 mb-4">ملاحظات</h2>
+                            <p id="order-notes" class="text-slate-600"></p>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Info -->
+                    <div class="space-y-6">
+                        <!-- Customer Info -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">معلومات العميل</h2>
+                            <div id="customer-info" class="space-y-4">
+                                <!-- Customer info loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">عنوان الشحن</h2>
+                            <div id="shipping-address" class="text-slate-600 space-y-1">
+                                <!-- Address loaded dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">الدفع</h2>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-500 text-sm">طريقة الدفع</span>
+                                    <span id="payment-method" class="text-slate-900 font-medium text-sm">---</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-500 text-sm">حالة الدفع</span>
+                                    <span id="payment-status" class="px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">---</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline -->
+                        <div class="bg-white rounded-xl border border-gray-100 p-6">
+                            <h2 class="font-bold text-slate-900 mb-4">سجل الطلب</h2>
+                            <div id="order-timeline" class="space-y-4">
+                                <!-- Timeline loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/admin-order-detail.js"></script>
+</body>
+</html>

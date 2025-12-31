@@ -1,143 +1,144 @@
 /**
- * Views Routes - Server-side rendering for EJS templates
+ * Views Routes - Serve static HTML files
  */
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 
 // Store Pages
 router.get('/', (req, res) => {
-    res.render('pages/index', { title: 'الرئيسية', currentPage: 'home' });
+    res.sendFile(path.join(__dirname, '../../public/pages/index.html'));
 });
 
 router.get('/products', (req, res) => {
-    res.render('pages/products', { title: 'المنتجات', currentPage: 'products' });
+    res.sendFile(path.join(__dirname, '../../public/pages/products.html'));
 });
 
 router.get('/categories', (req, res) => {
-    res.render('pages/categories', { title: 'التصنيفات', currentPage: 'categories' });
+    res.sendFile(path.join(__dirname, '../../public/pages/categories.html'));
 });
 
 router.get('/products/:slug', (req, res) => {
-    res.render('pages/product', { title: 'تفاصيل المنتج', currentPage: 'products' });
+    res.sendFile(path.join(__dirname, '../../public/pages/product.html'));
 });
 
 router.get('/cart', (req, res) => {
-    res.render('pages/cart', { title: 'سلة التسوق', currentPage: 'cart' });
+    res.sendFile(path.join(__dirname, '../../public/pages/cart.html'));
 });
 
 router.get('/checkout', (req, res) => {
-    res.render('pages/checkout', { title: 'إتمام الطلب', currentPage: 'checkout' });
+    res.sendFile(path.join(__dirname, '../../public/pages/checkout.html'));
 });
 
 router.get('/order-success', (req, res) => {
-    res.render('pages/order-success', { title: 'تم الطلب بنجاح' });
+    res.sendFile(path.join(__dirname, '../../public/pages/order-success.html'));
 });
 
 router.get('/my-orders', (req, res) => {
-    res.render('pages/my-orders', { title: 'طلباتي', currentPage: 'orders' });
+    res.sendFile(path.join(__dirname, '../../public/pages/my-orders.html'));
 });
 
 router.get('/order/:id', (req, res) => {
-    res.render('pages/order-detail', { title: 'تفاصيل الطلب', currentPage: 'orders' });
+    res.sendFile(path.join(__dirname, '../../public/pages/order-detail.html'));
 });
 
 // Auth Pages
 router.get('/login', (req, res) => {
-    res.render('pages/login', { title: 'تسجيل الدخول' });
+    res.sendFile(path.join(__dirname, '../../public/pages/login.html'));
 });
 
 router.get('/register', (req, res) => {
-    res.render('pages/register', { title: 'إنشاء حساب' });
+    res.sendFile(path.join(__dirname, '../../public/pages/register.html'));
 });
 
 router.get('/forgot-password', (req, res) => {
-    res.render('pages/forgot-password', { title: 'استعادة كلمة المرور' });
+    res.sendFile(path.join(__dirname, '../../public/pages/forgot-password.html'));
 });
 
 router.get('/reset-password', (req, res) => {
-    res.render('pages/reset-password', { title: 'إعادة تعيين كلمة المرور' });
+    res.sendFile(path.join(__dirname, '../../public/pages/reset-password.html'));
 });
 
 router.get('/verify-email', (req, res) => {
-    res.render('pages/verify-email', { title: 'تأكيد البريد الإلكتروني' });
+    res.sendFile(path.join(__dirname, '../../public/pages/verify-email.html'));
 });
 
 router.get('/profile', (req, res) => {
-    res.render('pages/profile', { title: 'الملف الشخصي', currentPage: 'profile' });
+    res.sendFile(path.join(__dirname, '../../public/pages/profile.html'));
 });
 
 // Static Pages
 router.get('/about', (req, res) => {
-    res.render('pages/about', { title: 'من نحن', currentPage: 'about' });
+    res.sendFile(path.join(__dirname, '../../public/pages/about.html'));
 });
 
 router.get('/contact', (req, res) => {
-    res.render('pages/contact', { title: 'تواصل معنا', currentPage: 'contact' });
+    res.sendFile(path.join(__dirname, '../../public/pages/contact.html'));
 });
 
 router.get('/shipping', (req, res) => {
-    res.render('pages/shipping', { title: 'الشحن والتوصيل' });
+    res.sendFile(path.join(__dirname, '../../public/pages/shipping.html'));
 });
 
 router.get('/payment-info', (req, res) => {
-    res.render('pages/payment-info', { title: 'طرق الدفع' });
+    res.sendFile(path.join(__dirname, '../../public/pages/payment-info.html'));
 });
 
 router.get('/terms', (req, res) => {
-    res.render('pages/terms', { title: 'الشروط والأحكام' });
+    res.sendFile(path.join(__dirname, '../../public/pages/terms.html'));
 });
 
 // Admin Pages
 router.get('/admin/login', (req, res) => {
-    res.render('admin/login', { title: 'تسجيل الدخول - لوحة التحكم', layout: false });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-login.html'));
 });
 
 router.get('/admin', (req, res) => {
-    res.render('admin/index', { title: 'لوحة التحكم', currentPage: 'dashboard', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-dashboard.html'));
 });
 
 router.get('/admin/products', (req, res) => {
-    res.render('admin/products', { title: 'المنتجات', currentPage: 'products', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-products.html'));
 });
 
 router.get('/admin/products/new', (req, res) => {
-    res.render('admin/product-form', { title: 'إضافة منتج', currentPage: 'products', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-product-form.html'));
 });
 
 router.get('/admin/products/:id/edit', (req, res) => {
-    res.render('admin/product-form', { title: 'تعديل المنتج', currentPage: 'products', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-product-form.html'));
 });
 
 router.get('/admin/categories/new', (req, res) => {
-    res.render('admin/category-form', { title: 'إضافة فئة', currentPage: 'categories', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-category-form.html'));
 });
 
 router.get('/admin/categories/:id/edit', (req, res) => {
-    res.render('admin/category-form', { title: 'تعديل الفئة', currentPage: 'categories', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-category-form.html'));
 });
 
 router.get('/admin/categories', (req, res) => {
-    res.render('admin/categories', { title: 'الفئات', currentPage: 'categories', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-categories.html'));
 });
 
 router.get('/admin/orders', (req, res) => {
-    res.render('admin/orders', { title: 'الطلبات', currentPage: 'orders', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-orders.html'));
 });
 
 router.get('/admin/orders/:id', (req, res) => {
-    res.render('admin/order-detail', { title: 'تفاصيل الطلب', currentPage: 'orders', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-order-detail.html'));
 });
 
 router.get('/admin/customers', (req, res) => {
-    res.render('admin/customers', { title: 'العملاء', currentPage: 'customers', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-customers.html'));
 });
 
 router.get('/admin/files', (req, res) => {
-    res.render('admin/files', { title: 'الملفات', currentPage: 'files', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-files.html'));
 });
 
 router.get('/admin/settings', (req, res) => {
-    res.render('admin/settings', { title: 'الإعدادات', currentPage: 'settings', layout: 'layouts/admin' });
+    res.sendFile(path.join(__dirname, '../../public/pages/admin-settings.html'));
 });
 
 module.exports = router;
