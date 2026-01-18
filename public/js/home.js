@@ -12,12 +12,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const grid = document.getElementById('categories-grid');
                 const categories = data.categories.slice(0, 4); // Show only 4
 
-                grid.innerHTML = categories.map(cat => `
-                    <a href="/pages/products.html?category=${cat.slug}" class="group flex flex-col gap-4 cursor-pointer">
+                grid.innerHTML = categories.map(cat => {
+                    const name = lang === 'ar'
+                        ? (cat.name_ar || t('common.unknown', 'Unknown'))
+                        : (cat.name_en || t('common.unknown', 'Unknown'));
+                    return `
+                    <a href="/products?category=${cat.slug}" class="group flex flex-col gap-4 cursor-pointer">
                         <div class="w-full aspect-[3/4] rounded-xl overflow-hidden relative shadow-sm bg-gray-100">
                             <div class="absolute inset-0 bg-[#f9f7f2] transition-transform duration-500 group-hover:scale-105">
                                 ${cat.image_url ?
-                            `<img src="${cat.image_url}" alt="${lang === 'ar' ? cat.name_ar : cat.name_en}" class="w-full h-full object-cover">` :
+                            `<img src="${cat.image_url}" alt="${name}" class="w-full h-full object-cover">` :
                             `<div class="w-full h-full flex items-center justify-center text-primary">
                                         <span class="material-symbols-outlined text-6xl">category</span>
                                     </div>`
@@ -26,10 +30,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
                         </div>
                         <div class="text-center">
-                            <p class="text-olive-dark text-lg font-bold group-hover:text-primary transition-colors">${lang === 'ar' ? cat.name_ar : cat.name_en}</p>
+                            <p class="text-olive-dark text-lg font-bold group-hover:text-primary transition-colors">${name}</p>
                         </div>
                     </a>
-                `).join('');
+                `}).join('');
             }
         } catch (error) {
             console.error('Error loading categories:', error);
@@ -48,8 +52,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 const container = document.getElementById('featured-products');
 
                 container.innerHTML = data.products.map(product => {
-                    const name = lang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
-                    const desc = lang === 'ar' ? product.short_description_ar : (product.short_description_en || '');
+                    const name = lang === 'ar'
+                        ? (product.name_ar || t('common.unknown', 'Unknown'))
+                        : (product.name_en || t('common.unknown', 'Unknown'));
+                    const desc = lang === 'ar'
+                        ? (product.short_description_ar || '')
+                        : (product.short_description_en || '');
                     const price = Utils.formatPrice(product.price, lang);
                     const oldPrice = product.old_price ? Utils.formatPrice(product.old_price, lang) : '';
 
@@ -58,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                     return `
                         <div class="min-w-[280px] md:min-w-[300px] snap-center bg-white rounded-xl p-4 border border-gray-100 hover:shadow-lg transition-all duration-300 group flex-shrink-0">
-                            <a href="/pages/product.html?slug=${product.slug}" class="block">
+                            <a href="/products/${product.slug || product.id}" class="block">
                                 <div class="relative aspect-square rounded-lg bg-gray-50 mb-4 overflow-hidden">
                                     ${product.is_new ? `<div class="absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} bg-primary/90 backdrop-blur rounded px-2 py-1 text-xs font-bold text-white">${newBadge}</div>` : ''}
                                     ${product.old_price ? `<div class="absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} bg-red-500 rounded px-2 py-1 text-xs font-bold text-white">${saleBadge}</div>` : ''}
@@ -80,7 +88,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                                     <span class="text-xl font-bold text-primary">${price}</span>
                                 </div>
                                 <button
-                                    onclick="addToCart(${JSON.stringify({ id: product.id, name: product.name_ar, slug: product.slug, price: product.price, image: product.primary_image || '' }).replace(/"/g, '&quot;')})"
+                                    onclick="addToCart(${JSON.stringify({ id: product.id, name, name_ar: product.name_ar || '', name_en: product.name_en || '', slug: product.slug, price: product.price, image: product.primary_image || '' }).replace(/\"/g, '&quot;')})"
                                     class="w-10 h-10 rounded-full bg-gray-100 text-olive-dark flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                                     ${product.stock <= 0 ? 'disabled' : ''}
                                 >
@@ -117,7 +125,7 @@ function addToCart(product) {
     if (typeof Cart !== 'undefined') {
         Cart.addItem(product);
         const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
-        const msg = t('products.addedToCart', 'تمت الإضافة للسلة');
+        const msg = t('products.addedToCart', 'Added to cart');
         if (typeof Utils !== 'undefined') {
             Utils.showToast(msg, 'success');
         }

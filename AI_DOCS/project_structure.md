@@ -10,13 +10,9 @@ olive_store/
 │   ├── routes/           # API routes (public + admin)
 │   ├── services/         # Email, upload services
 │   ├── utils/            # Async handler, slugify, tokens
-│   └── views/
-│       ├── layouts/      # main.ejs, admin.ejs
-│       ├── partials/     # header, footer, breadcrumb
-│       ├── pages/        # Store pages (18 files)
-│       └── admin/        # Admin pages (11 files)
 │
 ├── public/
+│   ├── pages/            # Static HTML pages (store + admin)
 │   ├── css/              # style.css (custom styles)
 │   ├── js/               # Client-side modules
 │   │   ├── i18n.js       # Internationalization
@@ -42,38 +38,42 @@ olive_store/
 
 ## Key View Files
 
-### Store Pages (`app/views/pages/`)
+### Store Pages (`public/pages/`)
 | File | Purpose |
 |------|---------|
-| index.ejs | Homepage |
-| products.ejs | Product listing |
-| product.ejs | Product detail |
-| cart.ejs | Shopping cart |
-| checkout.ejs | Checkout form |
-| order-success.ejs | Order confirmation |
-| my-orders.ejs | Customer orders list |
-| order-detail.ejs | Order detail |
-| login.ejs | Login |
-| register.ejs | Registration |
-| forgot-password.ejs | Password reset request |
-| reset-password.ejs | Password reset form |
-| verify-email.ejs | Email verification |
-| profile.ejs | User profile |
-| about.ejs | About page |
-| contact.ejs | Contact form |
-| shipping.ejs | Shipping info |
-| payment-info.ejs | Payment info |
+| index.html | Homepage |
+| products.html | Product listing |
+| product.html | Product detail |
+| cart.html | Shopping cart |
+| checkout.html | Checkout form |
+| order-success.html | Order confirmation |
+| my-orders.html | Customer orders list |
+| order-detail.html | Order detail |
+| login.html | Login |
+| register.html | Registration |
+| forgot-password.html | Password reset request |
+| reset-password.html | Password reset form |
+| verify-email.html | Email verification |
+| profile.html | User profile |
+| about.html | About page |
+| contact.html | Contact form |
+| shipping.html | Shipping info |
+| payment-info.html | Payment info |
+| categories.html | Categories listing |
+| terms.html | Terms |
+| logout.html | Logout redirect page |
 
-### Admin Pages (`app/views/admin/`)
+### Admin Pages (`public/pages/`)
 | File | Purpose |
 |------|---------|
-| login.ejs | Admin login |
-| index.ejs | Dashboard |
-| products.ejs | Product list |
-| product-form.ejs | Add/edit product |
-| categories.ejs | Category management |
-| orders.ejs | Order list |
-| order-detail.ejs | Order detail |
-| customers.ejs | Customer list |
-| files.ejs | Media manager |
-| settings.ejs | Store settings |
+| admin-login.html | Admin login |
+| admin-dashboard.html | Dashboard |
+| admin-products.html | Product list |
+| admin-product-form.html | Add/edit product |
+| admin-categories.html | Category management |
+| admin-category-form.html | Category form |
+| admin-orders.html | Order list |
+| admin-order-detail.html | Order detail |
+| admin-customers.html | Customer list |
+| admin-files.html | Media manager |
+| admin-settings.html | Store settings |

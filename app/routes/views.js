@@ -67,6 +67,10 @@ router.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/pages/profile.html'));
 });
 
+router.get('/logout', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/pages/logout.html'));
+});
+
 // Static Pages
 router.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/pages/about.html'));

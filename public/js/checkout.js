@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if logged in
     const isLoggedIn = typeof AuthModule !== 'undefined' && AuthModule.isLoggedIn();
     if (!isLoggedIn) {
-        window.location.href = 'login.html?redirect=checkout.html';
+        window.location.href = '/login?redirect=/checkout';
         return;
     }
 
@@ -46,23 +46,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Render order items
         const orderItems = document.getElementById('order-items');
-        orderItems.innerHTML = cart.map(item => `
+        orderItems.innerHTML = cart.map(item => {
+            const displayName = lang === 'ar'
+                ? (item.name_ar || (item.lang === 'ar' ? item.name : '') || t('common.unknown', 'Unknown'))
+                : (item.name_en || (item.lang === 'en' ? item.name : '') || t('common.unknown', 'Unknown'));
+            return `
         <div class="flex gap-3">
             <div class="w-16 h-16 rounded-lg bg-gray-50 overflow-hidden flex-shrink-0">
                 ${item.image ?
-                `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                `<img src="${item.image}" alt="${displayName}" class="w-full h-full object-cover">` :
                 `<div class="w-full h-full flex items-center justify-center text-olive-light">
                         <span class="material-symbols-outlined">inventory_2</span>
                     </div>`
             }
             </div>
             <div class="flex-1 min-w-0">
-                <h4 class="text-sm font-medium text-olive-dark truncate">${item.name}</h4>
-                <p class="text-xs text-olive-light">${t('cart.quantity', 'الكمية')}: ${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity, lang) : item.quantity}</p>
+                <h4 class="text-sm font-medium text-olive-dark truncate">${displayName}</h4>
+                <p class="text-xs text-olive-light">${t('cart.quantity', 'Quantity')}: ${lang === 'ar' && typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity) : item.quantity}</p>
                 <p class="text-sm font-bold text-primary">${formatPrice(item.price * item.quantity)}</p>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 
         // Calculate totals
         const subtotal = Cart.getTotal();
@@ -98,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Show loading
         btn.disabled = true;
-        btnText.textContent = t('checkout.placingOrder', 'جاري تأكيد الطلب...');
+        btnText.textContent = t('checkout.processing', 'Placing order...');
         spinner.classList.remove('hidden');
 
         try {
@@ -139,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Cart.clear();
 
             // Redirect to success page
-            window.location.href = `order-success.html?order=${data.order?.order_number || data.order_number || data.orderId || ''}`;
+            window.location.href = `/order-success?order=${data.order?.order_number || data.order_number || data.orderId || ''}`;
         } catch (error) {
             console.error('Checkout error:', error);
             // Use Utils.parseError for consistent error messages

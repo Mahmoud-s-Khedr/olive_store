@@ -5,11 +5,11 @@
 ---
 
 ### Phase 1 (Base Shell) ✅
-- [x] Shared layouts: `main.ejs` (store) and `admin.ejs` (admin)
+- [x] Static HTML pages in `public/pages` (store + admin)
 - [x] Global styles: TailwindCSS, Cairo/Tajawal typography, olive green theme
 - [x] RTL/LTR auto-switching based on language
-- [x] Partials: header/footer/nav (store) and sidebar/topbar (admin)
-- [x] Language switcher component in both layouts
+- [x] Shared navbar behavior via `public/js/navbar.js`
+- [x] Language switcher component in store/admin headers
 
 ### Phase 2 (Auth) ✅
 - [x] Pages: login, register, verify-email, forgot-password, reset-password, profile
@@ -48,20 +48,19 @@
 - [x] i18n module (`public/js/i18n.js`)
 - [x] Translation files: Arabic (`ar.json`), English (`en.json`)
 - [x] Auto RTL/LTR direction switching
-- [x] Language switcher in store and admin layouts
+- [x] Language switcher in store/admin headers
 - [x] Number and price formatting per language
 
 ---
 
 ## File Counts
-- **Store pages**: 18 EJS files
-- **Admin pages**: 11 EJS files
-- **Layouts**: 2 EJS files
+- **Store pages**: 21 HTML files
+- **Admin pages**: 11 HTML files
 - **JS modules**: 6 files
 - **Locales**: 2 JSON files
 
 ## Technology Stack
-- Templates: EJS
+- Templates: Static HTML
 - Styling: TailwindCSS (CDN)
 - Icons: Material Symbols
 - Fonts: Cairo, Tajawal (Arabic), Inter (English)

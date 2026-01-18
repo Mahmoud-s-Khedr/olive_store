@@ -1,346 +1,399 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html class="light" dir="rtl" lang="ar">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة المنتج - متجر الزيتون</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
-    <script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>إضافة منتج - لوحة التحكم</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
+            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: '#8B5A2B',
-                        secondary: '#D4AF37'
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c"
                     },
                     fontFamily: {
-                        'cairo': ['Cairo', 'sans-serif']
-                    }
-                }
-            }
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
         }
     </script>
     <style>
-        body { font-family: 'Cairo', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-top: 2px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3af;
         }
     </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="bg-gray-50">
-    <!-- Topbar -->
-    <div class="bg-white border-b border-gray-200 px-6 py-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
-                <div class="flex items-center gap-2 text-sm text-slate-600">
-                    <a href="/admin/dashboard" class="hover:text-primary transition-colors">لوحة التحكم</a>
-                    <span>/</span>
-                    <a href="/admin/products" class="hover:text-primary transition-colors">المنتجات</a>
-                    <span>/</span>
-                    <span id="breadcrumb-current" class="text-slate-700">منتج جديد</span>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <button id="logout-btn" class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                    <span class="material-symbols-outlined text-lg">logout</span>
-                    <span>تسجيل الخروج</span>
-                </button>
-            </div>
-        </div>
-    </div>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-800 font-body min-h-screen flex"
+    data-theme="default">
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed right-0 top-0 h-full w-64 bg-white border-l border-gray-200 transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-        <div class="p-6">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary">store</span>
-                </div>
-                <div>
-                    <h1 class="font-bold text-slate-900">متجر الزيتون</h1>
-                    <p class="text-xs text-slate-500">لوحة التحكم</p>
-                </div>
+    <aside
+        class="w-64 bg-white dark:bg-surface-dark border-l border-gray-100 dark:border-gray-800 flex-shrink-0 hidden lg:flex flex-col h-screen sticky top-0 z-30 shadow-[0_0_15px_rgba(0,0,0,0.02)]">
+        <div class="p-6 flex items-center gap-3">
+            <div class="bg-emerald-600/10 p-2 rounded-xl">
+                <img src="/images/logo-icon.png"
+                    onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCYx5WQbT_k1mFeUG-bQB3Tcz1WKKV1i0SOJkA9kDXEKv5j65bxGhXBRufJ64jHetk7zELQjvGf6BSYvCxkY8H9uB1ouSpHMkV27BCOEWyk5Mm5npvQwFY6Tr6u0qYu0cBYdEJjQvMG-Ok4PgfkqRBEakLQwzIyiOFALi8NoNlaslcfBntsE1EWG7IiuX94iZapRXqZ9DEY_lTiQ6-D74xv6b4SmH0tHprOymjywYKRxptuwafvrCD3oXpWLDlv0teHa6RORNDNTqk'"
+                    alt="Logo" class="w-8 h-8 object-contain">
             </div>
-
-            <nav class="space-y-2">
-                <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span>لوحة التحكم</span>
+            <div>
+                <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">زيتون مصر</h1>
+                <p class="text-[11px] text-slate-500 font-medium">لوحة الإدارة</p>
+            </div>
+        </div>
+        <div class="flex-1 px-4 overflow-y-auto">
+            <p class="px-2 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">القائمة الرئيسية</p>
+            <nav class="flex flex-col gap-1">
+                <a href="/admin"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-600 transition-colors">dashboard</span>
+                    <span class="text-sm font-medium">لوحة التحكم</span>
                 </a>
-                <a href="/admin/products" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary transition-colors">
-                    <span class="material-symbols-outlined">inventory_2</span>
-                    <span>المنتجات</span>
+                <a href="/admin/products"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">inventory_2</span>
+                    <span class="text-sm font-medium">المنتجات</span>
                 </a>
-                <a href="/admin/categories" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">category</span>
-                    <span>الفئات</span>
+                <a href="/admin/categories"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-500 transition-colors">category</span>
+                    <span class="text-sm font-medium">الفئات</span>
                 </a>
-                <a href="/admin/orders" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">shopping_cart</span>
-                    <span>الطلبات</span>
+                <a href="/admin/orders"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-blue-500 transition-colors">shopping_bag</span>
+                    <span class="text-sm font-medium">الطلبات</span>
+                    <span class="mr-auto bg-red-100 text-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-md"
+                        id="pending-orders-badge">0</span>
                 </a>
-                <a href="/admin/customers" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">people</span>
-                    <span>العملاء</span>
+                <a href="/admin/customers"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-purple-500 transition-colors">group</span>
+                    <span class="text-sm font-medium">العملاء</span>
                 </a>
-                <a href="/admin/files" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">folder</span>
-                    <span>الملفات</span>
+                <a href="/admin/files"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-indigo-500 transition-colors">folder_open</span>
+                    <span class="text-sm font-medium">المكتبة</span>
                 </a>
-                <a href="/admin/settings" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span>الإعدادات</span>
+                <div class="h-px bg-gray-100 my-2 mx-2"></div>
+                <a href="/admin/settings"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-slate-800 transition-colors">settings</span>
+                    <span class="text-sm font-medium">الإعدادات</span>
                 </a>
             </nav>
         </div>
-    </div>
-
-    <!-- Overlay -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 pointer-events-none transition-opacity duration-300 z-40"></div>
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors group">
+                <div class="relative">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                        <span id="admin-avatar">م</span>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span id="admin-name"
+                        class="text-sm font-bold text-slate-800 group-hover:text-primary transition-colors">المدير</span>
+                    <span class="text-[10px] text-slate-400">مدير المتجر</span>
+                </div>
+                <button id="sidebar-logout-btn" class="mr-auto text-slate-300 hover:text-red-500 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                </button>
+            </div>
+        </div>
+    </aside>
 
     <!-- Main Content -->
-    <div class="p-6">
-        <div class="max-w-7xl mx-auto">
-            <!-- Page Header -->
-            <div class="mb-8">
-                <h1 id="page-title" class="text-2xl font-bold text-slate-900">إضافة منتج جديد</h1>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-slate-500 hover:text-slate-800" onclick="toggleMobileSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="flex items-center gap-2 text-sm text-slate-500">
+                    <a href="/admin" class="hover:text-slate-800 transition-colors">الرئيسية</a>
+                    <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+                    <a href="/admin/products" class="hover:text-slate-800 transition-colors">المنتجات</a>
+                    <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+                    <span id="breadcrumb-current" class="text-slate-900 dark:text-white font-medium">إضافة منتج</span>
+                </div>
             </div>
+            <div class="flex items-center gap-3">
+                <button class="relative p-2 rounded-full hover:bg-gray-50 text-slate-500 transition-colors">
+                    <span class="material-symbols-outlined text-[22px]">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                </button>
+            </div>
+        </header>
 
-            <form id="product-form" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <input type="hidden" id="product-id">
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6 scroll-smooth">
+            <div class="max-w-5xl mx-auto space-y-6">
 
-                <!-- Main Content -->
-                <div class="lg:col-span-2 space-y-6">
-                    <!-- Basic Info -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">المعلومات الأساسية</h2>
+                <!-- Error Alert -->
+                <div id="form-error"
+                    class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-3">
+                    <span class="material-symbols-outlined text-red-500">error</span>
+                    <span id="form-error-message"></span>
+                </div>
 
-                        <div class="space-y-5">
-                            <!-- Arabic Name -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    اسم المنتج بالعربية <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" id="name-ar" name="name_ar" required
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right">
-                            </div>
-
-                            <!-- English Name -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    اسم المنتج بالإنجليزية
-                                </label>
-                                <input type="text" id="name-en" name="name_en" dir="ltr"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
-                            </div>
-
-                            <!-- Slug -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    Slug
-                                </label>
-                                <input type="text" id="slug" name="slug" dir="ltr"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-gray-50"
-                                    placeholder="auto-generated">
-                            </div>
-
-                            <!-- Short Description -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    وصف مختصر
-                                </label>
-                                <textarea id="short-desc-ar" name="short_description_ar" rows="2"
-                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
-                                    placeholder="وصف مختصر يظهر في قوائم المنتجات"></textarea>
-                            </div>
-
-                            <!-- Full Description -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    الوصف الكامل
-                                </label>
-                                <textarea id="desc-ar" name="description_ar" rows="5"
-                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
-                                    placeholder="وصف تفصيلي للمنتج"></textarea>
-                            </div>
-                        </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 id="page-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">إضافة
+                            منتج جديد
+                        </h1>
+                        <p class="text-slate-500 text-sm mt-1">أدخل تفاصيل المنتج الجديد.</p>
                     </div>
-
-                    <!-- Images -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">الصور</h2>
-
-                        <div class="space-y-4">
-                            <!-- Primary Image -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    الصورة الرئيسية <span class="text-red-500">*</span>
-                                </label>
-                                <input type="url" id="primary-image" name="primary_image" dir="ltr" required
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm"
-                                    placeholder="https://...">
-                            </div>
-
-                            <!-- Image Preview -->
-                            <div id="image-preview" class="hidden w-32 h-32 rounded-lg border border-gray-200 overflow-hidden">
-                                <img id="preview-img" src="" alt="" class="w-full h-full object-cover">
-                            </div>
-
-                            <!-- Additional Images -->
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    صور إضافية (سطر لكل رابط)
-                                </label>
-                                <textarea id="additional-images" name="images" rows="3" dir="ltr"
-                                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm font-mono text-xs"
-                                    placeholder="https://image1.jpg&#10;https://image2.jpg"></textarea>
-                            </div>
-                        </div>
+                    <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3">
+                        <a href="/admin/products"
+                            class="px-5 py-2.5 rounded-xl border border-gray-200 text-slate-600 hover:bg-gray-50 font-bold text-sm transition-colors text-center">إلغاء</a>
+                        <button type="submit" form="product-form"
+                            class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-sm shadow-md shadow-primary/20 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="submit-spinner"
+                                class="hidden material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+                            <span class="material-symbols-outlined text-[20px]" id="submit-icon">save</span>
+                            <span id="submit-btn-text">حفظ المنتج</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Sidebar -->
-                <div class="lg:col-span-1 space-y-6">
-                    <!-- Publish -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">النشر</h2>
+                <form id="product-form" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Main Info -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-6">
+                            <h3
+                                class="text-lg font-bold text-slate-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
+                                المعلومات الأساسية</h3>
 
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="is-active" name="is_active" checked
-                                    class="rounded border-gray-300 text-primary focus:ring-primary">
-                                <label for="is-active" class="text-sm text-slate-700">
-                                    منتج نشط
-                                </label>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="is-featured" name="is_featured"
-                                    class="rounded border-gray-300 text-primary focus:ring-primary">
-                                <label for="is-featured" class="text-sm text-slate-700">
-                                    منتج مميز
-                                </label>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <input type="checkbox" id="is-new" name="is_new"
-                                    class="rounded border-gray-300 text-primary focus:ring-primary">
-                                <label for="is-new" class="text-sm text-slate-700">
-                                    منتج جديد
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Error -->
-                        <div id="form-error"
-                            class="hidden mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"></div>
-
-                        <div class="mt-6 flex gap-3">
-                            <a href="/admin/products"
-                                class="flex-1 h-11 border border-gray-200 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center">
-                                إلغاء
-                            </a>
-                            <button type="submit" id="submit-btn"
-                                class="flex-1 h-11 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold transition-colors flex items-center justify-center gap-2">
-                                <span id="submit-text">حفظ</span>
-                                <div id="submit-spinner" class="spinner hidden"></div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Category -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">الفئة</h2>
-                        <select id="category" name="category_id"
-                            class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right">
-                            <option value="">بدون فئة</option>
-                        </select>
-                    </div>
-
-                    <!-- Pricing -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">التسعير</h2>
-
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    السعر (ج.م) <span class="text-red-500">*</span>
-                                </label>
-                                <input type="number" id="price" name="price" required min="0" step="0.01"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    السعر القديم (للخصم)
-                                </label>
-                                <input type="number" id="old-price" name="old_price" min="0" step="0.01"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">اسم المنتج
+                                        (عربي) <span class="text-red-500">*</span></label>
+                                    <input type="text" id="name-ar" required
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="مثال: زيت زيتون بكر ممتاز">
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 text-left"
+                                        dir="ltr">Product Name (EN)</label>
+                                    <input type="text" id="name-en" dir="ltr"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="e.g. Extra Virgin Olive Oil">
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label
+                                        class="block text-sm font-bold text-slate-700 dark:text-gray-300">الفئة</label>
+                                    <select id="category"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+                                        <option value="">اختر الفئة...</option>
+                                        <!-- Populated via JS -->
+                                    </select>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 text-left"
+                                        dir="ltr">Slug</label>
+                                    <div class="flex dir-ltr">
+                                        <span
+                                            class="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-gray-200 bg-gray-100 text-slate-500 text-sm">/product/</span>
+                                        <input type="text" id="slug" dir="ltr"
+                                            class="flex-1 rounded-r-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                            placeholder="auto-generated">
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5 md:col-span-2">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">وصف
+                                        قصير</label>
+                                    <textarea id="short-desc" rows="2"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="وصف مختصر يظهر في قوائم المنتجات"></textarea>
+                                </div>
+                                <div class="space-y-1.5 md:col-span-2">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">الوصف
+                                        الكامل</label>
+                                    <textarea id="description" rows="5"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="وصف تفصيلي للمنتج يظهر في صفحة المنتج"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Inventory -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">المخزون</h2>
-
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    الكمية <span class="text-red-500">*</span>
-                                </label>
-                                <input type="number" id="stock" name="stock" required min="0"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    SKU
-                                </label>
-                                <input type="text" id="sku" name="sku" dir="ltr"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-6">
+                            <h3
+                                class="text-lg font-bold text-slate-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
+                                الصور</h3>
+                            <div class="space-y-4">
+                                <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:bg-gray-50 hover:border-primary/50 transition-all cursor-pointer"
+                                    onclick="document.getElementById('images-input').click()">
+                                    <div class="flex flex-col items-center gap-2 pointer-events-none">
+                                        <span
+                                            class="material-symbols-outlined text-4xl text-slate-300">add_photo_alternate</span>
+                                        <p class="text-sm font-bold text-slate-600">اضغط لرفع الصور</p>
+                                        <p class="text-xs text-slate-400">PNG, JPG, WEBP حتى 5MB</p>
+                                    </div>
+                                    <input type="file" id="images-input" multiple class="hidden" accept="image/*">
+                                </div>
+                                <div id="images-preview" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                    <!-- Image previews will go here -->
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Shipping -->
-                    <div class="bg-white rounded-xl border border-gray-100 p-6">
-                        <h2 class="font-bold text-slate-900 mb-5">الشحن</h2>
+                    <!-- Sidebar Info -->
+                    <div class="space-y-6">
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-6">
+                            <h3
+                                class="text-lg font-bold text-slate-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
+                                التسعير والمخزون</h3>
 
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    الوزن (كجم)
-                                </label>
-                                <input type="text" id="weight" name="weight"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm">
+                            <div class="space-y-4">
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">السعر <span
+                                            class="text-red-500">*</span></label>
+                                    <div class="relative">
+                                        <input type="number" id="price" required min="0" step="0.01"
+                                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pl-12"
+                                            placeholder="0.00">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">EGP</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">سعر الخصم
+                                        (اختياري)</label>
+                                    <div class="relative">
+                                        <input type="number" id="discount-price" min="0" step="0.01"
+                                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pl-12"
+                                            placeholder="0.00">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">EGP</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300">الكمية في
+                                        المخزون</label>
+                                    <input type="number" id="stock" min="0" value="0"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+                                </div>
+                                <div class="space-y-1.5">
+                                    <label class="block text-sm font-bold text-slate-700 dark:text-gray-300 text-left"
+                                        dir="ltr">SKU</label>
+                                    <input type="text" id="sku" dir="ltr"
+                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="e.g. OLV-001">
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">
-                                    الأبعاد
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="block text-sm font-bold text-slate-700 dark:text-white">الحالة</span>
+                                    <span class="block text-xs text-slate-500">هل المنتج نشط ومتاح للبيع؟</span>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="status" class="sr-only peer" checked>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                    </div>
                                 </label>
-                                <input type="text" id="dimensions" name="dimensions"
-                                    class="w-full h-11 px-4 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm rtl:text-right"
-                                    placeholder="الطول × العرض × الارتفاع">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="block text-sm font-bold text-slate-700 dark:text-white">مميز</span>
+                                    <span class="block text-xs text-slate-500">عرض في القسم المميز بالصفحة
+                                        الرئيسية</span>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="featured" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                                    </div>
+                                </label>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+
+            </div>
         </div>
-    </div>
+    </main>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 left-4 z-50 space-y-2"></div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin-layout.js"></script>
     <script src="/js/admin-product-form.js"></script>
 </body>
+
 </html>

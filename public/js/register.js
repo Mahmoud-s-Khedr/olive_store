@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Redirect to verify email page after delay
                 setTimeout(() => {
-                    window.location.href = 'verify-email.html?email=' + encodeURIComponent(emailValue);
+                    window.location.href = '/verify-email?email=' + encodeURIComponent(emailValue);
                 }, 2000);
             } else {
                 // Use Utils.parseError for consistent error messages

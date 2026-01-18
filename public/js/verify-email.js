@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePage();
 });
 
+const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
 function initializePage() {
     // Get token and email from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -42,12 +44,12 @@ function verifyEmail(token) {
         if (data.success) {
             showSuccessState();
         } else {
-            showErrorState(data.message || 'فشل في تأكيد البريد الإلكتروني');
+            showErrorState(data.message || t('auth.verify.error', 'Email verification failed'));
         }
     })
     .catch(error => {
         console.error('Verification error:', error);
-        showErrorState('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى');
+        showErrorState(t('errors.network', 'Connection error. Please try again.'));
     });
 }
 
@@ -63,7 +65,7 @@ function showSuccessState() {
     document.getElementById('verify-error').classList.add('hidden');
 }
 
-function showErrorState(message = 'الرابط غير صالح أو منتهي الصلاحية. حاول طلب رابط جديد.') {
+function showErrorState(message = t('errors.tokenInvalid', 'Invalid or expired link')) {
     document.getElementById('verify-pending').classList.add('hidden');
     document.getElementById('verify-success').classList.add('hidden');
     document.getElementById('verify-error').classList.remove('hidden');
@@ -108,7 +110,7 @@ function setupResendButtons(email) {
 
 async function resendVerification(email) {
     if (!email) {
-        showResendError('البريد الإلكتروني غير متوفر');
+        showResendError(t('auth.verify.emailMissing', 'Email is not available'));
         return;
     }
 
@@ -122,7 +124,7 @@ async function resendVerification(email) {
 
     if (resendBtn) {
         resendBtn.disabled = true;
-        if (resendBtnText) resendBtnText.textContent = 'جاري الإرسال...';
+        if (resendBtnText) resendBtnText.textContent = t('auth.verify.sending', 'Sending...');
         if (resendSpinner) resendSpinner.classList.remove('hidden');
     }
 
@@ -140,23 +142,23 @@ async function resendVerification(email) {
         if (response.ok) {
             // Show success
             showResendSuccess();
-            showToast('تم إرسال رسالة جديدة بنجاح!', 'success');
+            showToast(t('auth.verify.resendSuccess', 'Verification email sent successfully!'), 'success');
         } else {
             // Handle error
-            const errorMsg = data.message || 'حدث خطأ في إرسال الرسالة';
+            const errorMsg = data.message || t('auth.verify.resendError', 'Failed to send verification email');
             showResendError(errorMsg);
             showToast(errorMsg, 'error');
         }
     } catch (error) {
         console.error('Resend error:', error);
-        const errorMsg = 'حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى';
+        const errorMsg = t('errors.network', 'Connection error. Please try again.');
         showResendError(errorMsg);
         showToast(errorMsg, 'error');
     } finally {
         // Reset button state
         if (resendBtn) {
             resendBtn.disabled = false;
-            if (resendBtnText) resendBtnText.textContent = 'إعادة إرسال رسالة التأكيد';
+            if (resendBtnText) resendBtnText.textContent = t('auth.verify.resend', 'Resend verification link');
             if (resendSpinner) resendSpinner.classList.add('hidden');
         }
     }

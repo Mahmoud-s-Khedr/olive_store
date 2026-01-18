@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const token = localStorage.getItem('admin_token');
     if (!token) {
-        window.location.href = 'admin-login.html';
+        window.location.href = '/admin/login';
         return;
     }
 
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         try {
             await saveCategory(payload);
-            window.location.href = 'admin-categories.html';
+            window.location.href = '/admin/categories';
         } catch (error) {
             console.error('Save error:', error);
             formError.textContent = error.message || 'حدث خطأ أثناء الحفظ';
@@ -159,6 +159,6 @@ function toggleSidebar() {
 function handleLogout() {
     if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
         localStorage.removeItem('admin_token');
-        window.location.href = 'admin-login.html';
+        window.location.href = '/admin/login';
     }
 }

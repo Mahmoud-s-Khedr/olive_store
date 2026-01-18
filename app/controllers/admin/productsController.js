@@ -24,8 +24,15 @@ function validateProductPayload(body) {
 }
 
 async function list(req, res) {
-  const products = await Product.listAdmin();
-  res.json({ products });
+  const { page = 1, limit = 10, search, category, is_active } = req.query;
+  const result = await Product.listAdmin({
+    page: parseInt(page, 10),
+    limit: parseInt(limit, 10),
+    search,
+    category: category ? parseInt(category, 10) : undefined,
+    is_active
+  });
+  res.json(result);
 }
 
 async function getOne(req, res) {

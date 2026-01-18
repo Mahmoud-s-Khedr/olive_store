@@ -4,16 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرئيسية - زيتون مصر</title>
-    <meta name="description" content="متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي">
+    <title data-i18n="pageTitles.home">الرئيسية - زيتون مصر</title>
+    <meta name="description" content="متجر زيتون مصر - أفخر أنواع زيت الزيتون المصري الطبيعي"
+        data-i18n="[content]meta.homeDescription">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -72,16 +76,16 @@
 
     <!-- i18n Setup (before page load) -->
     <script>
-        (function () {
-            const lang = localStorage.getItem('lang') || 'ar';
-            const dir = lang === 'ar' ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
-            document.documentElement.dir = dir;
-        })();
+            (function () {
+                const lang = localStorage.getItem('lang') || 'ar';
+                const dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                document.documentElement.dir = dir;
+            })();
     </script>
 </head>
 
-<body class="bg-background-light text-olive-dark min-h-screen flex flex-col">
+<body class="bg-background-light text-olive-dark min-h-screen flex flex-col" data-nav="home">
 
     <!-- Top Navigation Bar -->
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -98,11 +102,16 @@
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center gap-8">
-                    <a href="/" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors text-primary font-bold" data-i18n="nav.home">الرئيسية</a>
-                    <a href="/products" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.products">المتجر</a>
-                    <a href="/categories" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.categories">الأقسام</a>
-                    <a href="/about" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.about">من نحن</a>
-                    <a href="/contact" class="text-olive-dark text-sm font-medium hover:text-primary transition-colors" data-i18n="nav.contact">تواصل معنا</a>
+                    <a href="/" class="nav-link text-sm font-medium hover:text-primary transition-colors"
+                        data-nav="home" data-i18n="nav.home">الرئيسية</a>
+                    <a href="/products" class="nav-link text-sm font-medium hover:text-primary transition-colors"
+                        data-nav="products" data-i18n="nav.products">المتجر</a>
+                    <a href="/categories" class="nav-link text-sm font-medium hover:text-primary transition-colors"
+                        data-nav="categories" data-i18n="nav.categories">الأقسام</a>
+                    <a href="/about" class="nav-link text-sm font-medium hover:text-primary transition-colors"
+                        data-nav="about" data-i18n="nav.about">من نحن</a>
+                    <a href="/contact" class="nav-link text-sm font-medium hover:text-primary transition-colors"
+                        data-nav="contact" data-i18n="nav.contact">تواصل معنا</a>
                 </nav>
 
                 <!-- Search & Actions -->
@@ -110,51 +119,71 @@
 
                     <!-- Search Bar (Desktop) -->
                     <div class="hidden md:flex w-64 lg:w-80 relative">
-                        <input type="text" id="search-input" placeholder="ابحث عن منتج..." data-i18n="nav.search" class="w-full bg-gray-50 border-none rounded-lg py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all">
+                        <input type="text" id="search-input" placeholder="ابحث عن منتج..." data-i18n="nav.search"
+                            class="w-full bg-gray-50 border-none rounded-lg py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all">
                         <span class="material-symbols-outlined absolute right-3 top-2.5 text-olive-light">search</span>
                     </div>
 
                     <!-- Language Switcher -->
                     <div class="relative" id="lang-menu-container">
-                        <button id="lang-menu-btn" class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
-                            <span id="current-lang-flag">🇪🇬</span>
-                            <span id="current-lang-name" class="hidden sm:inline text-olive-dark">العربية</span>
+                        <button id="lang-menu-btn"
+                            class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                            <span id="current-lang-flag" data-current-flag>🇪🇬</span>
+                            <span id="current-lang-name" class="hidden sm:inline text-olive-dark"
+                                data-current-lang>العربية</span>
                             <span class="material-symbols-outlined text-sm">expand_more</span>
                         </button>
-                        <div id="lang-dropdown" class="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden lang-dropdown z-50">
-                            <button class="lang-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2" data-lang="ar">
+                        <div id="lang-dropdown"
+                            class="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden lang-dropdown z-50">
+                            <button
+                                class="lang-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"
+                                data-lang="ar">
                                 <span>🇪🇬</span>
-                                <span>العربية</span>
+                                <span data-i18n="lang.ar">العربية</span>
                             </button>
-                            <button class="lang-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2" data-lang="en">
+                            <button
+                                class="lang-option w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"
+                                data-lang="en">
                                 <span>🇺🇸</span>
-                                <span>English</span>
+                                <span data-i18n="lang.en">English</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Cart -->
-                    <a href="/cart" class="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors">
+                    <a href="/cart"
+                        class="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors">
                         <span class="material-symbols-outlined">shopping_cart</span>
-                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                        <span id="cart-badge"
+                            class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                     </a>
 
                     <!-- User Menu -->
                     <div class="relative" id="user-menu-container">
-                        <button id="user-menu-btn" class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                        <button id="user-menu-btn"
+                            class="flex items-center gap-1.5 h-10 px-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
                             <span class="material-symbols-outlined">person</span>
-                            <span id="user-name" class="hidden sm:inline text-olive-dark">الحساب</span>
+                            <span id="user-name" class="hidden sm:inline text-olive-dark"
+                                data-i18n="nav.account">الحساب</span>
                             <span class="material-symbols-outlined text-sm">expand_more</span>
                         </button>
-                        <div id="user-dropdown" class="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden min-w-[140px] z-50">
-                            <a href="/login" class="guest-link block px-4 py-2 text-sm hover:bg-gray-50" data-i18n="nav.login">تسجيل الدخول</a>
-                            <a href="/register" class="guest-link block px-4 py-2 text-sm hover:bg-gray-50" data-i18n="nav.register">إنشاء حساب</a>
+                        <div id="user-dropdown"
+                            class="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 hidden min-w-[140px] z-50">
+                            <a href="/login" class="guest-link block px-4 py-2 text-sm hover:bg-gray-50"
+                                data-i18n="nav.login">تسجيل الدخول</a>
+                            <a href="/register" class="guest-link block px-4 py-2 text-sm hover:bg-gray-50"
+                                data-i18n="nav.register">إنشاء حساب</a>
                             <div class="border-t border-gray-100 my-1"></div>
-                            <a href="/profile" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50" data-i18n="nav.profile">الملف الشخصي</a>
-                            <a href="/my-orders" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50" data-i18n="nav.myOrders">طلباتي</a>
-                            <a href="/my-addresses" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50" data-i18n="nav.myAddresses">عناويني</a>
+                            <a href="/profile" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50"
+                                data-i18n="nav.profile">الملف الشخصي</a>
+                            <a href="/my-orders" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50"
+                                data-i18n="nav.orders">طلباتي</a>
+                            <a href="/profile" class="user-link hidden px-4 py-2 text-sm hover:bg-gray-50"
+                                data-i18n="nav.addresses">عناويني</a>
                             <div class="border-t border-gray-100 my-1"></div>
-                            <button id="logout-btn" class="user-link hidden w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-red-600" data-i18n="nav.logout">تسجيل الخروج</button>
+                            <button id="logout-btn"
+                                class="user-link hidden w-full text-left px-4 py-2 text-sm hover:bg-gray-50 text-red-600"
+                                data-i18n="nav.logout">تسجيل الخروج</button>
                         </div>
                     </div>
 
@@ -162,30 +191,127 @@
             </div>
 
             <!-- Mobile Navigation -->
-            <div class="lg:hidden border-t border-gray-100 py-3">
-                <nav class="flex items-center justify-between">
-                    <a href="/" class="flex flex-col items-center gap-1 text-xs text-olive-dark text-primary font-bold">
-                        <span class="material-symbols-outlined text-lg">home</span>
-                        <span data-i18n="nav.home">الرئيسية</span>
-                    </a>
-                    <a href="/products" class="flex flex-col items-center gap-1 text-xs text-olive-dark">
-                        <span class="material-symbols-outlined text-lg">store</span>
-                        <span data-i18n="nav.products">المتجر</span>
-                    </a>
-                    <a href="/categories" class="flex flex-col items-center gap-1 text-xs text-olive-dark">
-                        <span class="material-symbols-outlined text-lg">category</span>
-                        <span data-i18n="nav.categories">الأقسام</span>
-                    </a>
-                    <a href="/cart" class="flex flex-col items-center gap-1 text-xs text-olive-dark relative">
-                        <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                        <span id="cart-badge-mobile" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
-                        <span data-i18n="nav.cart">السلة</span>
-                    </a>
-                    <a href="/profile" class="flex flex-col items-center gap-1 text-xs text-olive-dark">
-                        <span class="material-symbols-outlined text-lg">person</span>
-                        <span data-i18n="nav.profile">الحساب</span>
-                    </a>
-                </nav>
+            <div class="lg:hidden flex items-center gap-4">
+                <!-- Search (Mobile) -->
+                <button id="mobile-search-toggle" class="text-olive-dark">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+
+                <!-- Cart (Mobile) -->
+                <a href="/cart"
+                    class="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span id="cart-badge-mobile"
+                        class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </a>
+
+                <!-- Hamburger Button -->
+                <button id="mobile-menu-btn" class="p-2 text-olive-dark rounded-lg hover:bg-gray-100 transition-colors">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden fixed inset-0 z-[60] bg-black/50 lg:hidden">
+                <div class="bg-white w-[280px] h-full shadow-2xl flex flex-col transition-transform">
+                    <!-- Menu Header -->
+                    <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+                        <span class="font-bold text-lg text-olive-dark" data-i18n="common.menu">القائمة</span>
+                        <button id="close-mobile-menu" class="p-2 text-gray-500 hover:text-red-500 transition-colors">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+
+                    <!-- Search Box -->
+                    <div class="p-4 border-b border-gray-100" id="mobile-search-container">
+                        <div class="relative">
+                            <input type="text" id="search-input-mobile" placeholder="ابحث عن منتج..."
+                                data-i18n="nav.search"
+                                class="w-full bg-gray-50 border-none rounded-lg py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 transition-all">
+                            <span
+                                class="material-symbols-outlined absolute right-3 top-2.5 text-olive-light">search</span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="flex-1 overflow-y-auto py-2">
+                        <nav class="flex flex-col">
+                            <a href="/"
+                                class="px-6 py-3 text-olive-dark hover:bg-primary/5 hover:text-primary font-medium transition-colors flex items-center gap-3"
+                                data-nav="home">
+                                <span class="material-symbols-outlined text-xl">home</span>
+                                <span data-i18n="nav.home">الرئيسية</span>
+                            </a>
+                            <a href="/products"
+                                class="px-6 py-3 text-olive-dark hover:bg-primary/5 hover:text-primary font-medium transition-colors flex items-center gap-3"
+                                data-nav="products">
+                                <span class="material-symbols-outlined text-xl">store</span>
+                                <span data-i18n="nav.products">المتجر</span>
+                            </a>
+                            <a href="/categories"
+                                class="px-6 py-3 text-olive-dark hover:bg-primary/5 hover:text-primary font-medium transition-colors flex items-center gap-3"
+                                data-nav="categories">
+                                <span class="material-symbols-outlined text-xl">category</span>
+                                <span data-i18n="nav.categories">الأقسام</span>
+                            </a>
+                            <a href="/about"
+                                class="px-6 py-3 text-olive-dark hover:bg-primary/5 hover:text-primary font-medium transition-colors flex items-center gap-3"
+                                data-nav="about">
+                                <span class="material-symbols-outlined text-xl">info</span>
+                                <span data-i18n="nav.about">من نحن</span>
+                            </a>
+                            <a href="/contact"
+                                class="px-6 py-3 text-olive-dark hover:bg-primary/5 hover:text-primary font-medium transition-colors flex items-center gap-3"
+                                data-nav="contact">
+                                <span class="material-symbols-outlined text-xl">contact_support</span>
+                                <span data-i18n="nav.contact">تواصل معنا</span>
+                            </a>
+
+                            <hr class="my-2 border-gray-100">
+
+                            <!-- User Actions -->
+                            <div class="px-6 py-2">
+                                <div class="guest-link">
+                                    <a href="/login"
+                                        class="flex items-center gap-3 py-2 text-olive-dark hover:text-primary">
+                                        <span class="material-symbols-outlined">login</span>
+                                        <span data-i18n="nav.login">تسجيل الدخول</span>
+                                    </a>
+                                </div>
+                                <div class="user-link hidden">
+                                    <a href="/profile"
+                                        class="flex items-center gap-3 py-2 text-olive-dark hover:text-primary">
+                                        <span class="material-symbols-outlined">person</span>
+                                        <span data-i18n="nav.profile">الملف الشخصي</span>
+                                    </a>
+                                    <a href="/my-orders"
+                                        class="flex items-center gap-3 py-2 text-olive-dark hover:text-primary">
+                                        <span class="material-symbols-outlined">shopping_bag</span>
+                                        <span data-i18n="nav.orders">طلباتي</span>
+                                    </a>
+                                    <button id="mobile-logout-btn"
+                                        class="flex items-center gap-3 py-2 text-red-600 hover:text-red-700 w-full text-right mt-2">
+                                        <span class="material-symbols-outlined">logout</span>
+                                        <span data-i18n="nav.logout">تسجيل الخروج</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <!-- Language Switcher (Mobile Footer) -->
+                    <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+                        <span class="text-sm font-bold text-olive-dark" data-i18n="common.language">اللغة</span>
+                        <div class="flex gap-2">
+                            <button
+                                class="mobile-lang-btn w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-200"
+                                data-lang="ar">🇪🇬</button>
+                            <button
+                                class="mobile-lang-btn w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-200"
+                                data-lang="en">🇺🇸</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -195,14 +321,20 @@
         <!-- Hero Section -->
         <section class="relative w-full bg-white">
             <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
-                <div class="relative rounded-2xl overflow-hidden min-h-[500px] md:min-h-[600px] flex items-center justify-center bg-cover bg-center" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1600&q=80');">
+                <div class="relative rounded-2xl overflow-hidden min-h-[500px] md:min-h-[600px] flex items-center justify-center bg-cover bg-center"
+                    style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=1600&q=80');">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div class="relative z-10 flex flex-col gap-6 text-center max-w-[800px] px-4">
-                        <span class="text-white/90 text-lg md:text-xl font-medium tracking-wide" data-i18n="home.hero.subtitle">أصالة الأرض المصرية</span>
-                        <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight" data-i18n-html="home.hero.title">الذهب السائل <br />من قلب مصر</h1>
-                        <p class="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed" data-i18n="home.hero.description">زيوت زيتون بكر ممتازة، عصرة أولى على البارد. نكهة غنية وجودة لا تضاهى.</p>
+                        <span class="text-white/90 text-lg md:text-xl font-medium tracking-wide"
+                            data-i18n="home.hero.subtitle"></span>
+                        <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight"
+                            data-i18n-html="home.hero.title"></h1>
+                        <p class="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed"
+                            data-i18n="home.hero.description"></p>
                         <div class="pt-4">
-                            <a href="/products" class="inline-block bg-primary hover:bg-primary-dark text-white text-lg font-bold py-4 px-10 rounded-lg transition-all transform hover:scale-105 shadow-lg" data-i18n="home.hero.cta">تسوق الآن</a>
+                            <a href="/products"
+                                class="inline-block bg-primary hover:bg-primary-dark text-white text-lg font-bold py-4 px-10 rounded-lg transition-all transform hover:scale-105 shadow-lg"
+                                data-i18n="home.hero.cta"></a>
                         </div>
                     </div>
                 </div>
@@ -213,8 +345,11 @@
         <section class="w-full bg-white py-12">
             <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-olive-dark text-2xl md:text-3xl font-bold" data-i18n="home.categories.title">تصفح الأقسام</h2>
-                    <a href="/categories" class="text-primary font-bold text-sm flex items-center gap-1 hover:underline" data-i18n="home.categories.viewAll">عرض الكل <span class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span></a>
+                    <h2 class="text-olive-dark text-2xl md:text-3xl font-bold" data-i18n="home.categories.title">تصفح
+                        الأقسام</h2>
+                    <a href="/categories" class="text-primary font-bold text-sm flex items-center gap-1 hover:underline"
+                        data-i18n="home.categories.viewAll">عرض الكل <span
+                            class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span></a>
                 </div>
 
                 <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -227,12 +362,15 @@
         <section class="w-full bg-background-light py-12">
             <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-olive-dark text-2xl md:text-3xl font-bold" data-i18n="home.featured.title">المنتجات المميزة</h2>
+                    <h2 class="text-olive-dark text-2xl md:text-3xl font-bold" data-i18n="home.featured.title">المنتجات
+                        المميزة</h2>
                     <div class="flex gap-2">
-                        <button id="products-prev" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
+                        <button id="products-prev"
+                            class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
                             <span class="material-symbols-outlined">chevron_right</span>
                         </button>
-                        <button id="products-next" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
+                        <button id="products-next"
+                            class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-white transition-colors">
                             <span class="material-symbols-outlined">chevron_left</span>
                         </button>
                     </div>
@@ -250,29 +388,35 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                     <!-- Badge 1 -->
                     <div class="flex flex-col items-center text-center gap-4">
-                        <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                        <div
+                            class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
                             <span class="material-symbols-outlined text-4xl">eco</span>
                         </div>
                         <h3 class="text-xl font-bold text-olive-dark" data-i18n="home.trust.quality">100% طبيعي</h3>
-                        <p class="text-olive-light" data-i18n="home.trust.qualityDesc">منتجات خالية من المواد الحافظة، مباشرة من المزرعة إليك.</p>
+                        <p class="text-olive-light" data-i18n="home.trust.qualityDesc">منتجات خالية من المواد الحافظة،
+                            مباشرة من المزرعة إليك.</p>
                     </div>
 
                     <!-- Badge 2 -->
                     <div class="flex flex-col items-center text-center gap-4">
-                        <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                        <div
+                            class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
                             <span class="material-symbols-outlined text-4xl">local_shipping</span>
                         </div>
                         <h3 class="text-xl font-bold text-olive-dark" data-i18n="home.trust.delivery">توصيل سريع</h3>
-                        <p class="text-olive-light" data-i18n="home.trust.deliveryDesc">شحن لجميع محافظات مصر خلال 2-4 أيام عمل.</p>
+                        <p class="text-olive-light" data-i18n="home.trust.deliveryDesc">شحن لجميع محافظات مصر خلال 2-4
+                            أيام عمل.</p>
                     </div>
 
                     <!-- Badge 3 -->
                     <div class="flex flex-col items-center text-center gap-4">
-                        <div class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                        <div
+                            class="w-20 h-20 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
                             <span class="material-symbols-outlined text-4xl">verified_user</span>
                         </div>
                         <h3 class="text-xl font-bold text-olive-dark" data-i18n="home.trust.payment">دفع آمن</h3>
-                        <p class="text-olive-light" data-i18n="home.trust.paymentDesc">خيارات دفع متعددة وآمنة، بما في ذلك الدفع عند الاستلام.</p>
+                        <p class="text-olive-light" data-i18n="home.trust.paymentDesc">خيارات دفع متعددة وآمنة، بما في
+                            ذلك الدفع عند الاستلام.</p>
                     </div>
                 </div>
             </div>
@@ -283,21 +427,33 @@
             <div class="max-w-[1280px] mx-auto px-4 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <span class="text-primary font-bold text-sm uppercase tracking-wider" data-i18n="home.about.story">قصتنا</span>
-                        <h2 class="text-2xl md:text-3xl font-bold text-olive-dark mt-2 mb-4" data-i18n="home.about.title">من قلب واحة سيوة إلى مائدتك</h2>
-                        <p class="text-olive-light leading-relaxed mb-6" data-i18n="home.about.description">نحن نختار بعناية أفضل ثمار الزيتون من مزارع سيوة العريقة، ونعصرها بأحدث التقنيات للحفاظ على كل العناصر الغذائية والنكهة الأصيلة. كل قطرة من زيتنا تحمل معها تاريخاً عريقاً وجودة لا تضاهى.</p>
-                        <a href="/about" class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors" data-i18n="home.about.cta">اعرف المزيد عنا <span class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span></a>
+                        <span class="text-primary font-bold text-sm uppercase tracking-wider"
+                            data-i18n="home.about.story">قصتنا</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-olive-dark mt-2 mb-4"
+                            data-i18n="home.about.title">من قلب واحة سيوة إلى مائدتك</h2>
+                        <p class="text-olive-light leading-relaxed mb-6" data-i18n="home.about.description">نحن نختار
+                            بعناية أفضل ثمار الزيتون من مزارع سيوة العريقة، ونعصرها بأحدث التقنيات للحفاظ على كل العناصر
+                            الغذائية والنكهة الأصيلة. كل قطرة من زيتنا تحمل معها تاريخاً عريقاً وجودة لا تضاهى.</p>
+                        <a href="/about"
+                            class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors"
+                            data-i18n="home.about.cta">اعرف المزيد عنا <span
+                                class="material-symbols-outlined text-sm rotate-180">arrow_right_alt</span></a>
                     </div>
                     <div class="relative">
                         <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200">
-                            <img src="https://images.unsplash.com/photo-1545153177-77e30c36b3c3?w=800&q=80" alt="مزارع الزيتون" class="w-full h-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1545153177-77e30c36b3c3?w=800&q=80"
+                                alt="مزارع الزيتون" class="w-full h-full object-cover"
+                                data-i18n="[alt]home.about.imageAlt">
                         </div>
-                        <div class="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 hidden md:flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                        <div
+                            class="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 hidden md:flex items-center gap-3">
+                            <div
+                                class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                                 <span class="material-symbols-outlined text-2xl">workspace_premium</span>
                             </div>
                             <div>
-                                <div class="text-2xl font-bold text-olive-dark">+١٠</div>
+                                <div class="text-2xl font-bold text-olive-dark" data-i18n="home.about.experienceValue">
+                                    +١٠</div>
                                 <div class="text-sm text-olive-light" data-i18n="home.about.experience">سنوات خبرة</div>
                             </div>
                         </div>
@@ -318,15 +474,19 @@
                         <span class="material-symbols-outlined text-3xl text-primary">water_drop</span>
                         <span class="text-2xl font-bold" data-i18n="footer.brand">زيتون مصر</span>
                     </div>
-                    <p class="text-[#b0b8a6] text-sm leading-relaxed" data-i18n="footer.description">نقدم أفخر أنواع زيت الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.</p>
+                    <p class="text-[#b0b8a6] text-sm leading-relaxed" data-i18n="footer.description">نقدم أفخر أنواع زيت
+                        الزيتون المصري، المزروع بعناية والمحضّر بشغف لنمنحكم مذاقاً لا ينسى.</p>
                     <div class="flex gap-3 mt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
                             <span class="text-xs font-bold">FB</span>
                         </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
                             <span class="text-xs font-bold">IG</span>
                         </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
+                        <a href="#"
+                            class="w-9 h-9 rounded-full bg-[#3d4536] flex items-center justify-center hover:bg-primary transition-colors">
                             <span class="text-xs font-bold">WA</span>
                         </a>
                     </div>
@@ -336,10 +496,14 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-white font-bold text-lg" data-i18n="footer.quickLinks">روابط سريعة</h4>
                     <ul class="space-y-2 text-[#b0b8a6] text-sm">
-                        <li><a href="/about" class="hover:text-white transition-colors" data-i18n="nav.about">من نحن</a></li>
-                        <li><a href="/products" class="hover:text-white transition-colors" data-i18n="nav.products">المتجر</a></li>
-                        <li><a href="/contact" class="hover:text-white transition-colors" data-i18n="nav.contact">تواصل معنا</a></li>
-                        <li><a href="/shipping" class="hover:text-white transition-colors" data-i18n="footer.shipping">الشحن والإرجاع</a></li>
+                        <li><a href="/about" class="hover:text-white transition-colors" data-i18n="nav.about">من نحن</a>
+                        </li>
+                        <li><a href="/products" class="hover:text-white transition-colors"
+                                data-i18n="nav.products">المتجر</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors" data-i18n="nav.contact">تواصل
+                                معنا</a></li>
+                        <li><a href="/shipping" class="hover:text-white transition-colors"
+                                data-i18n="footer.shipping">الشحن والإرجاع</a></li>
                     </ul>
                 </div>
 
@@ -347,10 +511,14 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-white font-bold text-lg" data-i18n="footer.customerService">خدمة العملاء</h4>
                     <ul class="space-y-2 text-[#b0b8a6] text-sm">
-                        <li><a href="/my-orders" class="hover:text-white transition-colors" data-i18n="nav.myOrders">طلباتي</a></li>
-                        <li><a href="/profile" class="hover:text-white transition-colors" data-i18n="nav.profile">الملف الشخصي</a></li>
-                        <li><a href="/faq" class="hover:text-white transition-colors" data-i18n="footer.faq">الأسئلة الشائعة</a></li>
-                        <li><a href="/support" class="hover:text-white transition-colors" data-i18n="footer.support">الدعم الفني</a></li>
+                        <li><a href="/my-orders" class="hover:text-white transition-colors"
+                                data-i18n="nav.orders">طلباتي</a></li>
+                        <li><a href="/profile" class="hover:text-white transition-colors" data-i18n="nav.profile">الملف
+                                الشخصي</a></li>
+                        <li><a href="/faq" class="hover:text-white transition-colors" data-i18n="footer.faq">الأسئلة
+                                الشائعة</a></li>
+                        <li><a href="/support" class="hover:text-white transition-colors"
+                                data-i18n="footer.support">الدعم الفني</a></li>
                     </ul>
                 </div>
 
@@ -360,7 +528,7 @@
                     <div class="space-y-3 text-[#b0b8a6] text-sm">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-primary">phone</span>
-                            <span>+20 123 456 7890</span>
+                            <span dir="ltr" data-i18n="footer.phone">+20 123 456 7890</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-primary">email</span>
@@ -377,10 +545,13 @@
 
             <div class="border-t border-[#3d4536] pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-[#b0b8a6] text-sm" data-i18n="footer.copyright">© 2024 زيتون مصر. جميع الحقوق محفوظة.</p>
+                    <p class="text-[#b0b8a6] text-sm" data-i18n="footer.copyright">© 2024 زيتون مصر. جميع الحقوق محفوظة.
+                    </p>
                     <div class="flex gap-6 text-sm">
-                        <a href="/privacy" class="text-[#b0b8a6] hover:text-white transition-colors" data-i18n="footer.privacy">سياسة الخصوصية</a>
-                        <a href="/terms" class="text-[#b0b8a6] hover:text-white transition-colors" data-i18n="footer.terms">الشروط والأحكام</a>
+                        <a href="/privacy" class="text-[#b0b8a6] hover:text-white transition-colors"
+                            data-i18n="footer.privacy">سياسة الخصوصية</a>
+                        <a href="/terms" class="text-[#b0b8a6] hover:text-white transition-colors"
+                            data-i18n="footer.terms">الشروط والأحكام</a>
                     </div>
                 </div>
             </div>
@@ -396,81 +567,8 @@
     <script src="/js/cart.js"></script>
     <script src="/js/home.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize i18n
-            if (typeof I18n !== 'undefined') {
-                I18n.init();
-            }
 
-            // Initialize auth
-            if (typeof AuthModule !== 'undefined') {
-                AuthModule.init();
-            }
-
-            // Initialize cart
-            if (typeof Cart !== 'undefined') {
-                Cart.updateBadge();
-            }
-
-            // Language switcher
-            document.getElementById('lang-menu-btn')?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.getElementById('lang-dropdown').classList.toggle('hidden');
-            });
-
-            document.querySelectorAll('.lang-option').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const lang = btn.dataset.lang;
-                    if (typeof I18n !== 'undefined') {
-                        I18n.setLanguage(lang);
-                    } else {
-                        localStorage.setItem('lang', lang);
-                        location.reload();
-                    }
-                    document.getElementById('lang-dropdown').classList.add('hidden');
-                });
-            });
-
-            document.addEventListener('click', (e) => {
-                const langDropdown = document.getElementById('lang-dropdown');
-                const langContainer = document.getElementById('lang-menu-container');
-                if (langDropdown && langContainer && !langContainer.contains(e.target)) {
-                    langDropdown.classList.add('hidden');
-                }
-            });
-
-            // User menu
-            document.getElementById('user-menu-btn')?.addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.getElementById('user-dropdown').classList.toggle('hidden');
-            });
-
-            document.getElementById('logout-btn')?.addEventListener('click', () => {
-                if (typeof AuthModule !== 'undefined') {
-                    AuthModule.logout();
-                }
-            });
-
-            document.addEventListener('click', (e) => {
-                const userDropdown = document.getElementById('user-dropdown');
-                const userContainer = document.getElementById('user-menu-container');
-                if (userDropdown && userContainer && !userContainer.contains(e.target)) {
-                    userDropdown.classList.add('hidden');
-                }
-            });
-
-            // Search
-            document.getElementById('search-input')?.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    const query = e.target.value.trim();
-                    if (query) {
-                        window.location.href = `/products?search=${encodeURIComponent(query)}`;
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="/js/navbar.js"></script>
 </body>
 
 </html>

@@ -1,245 +1,351 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html class="light" dir="rtl" lang="ar">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة الملفات - متجر الزيتون</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>الملفات - لوحة التحكم</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
+            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: '#8B5A2B',
-                        'primary-dark': '#6B4423',
-                        'primary-light': '#B67B4A',
-                        secondary: '#D4AF37',
-                        'secondary-dark': '#B8941F',
-                        accent: '#F4F1E8',
-                        'text-main': '#2C1810',
-                        'text-secondary': '#8B7355',
-                        'text-muted': '#B8A089',
-                        'border-color': '#E8DCC0',
-                        'bg-primary': '#FEFCF8',
-                        'bg-secondary': '#F9F6F0',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'error': '#EF4444'
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c"
                     },
                     fontFamily: {
-                        'sans': ['Work Sans', 'system-ui', 'sans-serif'],
-                        'arabic': ['Amiri', 'serif']
-                    }
-                }
-            }
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
         }
     </script>
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .sidebar-transition {
-            transition: transform 0.3s ease-in-out;
+
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .sidebar-open {
-            transform: translateX(0);
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        .sidebar-closed {
-            transform: translateX(100%);
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
-        @media (min-width: 768px) {
-            .sidebar-closed {
-                transform: translateX(0);
-            }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
         }
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        .file-item {
-            background: white;
-            border: 1px solid #E8DCC0;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            transition: all 0.2s;
-        }
-        .file-item:hover {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        .file-preview {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 0.375rem;
-            margin-bottom: 0.75rem;
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3af;
         }
     </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="bg-bg-primary font-sans text-text-main">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg sidebar-transition sidebar-closed md:sidebar-open">
-        <div class="flex flex-col h-full">
-            <!-- Logo -->
-            <div class="flex items-center justify-center h-16 px-4 bg-primary">
-                <h1 class="text-xl font-bold text-white">متجر الزيتون</h1>
-            </div>
 
-            <!-- Navigation -->
-            <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="admin-dashboard.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">dashboard</span>
-                    لوحة التحكم
+<body class="bg-background-light dark:bg-background-dark text-slate-800 font-body min-h-screen flex"
+    data-theme="default">
+
+    <!-- Sidebar (Structure standard, theme handled by admin-layout.js) -->
+    <aside
+        class="w-64 bg-white dark:bg-surface-dark border-l border-gray-100 dark:border-gray-800 flex-shrink-0 hidden lg:flex flex-col h-screen sticky top-0 z-30 shadow-[0_0_15px_rgba(0,0,0,0.02)]">
+        <div class="p-6 flex items-center gap-3">
+            <div class="bg-emerald-600/10 p-2 rounded-xl">
+                <img src="/images/logo-icon.png"
+                    onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCYx5WQbT_k1mFeUG-bQB3Tcz1WKKV1i0SOJkA9kDXEKv5j65bxGhXBRufJ64jHetk7zELQjvGf6BSYvCxkY8H9uB1ouSpHMkV27BCOEWyk5Mm5npvQwFY6Tr6u0qYu0cBYdEJjQvMG-Ok4PgfkqRBEakLQwzIyiOFALi8NoNlaslcfBntsE1EWG7IiuX94iZapRXqZ9DEY_lTiQ6-D74xv6b4SmH0tHprOymjywYKRxptuwafvrCD3oXpWLDlv0teHa6RORNDNTqk'"
+                    alt="Logo" class="w-8 h-8 object-contain">
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">زيتون مصر</h1>
+                <p class="text-[11px] text-slate-500 font-medium">لوحة الإدارة</p>
+            </div>
+        </div>
+        <div class="flex-1 px-4 overflow-y-auto">
+            <p class="px-2 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">القائمة الرئيسية</p>
+            <nav class="flex flex-col gap-1">
+                <a href="/admin"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-600 transition-colors">dashboard</span>
+                    <span class="text-sm font-medium">لوحة التحكم</span>
                 </a>
-                <a href="admin-products.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">inventory_2</span>
-                    المنتجات
+                <a href="/admin/products"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-amber-500 transition-colors">inventory_2</span>
+                    <span class="text-sm font-medium">المنتجات</span>
                 </a>
-                <a href="admin-categories.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">category</span>
-                    الفئات
+                <a href="/admin/categories"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-500 transition-colors">category</span>
+                    <span class="text-sm font-medium">الفئات</span>
                 </a>
-                <a href="admin-orders.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">shopping_cart</span>
-                    الطلبات
+                <a href="/admin/orders"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-blue-500 transition-colors">shopping_bag</span>
+                    <span class="text-sm font-medium">الطلبات</span>
+                    <span class="mr-auto bg-red-100 text-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-md"
+                        id="pending-orders-badge">0</span>
                 </a>
-                <a href="admin-customers.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">people</span>
-                    العملاء
+                <a href="/admin/customers"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-purple-500 transition-colors">group</span>
+                    <span class="text-sm font-medium">العملاء</span>
                 </a>
-                <a href="admin-files.html" class="flex items-center px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">folder</span>
-                    الملفات
+                <a href="/admin/files"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-indigo-500 transition-colors">folder_open</span>
+                    <span class="text-sm font-medium">المكتبة</span>
                 </a>
-                <a href="admin-settings.html" class="flex items-center px-4 py-3 text-text-secondary hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">settings</span>
-                    الإعدادات
+                <div class="h-px bg-gray-100 my-2 mx-2"></div>
+                <a href="/admin/settings"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-slate-800 transition-colors">settings</span>
+                    <span class="text-sm font-medium">الإعدادات</span>
                 </a>
             </nav>
+        </div>
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors group">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 bg-cover bg-center border-2 border-white shadow-sm"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDp5OgAjFlqqRjPxJ9pP321tS2iWmDWh3hGTef6TqnTbbNZ5YTpB7zVhAPVbC6kCdUYApzpo6d1NXogEXe-Ltbaw6rPRZzSqHoSiQGgPBHwDP1isQMA9wfkA1QoWmjCBwiNl14F_YI87QYxRxP1rUa63iHhDc-g-Drj9zBV46ZjD3H4TeQ_M6HppGjtokmMfmwqMi0hRA5OwxRr_asmgnvlaT_huiA-vZB4W3Pcc4KgekEvarkehMYidEWfShASZzsJl_aqV2ZiwgA');">
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span id="admin-name"
+                        class="text-sm font-bold text-slate-800 group-hover:text-primary transition-colors">المدير
 
-            <!-- Logout -->
-            <div class="p-4 border-t border-border-color">
-                <button id="logout-btn" class="flex items-center w-full px-4 py-3 text-text-secondary hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
-                    <span class="material-symbols-outlined ml-3">logout</span>
-                    تسجيل الخروج
+                        <span class="text-[10px] text-slate-400">مدير المتجر</span>
+                </div>
+                <button id="sidebar-logout-btn" class="mr-auto text-slate-300 hover:text-red-500 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
                 </button>
             </div>
         </div>
     </aside>
 
     <!-- Main Content -->
-    <div class="md:mr-64">
-        <!-- Topbar -->
-        <header class="bg-white shadow-sm border-b border-border-color">
-            <div class="flex items-center justify-between px-4 py-3">
-                <!-- Mobile menu button -->
-                <button id="sidebar-toggle" class="md:hidden p-2 text-text-secondary hover:bg-gray-100 rounded-lg">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-slate-500 hover:text-slate-800" onclick="toggleMobileSidebar()">
                     <span class="material-symbols-outlined">menu</span>
                 </button>
+                <div class="relative hidden sm:block w-96">
+                    <span
+                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+                    <input id="search-input" type="text" placeholder="بحث عن ملف..."
+                        class="w-full bg-gray-50 border-none rounded-xl py-2.5 pr-10 pl-4 text-sm text-slate-700 focus:ring-2 focus:ring-primary/20 transition-shadow">
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="relative p-2 rounded-full hover:bg-gray-50 text-slate-500 transition-colors">
+                    <span class="material-symbols-outlined text-[22px]">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                </button>
+            </div>
+        </header>
 
-                <!-- Search -->
-                <div class="flex-1 max-w-md mx-4">
-                    <div class="relative">
-                        <span class="material-symbols-outlined absolute right-3 top-1/2 transform -translate-y-1/2 text-text-secondary">search</span>
-                        <input type="text" id="search-input" placeholder="البحث في الملفات..." class="w-full pr-10 pl-4 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-6 scroll-smooth">
+            <div class="max-w-7xl mx-auto space-y-6">
+
+                <!-- Page Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-1">
+                            <span>لوحة التحكم</span>
+                            <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+                            <span>المكتبة</span>
+                        </div>
+                        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">إدارة الملفات</h1>
+                        <p class="text-slate-500 text-sm mt-1">قم بإدارة صور المنتجات والمستندات الخاصة بمتجرك.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="upload-btn"
+                            class="flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl transition-colors text-sm font-bold shadow-md shadow-primary/20 w-full sm:w-auto justify-center">
+                            <span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+                            <span>رفع ملف</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tools Bar -->
+                <div
+                    class="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row gap-4 md:items-center justify-between">
+                    <div class="flex flex-wrap gap-4 flex-1">
+                        <!-- Search -->
+                        <div class="relative w-full sm:w-64">
+                            <span
+                                class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+                            <input id="search-input-mobile" type="text" placeholder="بحث..."
+                                class="w-full bg-gray-50 border-none rounded-xl py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/20 text-slate-700 sm:hidden">
+                            <!-- Desktop Search -->
+                            <span
+                                class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hidden sm:block">search</span>
+                            <input id="search-input-desktop" type="text" placeholder="بحث في المكتبة..."
+                                class="w-full bg-gray-50 border-none rounded-xl py-2.5 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/20 text-slate-700 hidden sm:block">
+                        </div>
+
+                        <!-- Type Filter -->
+                        <div class="relative min-w-[160px] flex-1 sm:flex-none">
+                            <select id="type-filter"
+                                class="w-full appearance-none bg-gray-50 border-none text-slate-700 text-sm rounded-xl px-4 py-2.5 pr-4 pl-10 focus:ring-2 focus:ring-primary/20 cursor-pointer">
+                                <option value="">جميع الملفات</option>
+                                <option value="image">الصور</option>
+                                <option value="video">الفيديو</option>
+                                <option value="document">المستندات</option>
+                            </select>
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center bg-gray-50 dark:bg-gray-800/50 rounded-xl p-1 gap-1">
+                        <button
+                            class="p-2 rounded-lg bg-white dark:bg-surface-dark text-primary shadow-sm transition-all"
+                            title="عرض الشبكة">
+                            <span class="material-symbols-outlined text-[20px]">grid_view</span>
+                        </button>
+                        <button
+                            class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all"
+                            title="عرض القائمة">
+                            <span class="material-symbols-outlined text-[20px]">view_list</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Files Grid -->
+                <div id="files-grid"
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state"
+                    class="hidden flex flex-col items-center justify-center py-16 bg-white dark:bg-surface-dark border border-gray-100 dark:border-gray-800 rounded-3xl text-center border-dashed border-2">
+                    <div class="bg-indigo-50 dark:bg-indigo-500/10 p-4 rounded-full mb-4">
+                        <span class="material-symbols-outlined text-4xl text-indigo-400">folder_open</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">المكتبة فارغة</h3>
+                    <p class="text-slate-500 text-sm mb-6 max-w-xs mx-auto">لم يتم العثور على أي ملفات. ابدأ برفع صور
+                        منتجاتك.</p>
+                    <button
+                        class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md shadow-primary/20 transition-all inline-flex items-center gap-2"
+                        onclick="document.getElementById('upload-btn').click()">
+                        <span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+                        رفع أول ملف
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination-container" class="mt-4 flex items-center justify-between"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal"
+        class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div
+            class="bg-white dark:bg-surface-dark rounded-2xl shadow-xl max-w-lg w-full transform scale-95 transition-transform duration-300">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">رفع ملف جديد</h3>
+                <button id="close-upload-modal"
+                    class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="upload-form" class="p-6 space-y-6">
+                <!-- Dropzone -->
+                <div
+                    class="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-8 text-center hover:border-primary hover:bg-primary/5 transition-colors cursor-pointer relative">
+                    <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        multiple accept="image/*,video/*,application/pdf">
+                    <div class="flex flex-col items-center gap-3 pointer-events-none">
+                        <div class="bg-indigo-50 dark:bg-indigo-500/10 p-3 rounded-full">
+                            <span class="material-symbols-outlined text-3xl text-primary">cloud_upload</span>
+                        </div>
+                        <div>
+                            <p class="text-slate-900 dark:text-white font-bold text-sm">اسحب وأفلت الملفات هنا</p>
+                            <p class="text-slate-500 text-xs mt-1">أو انقر للاختيار من جهازك</p>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2">PNG, JPG, PDF up to 5MB</p>
+                    </div>
+                </div>
+
+                <!-- Preview Area (Simplified) -->
+                <div id="upload-preview" class="hidden space-y-2">
+                    <p class="text-xs font-bold text-slate-500 uppercase">الملفات المختارة</p>
+                    <div class="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl flex items-center gap-3">
+                        <span class="material-symbols-outlined text-slate-400">description</span>
+                        <span class="text-sm text-slate-700 dark:text-white truncate flex-1"
+                            id="file-name-preview">filename.jpg</span>
+                        <button type="button" class="text-slate-400 hover:text-red-500"><span
+                                class="material-symbols-outlined text-[18px]">delete</span></button>
                     </div>
                 </div>
 
                 <!-- Actions -->
-                <div class="flex items-center gap-2">
-                    <button id="upload-btn" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-                        <span class="material-symbols-outlined text-[20px]">upload</span>
-                        رفع ملف
-                    </button>
+                <div class="flex items-center gap-3">
+                    <button type="button" id="cancel-upload"
+                        class="flex-1 py-2.5 rounded-xl border border-gray-200 text-slate-600 hover:bg-gray-50 font-bold text-sm transition-colors">إلغاء</button>
+                    <button type="submit"
+                        class="flex-1 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-sm shadow-md shadow-primary/20 transition-colors">رفع
+                        الملفات</button>
                 </div>
-            </div>
-        </header>
-
-        <!-- Page Content -->
-        <main class="p-6">
-            <!-- Page Header -->
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-text-main mb-2">إدارة الملفات</h2>
-                <p class="text-text-secondary">إدارة ملفات وصور المتجر</p>
-            </div>
-
-            <!-- File Upload Modal -->
-            <div id="upload-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
-                <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-xl font-bold text-text-main">رفع ملف جديد</h3>
-                            <button id="close-upload-modal" class="p-2 text-text-secondary hover:bg-gray-100 rounded-lg">
-                                <span class="material-symbols-outlined">close</span>
-                            </button>
-                        </div>
-
-                        <form id="upload-form" enctype="multipart/form-data">
-                            <div class="mb-4">
-                                <label for="file-input" class="block text-sm font-medium text-text-main mb-2">اختر الملف</label>
-                                <input type="file" id="file-input" name="file" multiple accept="image/*,video/*,audio/*,application/*" required class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <p class="text-xs text-text-secondary mt-1">يمكن رفع ملفات الصور، الفيديو، الصوت والمستندات</p>
-                            </div>
-
-                            <div class="mb-6">
-                                <label for="file-category" class="block text-sm font-medium text-text-main mb-2">الفئة</label>
-                                <select id="file-category" name="category" class="w-full px-3 py-2 border border-border-color rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                                    <option value="products">منتجات</option>
-                                    <option value="categories">فئات</option>
-                                    <option value="banners">بانرز</option>
-                                    <option value="general">عام</option>
-                                </select>
-                            </div>
-
-                            <div class="flex gap-3">
-                                <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-                                    رفع الملف
-                                </button>
-                                <button type="button" id="cancel-upload" class="flex-1 px-4 py-2 border border-border-color text-text-main rounded-lg hover:bg-gray-50 transition-colors">
-                                    إلغاء
-                                </button>
-                            </div>
-                        </form>
-
-                        <div id="upload-progress" class="hidden mt-4">
-                            <div class="bg-gray-200 rounded-full h-2">
-                                <div id="progress-bar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-                            </div>
-                            <p class="text-sm text-text-secondary mt-2 text-center">جاري رفع الملف...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Files Grid -->
-            <div id="files-grid" class="file-grid">
-                <!-- Files will be loaded here -->
-            </div>
-
-            <!-- Pagination -->
-            <div id="pagination-container" class="mt-6">
-                <!-- Pagination will be loaded here -->
-            </div>
-
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden text-center py-12">
-                <span class="material-symbols-outlined text-6xl text-text-muted mb-4">folder</span>
-                <h3 class="text-xl font-bold text-text-main mb-2">لا توجد ملفات</h3>
-                <p class="text-text-secondary mb-6">ابدأ برفع بعض الملفات لإدارتها</p>
-                <button id="upload-first-btn" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
-                    رفع ملف جديد
-                </button>
-            </div>
-        </main>
+            </form>
+        </div>
     </div>
 
-    <!-- Scripts -->
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin-layout.js"></script>
     <script src="/js/admin-files.js"></script>
 </body>
+
 </html>

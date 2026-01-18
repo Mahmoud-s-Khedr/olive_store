@@ -1,5 +1,8 @@
 // Order Detail Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+    const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : (localStorage.getItem('lang') || 'ar');
+    const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
     // Account menu toggle
     const accountBtn = document.getElementById('account-btn');
     const accountMenu = document.getElementById('account-menu');
@@ -17,39 +20,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Redirect if not logged in
     if (!token) {
-        window.location.href = '/pages/login.html?redirect=' + window.location.pathname;
+        window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
         return;
     }
 
     // Get order ID from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const orderNumber = urlParams.get('id');
-
-    // Convert to Arabic numerals
-    function toArabicNum(num) {
-        const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-        return String(num).split('').map(d => arabicNums[parseInt(d)] || d).join('');
+    let orderNumber = urlParams.get('id');
+    if (!orderNumber) {
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        orderNumber = parts[1] || '';
+    }
+    if (!orderNumber) {
+        document.getElementById('loading-state')?.classList.add('hidden');
+        document.getElementById('not-found')?.classList.remove('hidden');
+        return;
     }
 
     // Format price
     function formatPrice(price) {
-        return toArabicNum(parseFloat(price).toFixed(0)) + ' ج.م';
+        if (typeof Utils !== 'undefined') {
+            return Utils.formatPrice(price, lang);
+        }
+        return lang === 'ar' ? `${price} ج.م` : `EGP ${price}`;
     }
 
     // Format date
     function formatDate(dateStr) {
+        if (typeof Utils !== 'undefined') {
+            return Utils.formatDateTime(dateStr, lang);
+        }
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        return new Date(dateStr).toLocaleDateString('ar-EG', options);
+        return new Date(dateStr).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', options);
     }
 
     // Get status info
     function getStatusInfo(status) {
         const statuses = {
-            'pending': { label: 'قيد الانتظار', class: 'bg-amber-100 text-amber-800', dot: 'bg-amber-500', icon: 'schedule' },
-            'processing': { label: 'جاري التجهيز', class: 'bg-blue-100 text-blue-800', dot: 'bg-blue-500', icon: 'inventory_2' },
-            'shipped': { label: 'تم الشحن', class: 'bg-purple-100 text-purple-800', dot: 'bg-purple-500', icon: 'local_shipping' },
-            'delivered': { label: 'تم التوصيل', class: 'bg-green-100 text-green-800', dot: 'bg-green-500', icon: 'check_circle' },
-            'cancelled': { label: 'ملغي', class: 'bg-red-100 text-red-800', dot: 'bg-red-500', icon: 'cancel' }
+            'pending': { label: t('orders.statuses.pending', 'Pending'), class: 'bg-amber-100 text-amber-800', dot: 'bg-amber-500', icon: 'schedule' },
+            'processing': { label: t('orders.statuses.processing', 'Processing'), class: 'bg-blue-100 text-blue-800', dot: 'bg-blue-500', icon: 'inventory_2' },
+            'shipped': { label: t('orders.statuses.shipped', 'Shipped'), class: 'bg-purple-100 text-purple-800', dot: 'bg-purple-500', icon: 'local_shipping' },
+            'delivered': { label: t('orders.statuses.delivered', 'Delivered'), class: 'bg-green-100 text-green-800', dot: 'bg-green-500', icon: 'check_circle' },
+            'cancelled': { label: t('orders.statuses.cancelled', 'Cancelled'), class: 'bg-red-100 text-red-800', dot: 'bg-red-500', icon: 'cancel' }
         };
         return statuses[status] || statuses['pending'];
     }
@@ -69,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.status === 401) {
                 localStorage.removeItem('token');
-                window.location.href = '/pages/login.html?redirect=' + window.location.pathname;
+                window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
                 return;
             }
 
@@ -87,9 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
             orderContent.classList.remove('hidden');
 
             // Populate order info
-            document.getElementById('breadcrumb-order').textContent = `طلب #${order.order_number || order.id}`;
-            document.getElementById('order-title').textContent = `طلب #${order.order_number || order.id}`;
-            document.getElementById('order-date').textContent = `تاريخ الطلب: ${formatDate(order.created_at)}`;
+            const orderLabel = t('orders.orderNumber', 'Order #');
+            document.getElementById('breadcrumb-order').textContent = `${orderLabel} ${order.order_number || order.id}`;
+            document.getElementById('order-title').textContent = `${orderLabel} ${order.order_number || order.id}`;
+            document.getElementById('order-date').textContent = `${t('orderDetail.dateLabel', 'Order date')}: ${formatDate(order.created_at)}`;
 
             // Status badge
             const statusInfo = getStatusInfo(order.status);
@@ -106,24 +119,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="flex items-center gap-4 p-4">
                     <div class="w-16 h-16 rounded-lg bg-gray-50 overflow-hidden flex-shrink-0">
                         ${item.product_image ?
-                        `<img src="${item.product_image}" alt="${item.product_name_ar || item.product_name_en || 'منتج'}" class="w-full h-full object-cover">` :
+                        `<img src="${item.product_image}" alt="${lang === 'ar' ? (item.product_name_ar || t('common.unknown', 'Unknown')) : (item.product_name_en || t('common.unknown', 'Unknown'))}" class="w-full h-full object-cover">` :
                         `<div class="w-full h-full flex items-center justify-center text-olive-light">
                                 <span class="material-symbols-outlined text-2xl">inventory_2</span>
                             </div>`
                     }
                     </div>
                     <div class="flex-1 min-w-0">
-                        <h4 class="font-medium text-olive-dark truncate">${item.product_name_ar || item.product_name_en || 'منتج'}</h4>
-                        <p class="text-sm text-olive-light">الكمية: ${toArabicNum(item.quantity)}</p>
+                        <h4 class="font-medium text-olive-dark truncate">${lang === 'ar' ? (item.product_name_ar || t('common.unknown', 'Unknown')) : (item.product_name_en || t('common.unknown', 'Unknown'))}</h4>
+                        <p class="text-sm text-olive-light">${t('cart.quantity', 'Quantity')}: ${lang === 'ar' && typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity) : item.quantity}</p>
                     </div>
                     <div class="text-left">
                         <p class="font-bold text-primary">${formatPrice(item.price * item.quantity)}</p>
-                        <p class="text-xs text-olive-light">${formatPrice(item.price)} × ${toArabicNum(item.quantity)}</p>
+                        <p class="text-xs text-olive-light">${formatPrice(item.price)} × ${lang === 'ar' && typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity) : item.quantity}</p>
                     </div>
                 </div>
             `).join('');
             } else {
-                itemsContainer.innerHTML = '<p class="p-4 text-olive-light text-center">لا توجد منتجات</p>';
+                itemsContainer.innerHTML = `<p class="p-4 text-olive-light text-center">${t('orderDetail.noItems', 'No items found')}</p>`;
             }
 
             // Order summary
@@ -139,10 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Payment method
             const paymentMethods = {
-                'cod': { icon: 'local_shipping', label: 'الدفع عند الاستلام' },
-                'card': { icon: 'credit_card', label: 'بطاقة ائتمان' }
+                'cod': { icon: 'local_shipping', label: t('paymentMethods.cash_on_delivery', 'Cash on Delivery') },
+                'cash_on_delivery': { icon: 'local_shipping', label: t('paymentMethods.cash_on_delivery', 'Cash on Delivery') },
+                'card': { icon: 'credit_card', label: t('paymentMethods.card', 'Credit Card') },
+                'bank_transfer': { icon: 'account_balance', label: t('paymentMethods.bank_transfer', 'Bank Transfer') }
             };
-            const pm = paymentMethods[order.payment_method] || paymentMethods['cod'];
+            const pm = paymentMethods[order.payment_method] || paymentMethods.cod;
             document.getElementById('payment-method').innerHTML = `
             <span class="material-symbols-outlined text-primary text-2xl">${pm.icon}</span>
             <span class="text-olive-dark">${pm.label}</span>
@@ -167,10 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Timeline
             const timeline = document.getElementById('order-timeline');
             const timelineSteps = [
-                { status: 'pending', title: 'تم استلام الطلب', icon: 'check_circle' },
-                { status: 'processing', title: 'جاري التجهيز', icon: 'inventory_2' },
-                { status: 'shipped', title: 'تم الشحن', icon: 'local_shipping' },
-                { status: 'delivered', title: 'تم التوصيل', icon: 'check_circle' }
+                { status: 'pending', title: t('orderDetail.timelineSteps.received', 'Order received'), icon: 'check_circle' },
+                { status: 'processing', title: t('orderDetail.timelineSteps.processing', 'Processing'), icon: 'inventory_2' },
+                { status: 'shipped', title: t('orderDetail.timelineSteps.shipped', 'Shipped'), icon: 'local_shipping' },
+                { status: 'delivered', title: t('orderDetail.timelineSteps.delivered', 'Delivered'), icon: 'check_circle' }
             ];
 
             const statusOrder = ['pending', 'processing', 'shipped', 'delivered'];

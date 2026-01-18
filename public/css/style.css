@@ -2,6 +2,83 @@
    Olive Store - Base Styles
    ============================================ */
 
+:root {
+    --primary: #6e8137;
+    --primary-dark: #5a6b2c;
+    --accent: #61896f;
+    --olive-dark: #151613;
+    --olive-light: #7a7f6c;
+    --background-light: #f6f8f6;
+    --background-dark: #1b1d15;
+    --surface: #ffffff;
+    --surface-dark: #1a2e22;
+    --text-main: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+}
+
+.text-primary { color: var(--primary); }
+.text-primary-dark { color: var(--primary-dark); }
+.text-accent { color: var(--accent); }
+.text-olive-dark { color: var(--olive-dark); }
+.text-olive-light { color: var(--olive-light); }
+.text-text-main { color: var(--text-main); }
+.text-text-secondary { color: var(--text-secondary); }
+.text-background-dark { color: var(--background-dark); }
+
+.bg-primary { background-color: var(--primary); }
+.bg-primary-dark { background-color: var(--primary-dark); }
+.bg-accent { background-color: var(--accent); }
+.bg-olive-dark { background-color: var(--olive-dark); }
+.bg-olive-light { background-color: var(--olive-light); }
+.bg-background-light { background-color: var(--background-light); }
+.bg-background-dark { background-color: var(--background-dark); }
+.bg-surface { background-color: var(--surface); }
+.bg-surface-dark { background-color: var(--surface-dark); }
+
+.border-primary { border-color: var(--primary); }
+.border-olive-light { border-color: var(--olive-light); }
+.border-border-color { border-color: var(--border-color); }
+
+.hover\:text-primary:hover { color: var(--primary); }
+.hover\:text-primary-dark:hover { color: var(--primary-dark); }
+.hover\:text-olive-dark:hover { color: var(--olive-dark); }
+.hover\:text-olive-light:hover { color: var(--olive-light); }
+.hover\:bg-primary:hover { background-color: var(--primary); }
+.hover\:bg-primary-dark:hover { background-color: var(--primary-dark); }
+.hover\:bg-olive-light:hover { background-color: var(--olive-light); }
+.hover\:bg-background-light:hover { background-color: var(--background-light); }
+
+.bg-primary\/5 { background-color: rgba(110, 129, 55, 0.05); }
+.bg-primary\/10 { background-color: rgba(110, 129, 55, 0.10); }
+.bg-primary\/20 { background-color: rgba(110, 129, 55, 0.20); }
+.bg-primary\/30 { background-color: rgba(110, 129, 55, 0.30); }
+.bg-primary\/50 { background-color: rgba(110, 129, 55, 0.50); }
+
+.border-primary\/20 { border-color: rgba(110, 129, 55, 0.20); }
+.border-primary\/30 { border-color: rgba(110, 129, 55, 0.30); }
+.border-primary\/50 { border-color: rgba(110, 129, 55, 0.50); }
+.border-olive-light\/20 { border-color: rgba(122, 127, 108, 0.20); }
+
+.text-olive-dark\/80 { color: rgba(21, 22, 19, 0.80); }
+.text-text-secondary\/70 { color: rgba(107, 114, 128, 0.70); }
+
+.shadow-primary\/20 { box-shadow: 0 10px 15px -3px rgba(110, 129, 55, 0.20), 0 4px 6px -4px rgba(110, 129, 55, 0.20); }
+.shadow-primary\/30 { box-shadow: 0 10px 15px -3px rgba(110, 129, 55, 0.30), 0 4px 6px -4px rgba(110, 129, 55, 0.30); }
+
+.nav-link {
+    color: var(--olive-dark);
+}
+
+body[data-nav="home"] .nav-link[data-nav="home"],
+body[data-nav="products"] .nav-link[data-nav="products"],
+body[data-nav="categories"] .nav-link[data-nav="categories"],
+body[data-nav="about"] .nav-link[data-nav="about"],
+body[data-nav="contact"] .nav-link[data-nav="contact"] {
+    color: var(--primary);
+    font-weight: 700;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;

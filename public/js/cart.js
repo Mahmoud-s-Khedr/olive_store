@@ -44,13 +44,17 @@ const Cart = (function () {
         if (existingIndex > -1) {
             cart[existingIndex].quantity += quantity;
         } else {
+            const itemLang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : (localStorage.getItem('lang') || 'ar');
             cart.push({
                 id: product.id,
                 name: product.name,
+                name_ar: product.name_ar,
+                name_en: product.name_en,
                 slug: product.slug,
                 price: parseFloat(product.price),
                 image: product.image || product.images?.[0]?.url || Config.PLACEHOLDER_PRODUCT,
                 quantity: quantity,
+                lang: itemLang,
             });
         }
 
@@ -92,13 +96,24 @@ const Cart = (function () {
     // Update cart badge in header
     function updateBadge() {
         const badge = document.getElementById('cart-badge');
+        const badgeMobile = document.getElementById('cart-badge-mobile');
+        const count = getCount();
+        const text = count > 99 ? '99+' : count;
+
         if (badge) {
-            const count = getCount();
             if (count > 0) {
-                badge.textContent = count > 99 ? '99+' : count;
+                badge.textContent = text;
                 badge.classList.remove('hidden');
             } else {
                 badge.classList.add('hidden');
+            }
+        }
+        if (badgeMobile) {
+            if (count > 0) {
+                badgeMobile.textContent = text;
+                badgeMobile.classList.remove('hidden');
+            } else {
+                badgeMobile.classList.add('hidden');
             }
         }
     }
@@ -164,7 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (itemsCount) {
             const count = Cart.getCount();
             const countLabel = t('cart.itemUnit', 'منتج');
-            itemsCount.textContent = `${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(count, lang) : count} ${countLabel}`;
+            const countDisplay = lang === 'ar' && typeof Utils !== 'undefined' ? Utils.toArabicNumerals(count) : count;
+            itemsCount.textContent = `${countDisplay} ${countLabel}`;
         }
 
         if (cart.length === 0) {
@@ -186,6 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = cart.map((item, index) => {
             const itemTotal = item.price * item.quantity;
             subtotal += itemTotal;
+            const displayName = lang === 'ar'
+                ? (item.name_ar || (item.lang === 'ar' ? item.name : '') || t('common.unknown', 'Unknown'))
+                : (item.name_en || (item.lang === 'en' ? item.name : '') || t('common.unknown', 'Unknown'));
 
             return `
                 <div class="p-4 md:p-6 flex flex-col md:grid md:grid-cols-12 gap-4 items-center group hover:bg-gray-50/50 transition-colors">
@@ -193,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="w-full md:col-span-6 flex items-center gap-4">
                         <div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-gray-100 flex-shrink-0 overflow-hidden border border-gray-200">
                              ${item.image ?
-                        `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` :
+                        `<img src="${item.image}" alt="${displayName}" class="w-full h-full object-cover">` :
                         `<div class="w-full h-full flex items-center justify-center text-gray-300">
                                         <span class="material-symbols-outlined text-3xl">image</span>
                                      </div>`
@@ -201,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="flex-1 min-w-0">
                             <h3 class="font-bold text-olive-dark text-lg truncate mb-1">
-                                <a href="product.html?id=${item.id}" class="hover:text-primary transition-colors">${item.name}</a>
+                                <a href="/products/${item.slug || item.product_slug || item.id}" class="hover:text-primary transition-colors">${displayName}</a>
                             </h3>
                             <div class="text-sm text-olive-light mb-2 flex items-center gap-2">
                                 <span class="md:hidden font-medium">${t('cart.price', 'السعر')}:</span>
@@ -226,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 class="w-10 h-full flex items-center justify-center text-olive-light hover:bg-gray-50 hover:text-primary transition-colors rounded-r-lg">
                                 <span class="material-symbols-outlined text-sm">remove</span>
                             </button>
-                            <input type="text" value="${typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity, lang) : item.quantity}" readonly 
+                            <input type="text" value="${lang === 'ar' && typeof Utils !== 'undefined' ? Utils.toArabicNumerals(item.quantity) : item.quantity}" readonly 
                                 class="w-12 h-full border-none text-center font-bold text-olive-dark focus:ring-0 p-0 text-sm bg-transparent">
                             <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})"
                                 class="w-10 h-full flex items-center justify-center text-olive-light hover:bg-gray-50 hover:text-primary transition-colors rounded-l-lg">

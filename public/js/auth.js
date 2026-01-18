@@ -42,6 +42,11 @@ const AuthModule = (function () {
         }
         if (response.token) {
             localStorage.setItem(Config.ADMIN_TOKEN_KEY, response.token);
+            // Store admin user info for sidebar display
+            localStorage.setItem('adminUser', JSON.stringify({
+                name: response.user.name,
+                email: response.user.email
+            }));
         }
         return response;
     }
@@ -61,7 +66,8 @@ const AuthModule = (function () {
     // Admin logout
     function adminLogout() {
         localStorage.removeItem(Config.ADMIN_TOKEN_KEY);
-        window.location.href = '/admin/login';
+        localStorage.removeItem('adminUser');
+        window.location.href = '/pages/admin-login.html';
     }
 
     // Fetch current user data

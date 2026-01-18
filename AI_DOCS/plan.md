@@ -504,44 +504,42 @@ olive-store/
 │   │   ├── validators.js
 │   │   └── slugify.js
 │   │
-│   ├── views/
-│   │   ├── layouts/
-│   │   │   ├── main.ejs
-│   │   │   └── admin.ejs
-│   │   ├── partials/
-│   │   │   ├── header.ejs
-│   │   │   ├── footer.ejs
-│   │   │   └── admin-nav.ejs
-│   │   ├── pages/
-│   │   │   ├── index.ejs
-│   │   │   ├── products.ejs
-│   │   │   ├── product.ejs
-│   │   │   ├── cart.ejs
-│   │   │   ├── checkout.ejs
-│   │   │   ├── order-success.ejs
-│   │   │   ├── login.ejs
-│   │   │   ├── register.ejs
-│   │   │   ├── verify-email.ejs
-│   │   │   ├── forgot-password.ejs
-│   │   │   ├── reset-password.ejs
-│   │   │   ├── profile.ejs
-│   │   │   ├── my-orders.ejs
-│   │   │   └── order-detail.ejs
-│   │   └── admin/
-│   │       ├── index.ejs
-│   │       ├── login.ejs
-│   │       ├── products.ejs
-│   │       ├── product-form.ejs
-│   │       ├── categories.ejs
-│   │       ├── category-form.ejs
-│   │       ├── orders.ejs
-│   │       ├── order-detail.ejs
-│   │       ├── customers.ejs
-│   │       └── settings.ejs
-│   │
 │   └── app.js                  # Express app setup
 │
 ├── public/
+│   ├── pages/
+│   │   ├── index.html
+│   │   ├── products.html
+│   │   ├── product.html
+│   │   ├── categories.html
+│   │   ├── cart.html
+│   │   ├── checkout.html
+│   │   ├── order-success.html
+│   │   ├── my-orders.html
+│   │   ├── order-detail.html
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   ├── forgot-password.html
+│   │   ├── reset-password.html
+│   │   ├── verify-email.html
+│   │   ├── profile.html
+│   │   ├── about.html
+│   │   ├── contact.html
+│   │   ├── shipping.html
+│   │   ├── payment-info.html
+│   │   ├── terms.html
+│   │   ├── logout.html
+│   │   ├── admin-login.html
+│   │   ├── admin-dashboard.html
+│   │   ├── admin-products.html
+│   │   ├── admin-product-form.html
+│   │   ├── admin-categories.html
+│   │   ├── admin-category-form.html
+│   │   ├── admin-orders.html
+│   │   ├── admin-order-detail.html
+│   │   ├── admin-customers.html
+│   │   ├── admin-files.html
+│   │   └── admin-settings.html
 │   ├── css/
 │   │   ├── style.css
 │   │   ├── rtl.css
@@ -893,13 +891,13 @@ olive-store/                    # Bucket name
 **Document Version:** 3.0
 **Last Updated:** December 2024
 
-## Frontend Plan (Views)
+## Frontend Plan (Pages)
 
 ### Phase 1 (Base Shell)
-- [ ] Shared layouts: `main.ejs` (store) and `admin.ejs` (admin)
+- [ ] Static HTML pages in `public/pages` (store + admin)
 - [ ] Global styles: Cairo typography, spacing scale, buttons, form controls, alerts
 - [ ] RTL stylesheet + responsive utilities
-- [ ] Partials: header/footer/nav (store) and admin-nav (admin)
+- [ ] Shared navbar behavior via `public/js/navbar.js`
 
 ### Phase 2 (Auth)
 - [ ] Pages: login, register, verify-email, forgot-password, reset-password, profile

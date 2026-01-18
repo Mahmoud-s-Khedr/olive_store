@@ -41,8 +41,7 @@
 ## Frontend (Complete ✅)
 
 ### Phase 1: Foundation ✅
-- [x] Store layout (`main.ejs`) with header/footer
-- [x] Admin layout (`admin.ejs`) with sidebar/topbar
+- [x] Static store/admin pages in `public/pages`
 - [x] TailwindCSS theming (olive green, Cairo font)
 - [x] RTL/LTR auto-switching
 
@@ -70,7 +69,7 @@
 ### Phase 6: Internationalization ✅
 - [x] i18n module with translation loading
 - [x] Arabic & English translations
-- [x] Language switcher in layouts
+- [x] Language switcher in store/admin headers
 - [x] Auto RTL/LTR direction
 
 ---

@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 data.categories.forEach(cat => {
                     const isActive = currentCategory === cat.slug;
-                    const name = lang === 'ar' ? cat.name_ar : (cat.name_en || cat.name_ar);
+                    const name = lang === 'ar'
+                        ? (cat.name_ar || t('common.unknown', 'Unknown'))
+                        : (cat.name_en || t('common.unknown', 'Unknown'));
                     container.innerHTML += `
                     <button class="category-btn ${isActive ? 'active bg-primary text-white' : 'bg-white border border-gray-200 text-olive-dark hover:border-primary hover:text-primary'} px-4 py-2 rounded-lg text-sm font-medium transition-colors" data-slug="${cat.slug}">
                         ${name}
@@ -60,7 +62,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (currentCategory) {
                     const cat = data.categories.find(c => c.slug === currentCategory);
                     if (cat) {
-                        const name = lang === 'ar' ? cat.name_ar : (cat.name_en || cat.name_ar);
+                        const name = lang === 'ar'
+                            ? (cat.name_ar || t('common.unknown', 'Unknown'))
+                            : (cat.name_en || t('common.unknown', 'Unknown'));
                         const titleEl = document.getElementById('page-title');
                         const breadEl = document.getElementById('breadcrumb-title');
                         if (titleEl) titleEl.textContent = name;
@@ -118,14 +122,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                     document.getElementById('pagination').classList.remove('hidden');
 
                     grid.innerHTML = products.map(product => {
-                        const name = lang === 'ar' ? product.name_ar : (product.name_en || product.name_ar);
+                        const name = lang === 'ar'
+                            ? (product.name_ar || t('common.unknown', 'Unknown'))
+                            : (product.name_en || t('common.unknown', 'Unknown'));
                         const price = Utils.formatPrice(product.price, lang);
                         const oldPrice = product.old_price ? Utils.formatPrice(product.old_price, lang) : null;
                         const imageUrl = product.primary_image || product.image_url || product.image || '';
 
                         return `
                     <div class="group relative flex flex-col rounded-xl bg-white border border-transparent hover:border-gray-100 hover:shadow-lg transition-all duration-300 overflow-hidden">
-                        <a href="product.html?id=${product.id}" class="block">
+                        <a href="/products/${product.slug || product.id}" class="block">
                             <div class="relative aspect-square w-full overflow-hidden bg-gray-50">
                                 ${imageUrl ?
                                 `<img src="${imageUrl}" alt="${name}" class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500">` :
@@ -235,13 +241,49 @@ document.addEventListener('DOMContentLoaded', async function () {
         loadProducts();
     });
 
-    document.getElementById('search-input').addEventListener('keypress', function (e) {
+    // Search bindings
+    const handleSearch = function (e) {
         if (e.key === 'Enter') {
             currentSearch = this.value;
             currentPage = 1;
             loadProducts();
+            // On mobile, close sidebar if searching from sidebar
+            if (window.innerWidth < 1024 && this.id === 'sidebar-search-input') {
+                toggleFilters(false);
+            }
         }
-    });
+    };
+
+    const searchInput = document.getElementById('search-input');
+    const sidebarSearchInput = document.getElementById('sidebar-search-input');
+
+    if (searchInput) searchInput.addEventListener('keypress', handleSearch);
+    if (sidebarSearchInput) sidebarSearchInput.addEventListener('keypress', handleSearch);
+
+    // Mobile Filter UI Logic
+    const filterBtn = document.getElementById('filter-toggle-btn');
+    const closeFilterBtn = document.getElementById('close-filters-btn');
+    const filtersSidebar = document.getElementById('filters-sidebar');
+    const filtersOverlay = document.getElementById('filters-overlay');
+    const showResultsBtn = document.getElementById('show-results-btn');
+
+    function toggleFilters(show) {
+        if (!filtersSidebar) return;
+        if (show) {
+            filtersSidebar.classList.remove('translate-x-full');
+            if (filtersOverlay) filtersOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            filtersSidebar.classList.add('translate-x-full');
+            if (filtersOverlay) filtersOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (filterBtn) filterBtn.addEventListener('click', () => toggleFilters(true));
+    if (closeFilterBtn) closeFilterBtn.addEventListener('click', () => toggleFilters(false));
+    if (filtersOverlay) filtersOverlay.addEventListener('click', () => toggleFilters(false));
+    if (showResultsBtn) showResultsBtn.addEventListener('click', () => toggleFilters(false));
 
     document.getElementById('apply-price').addEventListener('click', function () {
         minPrice = document.getElementById('min-price').value;
@@ -275,11 +317,20 @@ function addToCart(product) {
         Cart.addItem(product);
     } else {
         // Legacy: addToCart(id, name, price, image)
-        Cart.addItem({ id: arguments[0], name: arguments[1], price: arguments[2], image: arguments[3] });
+        const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
+        const name = arguments[1];
+        Cart.addItem({
+            id: arguments[0],
+            name,
+            name_ar: lang === 'ar' ? name : '',
+            name_en: lang === 'en' ? name : '',
+            price: arguments[2],
+            image: arguments[3]
+        });
     }
 
     const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
-    const msg = typeof I18n !== 'undefined' ? I18n.t('products.addedToCart', 'تمت الإضافة للسلة') : 'Added to cart';
+    const msg = typeof I18n !== 'undefined' ? I18n.t('products.addedToCart', 'Added to cart') : 'Added to cart';
     if (typeof Utils !== 'undefined') {
         Utils.showToast(msg, 'success');
     } else {

@@ -85,9 +85,59 @@ async function findByIds(ids) {
   return result.rows;
 }
 
-async function listAdmin() {
-  const result = await pool.query('SELECT * FROM products ORDER BY created_at DESC');
-  return result.rows;
+async function listAdmin({ page = 1, limit = 10, search, category, is_active } = {}) {
+  const offset = (page - 1) * limit;
+  const clauses = [];
+  const values = [];
+
+  // Filter by is_active (admin can see both active and inactive)
+  if (is_active !== undefined && is_active !== '') {
+    values.push(is_active === true || is_active === 'true');
+    clauses.push(`p.is_active = $${values.length}`);
+  }
+
+  // Filter by category
+  if (category) {
+    values.push(category);
+    clauses.push(`p.category_id = $${values.length}`);
+  }
+
+  // Search filter
+  if (search) {
+    values.push(`%${search}%`);
+    clauses.push(`(p.name_ar ILIKE $${values.length} OR p.name_en ILIKE $${values.length} OR p.sku ILIKE $${values.length})`);
+  }
+
+  const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+
+  // Get products with category info
+  const itemsQuery = `
+    SELECT p.*, c.name_ar as category_name_ar, c.name_en as category_name_en
+    FROM products p
+    LEFT JOIN categories c ON c.id = p.category_id
+    ${where}
+    ORDER BY p.created_at DESC
+    LIMIT $${values.length + 1} OFFSET $${values.length + 2}
+  `;
+  const itemsResult = await pool.query(itemsQuery, [...values, limit, offset]);
+
+  // Get total count
+  const countResult = await pool.query(`SELECT COUNT(*) FROM products p ${where}`, values);
+  const total = parseInt(countResult.rows[0].count, 10);
+
+  return {
+    products: itemsResult.rows.map(row => ({
+      ...row,
+      category: row.category_name_ar || row.category_name_en ? {
+        name_ar: row.category_name_ar,
+        name_en: row.category_name_en
+      } : null
+    })),
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit)
+  };
 }
 
 async function createProduct(data, client) {

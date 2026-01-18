@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Redirect if not logged in
     if (!token) {
-        window.location.href = 'login.html?redirect=profile.html';
+        window.location.href = '/login?redirect=/profile';
         return;
     }
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             document.getElementById('user-avatar').textContent = user.name ? user.name.charAt(0) : 'U';
         } else if (response.status === 401) {
             localStorage.removeItem('token');
-            window.location.href = 'login.html?redirect=profile.html';
+            window.location.href = '/login?redirect=/profile';
         }
     } catch (error) {
         console.error('Error loading profile:', error);
@@ -152,6 +152,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('logout-link')?.addEventListener('click', function () {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        window.location.href = 'login.html';
+        window.location.href = '/login';
     });
 });

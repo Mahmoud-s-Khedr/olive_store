@@ -39,7 +39,8 @@
         "noData": "No data available",
         "showing": "Showing",
         "from": "of",
-        "view": "View"
+        "view": "View",
+        "browseProducts": "Browse Products"
     },
     "errors": {
         "network": "Connection error. Please check your internet.",
@@ -66,6 +67,7 @@
     },
     "nav": {
         "home": "Home",
+        "logo": "Zaytoun Masr",
         "products": "Products",
         "categories": "Categories",
         "about": "About Us",
@@ -76,9 +78,29 @@
         "profile": "Profile",
         "orders": "My Orders",
         "addresses": "My Addresses",
+        "account": "Account",
         "logout": "Logout",
         "search": "Search for a product...",
-        "language": "Language"
+        "language": "Language",
+        "lang": "English"
+    },
+    "lang": {
+        "ar": "Arabic",
+        "en": "English"
+    },
+    "pageTitles": {
+        "home": "Home - Zaytoun Masr",
+        "products": "All Products - Zaytoun Masr",
+        "cart": "Shopping Cart - Zaytoun Masr",
+        "checkout": "Checkout - Zaytoun Masr"
+    },
+    "meta": {
+        "homeDescription": "Zaytoun Masr - Finest natural Egyptian olive oil",
+        "productsDescription": "Zaytoun Masr - Finest natural Egyptian olive oil",
+        "cartDescription": "Zaytoun Masr - Finest natural Egyptian olive oil",
+        "checkoutDescription": "Zaytoun Masr - Finest natural Egyptian olive oil",
+        "registerDescription": "Zaytoun Masr - Finest natural Egyptian olive oil",
+        "loginDescription": "Login to Zaytoun Masr store"
     },
     "home": {
         "hero": {
@@ -107,7 +129,9 @@
             "title": "From Siwa Oasis to Your Table",
             "description": "We carefully select the best olive fruits from ancient Siwa farms and press them using modern technologies to preserve all nutrients and authentic flavor. Every drop of our oil carries a rich history and unmatched quality.",
             "cta": "Learn More About Us",
-            "experience": "Years Experience"
+            "experience": "Years Experience",
+            "experienceValue": "+10",
+            "imageAlt": "Olive farms"
         }
     },
     "categories": {
@@ -140,6 +164,7 @@
         "sort": {
             "label": "Sort by",
             "newest": "Newest",
+            "oldest": "Oldest",
             "price_low": "Price: Low to High",
             "price_high": "Price: High to Low",
             "name_az": "Name: A-Z"
@@ -164,15 +189,38 @@
         "addedToCart": "Added to Cart"
     },
     "product": {
+        "pageTitle": "Product Details",
         "description": "Description",
         "specifications": "Specifications",
         "reviews": "Reviews",
         "related": "Related Products",
+        "noDescription": "No description available",
         "quantity": "Quantity",
         "addToCart": "Add to Cart",
         "addedToCart": "Added to Cart",
         "buyNow": "Buy Now",
-        "share": "Share"
+        "share": "Share",
+        "noReviews": "No reviews yet.",
+        "reviewsSample": "(45 reviews)",
+        "notFoundTitle": "Product Not Found",
+        "notFoundMessage": "The product you're looking for is unavailable",
+        "browseProducts": "Browse Products",
+        "errorLoading": "Error loading product",
+        "relatedEmpty": "No related products",
+        "stock": {
+            "lowWithCount": "Low stock - {count} left"
+        },
+        "specs": {
+            "weight": "Weight",
+            "dimensions": "Dimensions",
+            "sku": "SKU"
+        },
+        "trust": {
+            "authentic": "100% Authentic",
+            "authenticDesc": "Quality guaranteed",
+            "shipping": "Fast Shipping",
+            "shippingDesc": "To all governorates"
+        }
     },
     "cart": {
         "title": "Shopping Cart",
@@ -276,10 +324,27 @@
     },
     "orderSuccess": {
         "title": "Order Placed Successfully!",
+        "notFound": "Order details not found",
+        "loadError": "Failed to load order details",
         "message": "Thank you! Your order has been received and will be processed soon.",
         "orderNumber": "Order Number",
+        "statusLabel": "Order Status",
+        "paymentMethodLabel": "Payment Method",
+        "orderDateLabel": "Order Date",
+        "nextTitle": "What's Next?",
+        "nextEmail": "You'll receive a confirmation email shortly",
+        "nextConfirm": "We will contact you to confirm delivery time",
+        "nextDeliveryTime": "Delivery within 2-4 business days",
         "viewOrders": "View My Orders",
-        "continueShopping": "Continue Shopping"
+        "continueShopping": "Continue Shopping",
+        "supportPrompt": "Have a question?",
+        "supportContact": "Contact Us",
+        "supportPhoneLabel": "or call"
+    },
+    "paymentMethods": {
+        "cash_on_delivery": "Cash on Delivery",
+        "card": "Credit Card",
+        "bank_transfer": "Bank Transfer"
     },
     "orders": {
         "title": "My Orders",
@@ -306,13 +371,28 @@
     "orderDetail": {
         "title": "Order Details",
         "orderInfo": "Order Information",
+        "dateLabel": "Order date",
         "shippingAddress": "Shipping Address",
         "paymentMethod": "Payment Method",
         "timeline": "Order Timeline",
-        "print": "Print"
+        "print": "Print",
+        "notFoundTitle": "Order Not Found",
+        "notFoundMessage": "We couldn't find this order",
+        "backToOrders": "Back to Orders",
+        "helpTitle": "Need Help?",
+        "helpDescription": "Contact us if you have any questions.",
+        "helpCta": "Contact Support",
+        "noItems": "No items found",
+        "timelineSteps": {
+            "received": "Order received",
+            "processing": "Processing",
+            "shipped": "Shipped",
+            "delivered": "Delivered"
+        }
     },
     "auth": {
         "login": {
+            "pageTitle": "Login - Zaytoun Masr",
             "title": "Login",
             "welcomeBack": "Welcome back! Please enter your details",
             "email": "Email Address",
@@ -328,6 +408,7 @@
             "error": "An error occurred during login"
         },
         "register": {
+            "pageTitle": "Create Account - Zaytoun Masr",
             "title": "Create Account",
             "subtitle": "Enter your details to join Zaytoun Masr family",
             "name": "Full Name",
@@ -364,20 +445,37 @@
             "backToLogin": "Back to Login"
         },
         "reset": {
+            "pageTitle": "Reset Password - Zaytoun Masr",
             "title": "Reset Password",
+            "subtitle": "Enter your new password",
             "newPassword": "New Password",
             "confirmPassword": "Confirm Password",
-            "submit": "Change Password"
+            "submit": "Change Password",
+            "successTitle": "Password changed successfully!",
+            "successBody": "You can now log in with your new password.",
+            "error": "Failed to reset password"
+        },
+        "logout": {
+            "pageTitle": "Logging out..."
         },
         "verify": {
             "title": "Verify Email",
             "pending": "Verifying your email...",
             "success": "Your email has been verified successfully!",
+            "successDescription": "Welcome to Zaytoun Masr! You can now log in and start shopping.",
             "error": "Email verification failed",
-            "resend": "Resend verification link"
+            "resend": "Resend verification link",
+            "sending": "Sending...",
+            "checkTitle": "Check your email",
+            "checkDescription": "We've sent a confirmation email. Please click the link to activate your account.",
+            "sentToLabel": "Sent to:",
+            "emailMissing": "Email is not available",
+            "resendSuccess": "A new verification email has been sent!",
+            "resendError": "Error sending verification email"
         }
     },
     "profile": {
+        "pageTitle": "Profile - Zaytoun Masr",
         "title": "Profile",
         "subtitle": "Manage your personal information and account settings",
         "nav": {
@@ -409,6 +507,7 @@
         }
     },
     "about": {
+        "pageTitle": "About Us - Zaytoun Masr",
         "title": "About Us",
         "badge": "About Us",
         "heroTitle": "A Journey from the Heart of the Earth to Your Table",
@@ -453,6 +552,7 @@
         "imageAlt": "Olive farms"
     },
     "contact": {
+        "pageTitle": "Contact Us - Zaytoun Masr",
         "title": "Contact Us",
         "subtitle": "We're here to answer your questions and help you. Don't hesitate to contact us!",
         "followUs": "Follow Us",
@@ -491,6 +591,7 @@
         }
     },
     "shipping": {
+        "pageTitle": "Shipping & Delivery - Zaytoun Masr",
         "title": "Shipping & Delivery",
         "subtitle": "Everything you need to know about shipping and returns",
         "methods": {
@@ -512,6 +613,7 @@
                 "condition": "For orders 500 EGP or above"
             }
         },
+        "free": "Free Shipping",
         "areas": {
             "title": "Delivery Areas",
             "description": "We deliver to all governorates of Egypt:",
@@ -565,6 +667,7 @@
         }
     },
     "paymentInfo": {
+        "pageTitle": "Payment Methods - Zaytoun Masr",
         "title": "Payment Methods",
         "subtitle": "Safe and multiple payment methods to suit your needs",
         "methods": {
@@ -643,17 +746,29 @@
         "about": "The finest natural Egyptian olive oils from Siwa Oasis",
         "description": "We offer the finest Egyptian olive oil, carefully grown and passionately prepared to give you an unforgettable taste.",
         "quickLinks": "Quick Links",
+        "products": "Products",
+        "shipping": "Shipping & Returns",
+        "payment": "Payment Methods",
+        "orders": "My Orders",
+        "account": "My Account",
+        "cart": "Cart",
+        "faq": "FAQ",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy Policy",
+        "support": "Support",
         "aboutStore": "About Store",
         "shippingReturns": "Shipping & Returns",
         "paymentMethods": "Payment Methods",
         "contactUs": "Contact Us",
         "shop": "Shop",
         "allProducts": "All Products",
+        "oliveOil": "Olive Oil",
         "virginOliveOil": "Virgin Olive Oil",
         "careProducts": "Care Products",
         "giftsAndSets": "Gifts & Sets",
         "customerService": "Customer Service",
         "contact": "Contact Us",
+        "contactInfo": "Contact Info",
         "newsletter": "Newsletter",
         "subscribe": "Subscribe",
         "copyright": "© 2024 Zaytoun Masr. All rights reserved.",

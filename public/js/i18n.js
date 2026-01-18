@@ -75,17 +75,28 @@ const I18n = (function () {
     // Translate all elements with data-i18n attribute
     function translatePage() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
+            const rawKey = el.getAttribute('data-i18n');
+            let key = rawKey;
+            let attr = null;
+
+            if (rawKey && rawKey.startsWith('[')) {
+                const match = rawKey.match(/^\[([^\]]+)\](.+)$/);
+                if (match) {
+                    attr = match[1];
+                    key = match[2];
+                }
+            }
+
             const translation = t(key);
 
             if (translation && translation !== key) {
-                // Check if it's an input placeholder
-                if (el.hasAttribute('placeholder')) {
+                if (attr) {
+                    el.setAttribute(attr, translation);
+                } else if (el.hasAttribute('placeholder')) {
                     el.setAttribute('placeholder', translation);
                 } else if (el.hasAttribute('data-i18n-attr')) {
-                    // Custom attribute translation
-                    const attr = el.getAttribute('data-i18n-attr');
-                    el.setAttribute(attr, translation);
+                    const targetAttr = el.getAttribute('data-i18n-attr');
+                    el.setAttribute(targetAttr, translation);
                 } else {
                     el.textContent = translation;
                 }

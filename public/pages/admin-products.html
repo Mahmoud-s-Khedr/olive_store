@@ -1,197 +1,302 @@
 <!DOCTYPE html>
 <html class="light" dir="rtl" lang="ar">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>إدارة المنتجات - Admin Products</title>
-    <!-- Google Fonts: Work Sans + Cairo for Arabic support -->
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&amp;family=Work+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>المنتجات - لوحة التحكم</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
     <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Theme Config -->
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#eeaa2b",
-                        "primary-dark": "#d9961e",
-                        "background-light": "#f8f7f6",
-                        "background-dark": "#221c10",
-                        "surface-light": "#ffffff",
-                        "surface-dark": "#2c241b",
-                        "text-main": "#333333",
-                        "text-secondary": "#666666",
-                        "border-color": "#e6e2db",
+                        "primary": "#6e8137",
+                        "primary-dark": "#56662a",
+                        "primary-light": "#8fa34d",
+                        "accent": "#d4a017",
+                        "accent-dark": "#b8890f",
+                        "background-light": "#f7f7f6",
+                        "background-dark": "#1b1d15",
+                        "surface": "#ffffff",
+                        "surface-dark": "#262920",
+                        "olive-dark": "#151613",
+                        "olive-light": "#7a7f6c"
                     },
                     fontFamily: {
-                        "display": ["Cairo", "Work Sans", "sans-serif"],
-                        "sans": ["Cairo", "Work Sans", "sans-serif"],
+                        "display": ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+                        "body": ["Noto Sans Arabic", "Tajawal", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
                 },
             },
         }
     </script>
     <style>
-        body {
-            font-family: 'Cairo', 'Work Sans', sans-serif;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        /* Custom scrollbar for table if needed */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
+
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3af;
         }
     </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="bg-background-light text-text-main antialiased min-h-screen flex flex-col">
-<!-- Main Layout -->
-<div class="flex h-screen overflow-hidden">
-<!-- Side Navigation (Right Side due to RTL) -->
-<aside class="w-64 bg-surface-light border-l border-border-color hidden md:flex flex-col h-full shrink-0 z-20">
-<div class="p-6 flex items-center gap-3 border-b border-border-color/50 h-20">
-<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">
-<span class="material-symbols-outlined">eco</span>
-</div>
-<div>
-<h1 class="text-lg font-bold text-text-main leading-tight">واحة سيوة</h1>
-<p class="text-xs text-text-secondary">لوحة التحكم</p>
-</div>
-</div>
-<div class="flex flex-col gap-2 p-4 flex-1 overflow-y-auto">
-<div class="px-4 py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider opacity-70">القائمة الرئيسية</div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-background-light hover:text-text-main transition-colors group" href="admin-dashboard.html">
-<span class="material-symbols-outlined text-[22px]">dashboard</span>
-<span class="font-medium">لوحة المعلومات</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary border border-primary/20 transition-colors group" href="admin-products.html">
-<span class="material-symbols-outlined text-[22px] fill-1">inventory_2</span>
-<span class="font-bold">المنتجات</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-background-light hover:text-text-main transition-colors group" href="admin-orders.html">
-<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
-<span class="font-medium">الطلبات</span>
-<span class="mr-auto bg-red-100 text-red-600 text-xs font-bold px-2 py-0.5 rounded-full">3</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-background-light hover:text-text-main transition-colors group" href="admin-customers.html">
-<span class="material-symbols-outlined text-[22px]">group</span>
-<span class="font-medium">العملاء</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-background-light hover:text-text-main transition-colors group" href="admin-analytics.html">
-<span class="material-symbols-outlined text-[22px]">analytics</span>
-<span class="font-medium">التقارير</span>
-</a>
-<div class="my-2 border-t border-border-color/50"></div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-secondary hover:bg-background-light hover:text-text-main transition-colors group" href="admin-settings.html">
-<span class="material-symbols-outlined text-[22px]">settings</span>
-<span class="font-medium">الإعدادات</span>
-</a>
-</div>
-<div class="p-4 border-t border-border-color">
-<div class="flex items-center gap-3">
-<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shadow-sm" data-alt="Admin user profile picture showing a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5aEbXbb7kiHyPGXp6Y5zl9nXDV9N8u47jZi4OCaHV4g0iZI5aMEVLkACpYecw7qasldhbGI59IGZ-lNaJinFvTlgv_nyArHtoaIrWBUmZtSkwELXbwxwvAB8JlGj2YSaS8UHYn_YDqLIvNyETAx_4sT1v4JZOyP5hI8-5GgkSh6nZZE2cgirWoiYOHU2-pYnAbcLgZtx5FKWMU43BeX5ibDoovZf8QhcajNmJOmkif_R74swl4J2iXiRXM_riNyYZ9pf7L0p2UdE");'></div>
-<div class="flex flex-col">
-<p class="text-sm font-bold text-text-main">أحمد محمد</p>
-<p class="text-xs text-text-secondary">مدير المتجر</p>
-</div>
-</div>
-<button class="mr-auto text-text-secondary hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined text-[20px]">logout</span>
-</button>
-</div>
-</div>
-</aside>
-<!-- Content Area -->
-<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light">
-<!-- Mobile Header (Visible only on small screens) -->
-<div class="md:hidden h-16 bg-surface-light border-b border-border-color flex items-center justify-between px-4 shrink-0">
-<div class="flex items-center gap-2 text-primary font-bold">
-<span class="material-symbols-outlined">eco</span>
-<span>واحة سيوة</span>
-</div>
-<button class="text-text-main">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-<!-- Page Scrollable Container -->
-<div class="flex-1 overflow-y-auto p-4 md:p-8">
-<div class="max-w-7xl mx-auto flex flex-col gap-6">
-<!-- Page Header -->
-<header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-<div>
-<h1 class="text-3xl font-bold text-text-main">المنتجات</h1>
-<p class="text-text-secondary text-sm mt-1">إدارة ومتابعة مخزون منتجات زيت الزيتون</p>
-</div>
-<div class="flex items-center gap-3">
-<button id="export-btn" class="flex items-center justify-center gap-2 bg-surface-light border border-border-color text-text-main px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-colors text-sm font-bold shadow-sm">
-<span class="material-symbols-outlined text-[20px]">file_download</span>
-<span>تصدير</span>
-</button>
-<button id="add-product-btn" class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-md shadow-primary/20">
-<span class="material-symbols-outlined text-[20px]">add</span>
-<span>إضافة منتج</span>
-</button>
-</div>
-</header>
-<!-- Filters Bar -->
-<div class="bg-surface-light p-4 rounded-xl shadow-sm border border-border-color flex flex-col md:flex-row gap-4 items-center justify-between">
-<!-- Search -->
-<div class="relative w-full md:w-96">
-<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none">search</span>
-<input id="search-input" class="w-full pr-10 pl-4 py-2.5 bg-background-light border border-border-color rounded-lg text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all placeholder:text-text-secondary/70" placeholder="بحث عن منتج بالاسم أو الرمز..." type="text"/>
-</div>
-<!-- Dropdowns -->
-<div class="flex flex-wrap w-full md:w-auto gap-3">
-<div class="relative min-w-[140px] flex-1 md:flex-none">
-<select id="category-filter" class="w-full appearance-none bg-background-light border border-border-color text-text-main text-sm rounded-lg px-4 py-2.5 pr-4 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer">
-<option selected="" value="">جميع الفئات</option>
-<!-- Categories will be populated by JS -->
-</select>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-[20px]">keyboard_arrow_down</span>
-</div>
-<div class="relative min-w-[140px] flex-1 md:flex-none">
-<select id="status-filter" class="w-full appearance-none bg-background-light border border-border-color text-text-main text-sm rounded-lg px-4 py-2.5 pr-4 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer">
-<option selected="" value="">الحالة</option>
-<option value="active">نشط</option>
-<option value="inactive">غير نشط</option>
-</select>
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-[20px]">keyboard_arrow_down</span>
-</div>
-</div>
-</div>
-<!-- Products Table -->
-<div class="bg-surface-light border border-border-color rounded-xl shadow-sm overflow-hidden flex flex-col">
-<div class="overflow-x-auto">
-<table class="w-full text-right border-collapse">
-<thead class="bg-background-light border-b border-border-color">
-<tr>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider w-20">الصورة</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">الاسم</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">الفئة</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">السعر</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">المخزون</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider">الحالة</th>
-<th class="px-6 py-4 text-xs font-bold text-text-secondary uppercase tracking-wider text-center w-32">الإجراءات</th>
-</tr>
-</thead>
-<tbody id="products-tbody" class="divide-y divide-border-color">
-<!-- Products will be populated by JS -->
-</tbody>
-</table>
-</div>
-</div>
-<!-- Pagination -->
-<div id="pagination-container" class="flex items-center justify-between border-t border-border-color pt-4 mb-8">
-<!-- Pagination will be populated by JS -->
-</div>
-</div>
-</div>
-</main>
-</div>
-<script src="/js/admin-products.js"></script>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-800 font-body min-h-screen flex"
+    data-theme="default">
+
+    <!-- Sidebar (Same structure as Dashboard, admin-layout.js handles active state) -->
+    <aside
+        class="w-64 bg-white dark:bg-surface-dark border-l border-gray-100 dark:border-gray-800 flex-shrink-0 hidden lg:flex flex-col h-screen sticky top-0 z-30 shadow-[0_0_15px_rgba(0,0,0,0.02)]">
+        <div class="p-6 flex items-center gap-3">
+            <div class="bg-emerald-600/10 p-2 rounded-xl">
+                <img src="/images/logo-icon.png"
+                    onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCYx5WQbT_k1mFeUG-bQB3Tcz1WKKV1i0SOJkA9kDXEKv5j65bxGhXBRufJ64jHetk7zELQjvGf6BSYvCxkY8H9uB1ouSpHMkV27BCOEWyk5Mm5npvQwFY6Tr6u0qYu0cBYdEJjQvMG-Ok4PgfkqRBEakLQwzIyiOFALi8NoNlaslcfBntsE1EWG7IiuX94iZapRXqZ9DEY_lTiQ6-D74xv6b4SmH0tHprOymjywYKRxptuwafvrCD3oXpWLDlv0teHa6RORNDNTqk'"
+                    alt="Logo" class="w-8 h-8 object-contain">
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">زيتون مصر</h1>
+                <p class="text-[11px] text-slate-500 font-medium">لوحة الإدارة</p>
+            </div>
+        </div>
+        <div class="flex-1 px-4 overflow-y-auto">
+            <p class="px-2 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">القائمة الرئيسية</p>
+            <nav class="flex flex-col gap-1">
+                <a href="/admin"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-600 transition-colors">dashboard</span>
+                    <span class="text-sm font-medium">لوحة التحكم</span>
+                </a>
+                <a href="/admin/products"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-amber-500 transition-colors">inventory_2</span>
+                    <span class="text-sm font-medium">المنتجات</span>
+                </a>
+                <a href="/admin/categories"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-emerald-500 transition-colors">category</span>
+                    <span class="text-sm font-medium">الفئات</span>
+                </a>
+                <a href="/admin/orders"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-blue-500 transition-colors">shopping_bag</span>
+                    <span class="text-sm font-medium">الطلبات</span>
+                    <span class="mr-auto bg-red-100 text-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-md"
+                        id="pending-orders-badge">0</span>
+                </a>
+                <a href="/admin/customers"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-purple-500 transition-colors">group</span>
+                    <span class="text-sm font-medium">العملاء</span>
+                </a>
+                <a href="/admin/files"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-indigo-500 transition-colors">folder_open</span>
+                    <span class="text-sm font-medium">المكتبة</span>
+                </a>
+                <div class="h-px bg-gray-100 my-2 mx-2"></div>
+                <a href="/admin/settings"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-600 hover:bg-gray-50 hover:text-slate-900 transition-colors group">
+                    <span
+                        class="material-symbols-outlined text-[22px] group-hover:text-slate-800 transition-colors">settings</span>
+                    <span class="text-sm font-medium">الإعدادات</span>
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-gray-100">
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors group">
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-slate-200 bg-cover bg-center border-2 border-white shadow-sm"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDp5OgAjFlqqRjPxJ9pP321tS2iWmDWh3hGTef6TqnTbbNZ5YTpB7zVhAPVbC6kCdUYApzpo6d1NXogEXe-Ltbaw6rPRZzSqHoSiQGgPBHwDP1isQMA9wfkA1QoWmjCBwiNl14F_YI87QYxRxP1rUa63iHhDc-g-Drj9zBV46ZjD3H4TeQ_M6HppGjtokmMfmwqMi0hRA5OwxRr_asmgnvlaT_huiA-vZB4W3Pcc4KgekEvarkehMYidEWfShASZzsJl_aqV2ZiwgA');">
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full">
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span id="admin-name"
+                        class="text-sm font-bold text-slate-800 group-hover:text-primary transition-colors">المدير</span>
+                    <span class="text-[10px] text-slate-400">مدير المتجر</span>
+                </div>
+                <button id="sidebar-logout-btn" class="mr-auto text-slate-300 hover:text-red-500 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-background-light dark:bg-background-dark relative">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden p-2 text-slate-500 hover:text-slate-800" onclick="toggleMobileSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="relative hidden sm:block w-96">
+                    <span
+                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+                    <input id="search-input" type="text" placeholder="بحث عن منتج..."
+                        class="w-full bg-gray-50 border-none rounded-xl py-2.5 pr-10 pl-4 text-sm text-slate-700 focus:ring-2 focus:ring-primary/20 transition-shadow">
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="relative p-2 rounded-full hover:bg-gray-50 text-slate-500 transition-colors">
+                    <span class="material-symbols-outlined text-[22px]">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth">
+            <div class="max-w-7xl mx-auto space-y-4 sm:space-y-6">
+
+                <!-- Page Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="hidden sm:flex items-center gap-2 text-sm text-slate-500 mb-1">
+                            <span>لوحة التحكم</span>
+                            <span class="material-symbols-outlined text-[14px]">chevron_left</span>
+                            <span>المنتجات</span>
+                        </div>
+                        <h1 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">إدارة المنتجات</h1>
+                    </div>
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <button id="export-btn"
+                            class="flex items-center gap-1.5 sm:gap-2 bg-white border border-gray-200 text-slate-700 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm font-bold shadow-sm">
+                            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">file_download</span>
+                            <span class="hidden sm:inline">تصدير</span>
+                        </button>
+                        <a href="/pages/admin-product-form.html" id="add-product-btn"
+                            class="flex items-center gap-1.5 sm:gap-2 bg-primary hover:bg-primary-dark text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl transition-colors text-sm font-bold shadow-md shadow-primary/20">
+                            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">add</span>
+                            <span>إضافة منتج</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Search (shown only on mobile) -->
+                <div class="sm:hidden relative">
+                    <span
+                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+                    <input id="mobile-search-input" type="text" placeholder="بحث عن منتج..."
+                        class="w-full bg-white border border-gray-200 rounded-xl py-2.5 pr-10 pl-4 text-sm text-slate-700 focus:ring-2 focus:ring-primary/20 transition-shadow">
+                </div>
+
+                <!-- Filters -->
+                <div
+                    class="bg-white dark:bg-surface-dark p-3 sm:p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+                    <div class="relative flex-1 sm:flex-none sm:min-w-[160px]">
+                        <select id="category-filter"
+                            class="w-full appearance-none bg-gray-50 border-none text-slate-700 text-sm rounded-xl px-4 py-2.5 pr-4 pl-10 focus:ring-2 focus:ring-primary/20 cursor-pointer">
+                            <option value="">جميع الفئات</option>
+                            <!-- Populated by JS -->
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+                    </div>
+                    <div class="relative flex-1 sm:flex-none sm:min-w-[160px]">
+                        <select id="status-filter"
+                            class="w-full appearance-none bg-gray-50 border-none text-slate-700 text-sm rounded-xl px-4 py-2.5 pr-4 pl-10 focus:ring-2 focus:ring-primary/20 cursor-pointer">
+                            <option value="">جميع الحالات</option>
+                            <option value="active">نشط</option>
+                            <option value="inactive">غير نشط</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[20px]">keyboard_arrow_down</span>
+                    </div>
+                </div>
+
+                <!-- Products Container -->
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+
+                    <!-- Desktop Table (hidden on mobile) -->
+                    <div class="hidden sm:block overflow-x-auto">
+                        <table class="w-full text-right">
+                            <thead class="bg-gray-50/50 border-b border-gray-100">
+                                <tr>
+                                    <th class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase">الصورة</th>
+                                    <th class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase">الاسم</th>
+                                    <th
+                                        class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase hidden md:table-cell">
+                                        الفئة</th>
+                                    <th class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase">السعر</th>
+                                    <th
+                                        class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase hidden lg:table-cell">
+                                        المخزون</th>
+                                    <th class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase">الحالة</th>
+                                    <th
+                                        class="px-4 lg:px-6 py-4 text-xs font-bold text-slate-500 uppercase text-center">
+                                        الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-tbody" class="divide-y divide-gray-100 text-sm">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mobile Cards (shown only on mobile) -->
+                    <div id="products-cards" class="sm:hidden divide-y divide-gray-100">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="pagination-container"
+                        class="border-t border-gray-100 px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin-layout.js"></script>
+    <script src="/js/admin-products.js"></script>
 </body>
+
 </html>

@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const forgotErrorMessage = document.getElementById('forgot-error-message');
     const forgotSuccess = document.getElementById('forgot-success');
 
+    const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
     form?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -31,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Show loading state
         forgotBtn.disabled = true;
-        forgotBtnText.textContent = 'جاري الإرسال...';
+        forgotBtnText.textContent = t('auth.forgot.sending', 'Sending...');
         forgotSpinner.classList.remove('hidden');
 
         try {
@@ -54,17 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 forgotBtn.classList.add('hidden');
             } else {
                 // Show error message
-                forgotErrorMessage.textContent = data.message || 'حدث خطأ';
+                forgotErrorMessage.textContent = data.message || t('auth.forgot.error', 'Error sending reset link');
                 forgotError.classList.remove('hidden');
             }
         } catch (error) {
             console.error('Forgot password error:', error);
-            forgotErrorMessage.textContent = 'حدث خطأ في الاتصال';
+            forgotErrorMessage.textContent = t('errors.network', 'Connection error. Please try again.');
             forgotError.classList.remove('hidden');
         } finally {
             // Reset button state
             forgotBtn.disabled = false;
-            forgotBtnText.textContent = 'إرسال رابط إعادة التعيين';
+            forgotBtnText.textContent = t('auth.forgot.submit', 'Send Reset Link');
             forgotSpinner.classList.add('hidden');
         }
     });

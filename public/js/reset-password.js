@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePage();
 });
 
+const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
 function initializePage() {
     const form = document.getElementById('reset-form');
     const tokenInput = document.getElementById('token');
@@ -26,7 +28,7 @@ function initializePage() {
 
     // If no token, show error
     if (!tokenInput.value) {
-        showError('رابط إعادة التعيين غير صالح أو منتهي الصلاحية');
+        showError(t('errors.tokenInvalid', 'Invalid or expired link'));
         return;
     }
 
@@ -51,7 +53,12 @@ function initializePage() {
     passwordInput?.addEventListener('input', function() {
         const strength = checkPasswordStrength(this.value);
         const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500'];
-        const texts = ['ضعيفة جداً', 'ضعيفة', 'متوسطة', 'قوية'];
+        const texts = [
+            t('auth.register.strength.veryWeak', 'Very Weak'),
+            t('auth.register.strength.weak', 'Weak'),
+            t('auth.register.strength.medium', 'Medium'),
+            t('auth.register.strength.strong', 'Strong')
+        ];
 
         strengthBars.forEach((bar, index) => {
             bar.classList.remove('bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500');
@@ -63,9 +70,9 @@ function initializePage() {
         });
 
         if (this.value.length > 0) {
-            strengthText.textContent = 'قوة كلمة المرور: ' + (texts[strength - 1] || 'ضعيفة جداً');
+            strengthText.textContent = t('auth.register.passwordStrengthPrefix', 'Password strength: ') + (texts[strength - 1] || texts[0]);
         } else {
-            strengthText.textContent = 'أدخل كلمة مرور قوية';
+            strengthText.textContent = t('auth.register.passwordStrength', 'Enter a strong password');
         }
     });
 
@@ -86,14 +93,14 @@ function initializePage() {
 
         // Validate passwords match
         if (passwordInput.value !== confirmPasswordInput.value) {
-            showError('كلمتا المرور غير متطابقتين');
+            showError(t('errors.passwordMismatch', 'Passwords do not match'));
             return;
         }
 
         // Validate password strength
         const strength = checkPasswordStrength(passwordInput.value);
         if (strength < 2) {
-            showError('كلمة المرور ضعيفة جداً. يرجى اختيار كلمة مرور أقوى');
+            showError(t('errors.passwordWeak', 'Password is too weak'));
             return;
         }
 
@@ -103,7 +110,7 @@ function initializePage() {
 
         // Show loading state
         resetBtn.disabled = true;
-        resetBtnText.textContent = 'جاري الحفظ...';
+        resetBtnText.textContent = t('common.saving', 'Saving...');
         resetSpinner.classList.remove('hidden');
 
         try {
@@ -125,24 +132,24 @@ function initializePage() {
                 resetSuccess.classList.remove('hidden');
                 form.querySelectorAll('input').forEach(input => input.disabled = true);
                 resetBtn.classList.add('hidden');
-                showToast('تم تغيير كلمة المرور بنجاح!', 'success');
+                showToast(t('auth.reset.successTitle', 'Password changed successfully!'), 'success');
 
                 // Redirect to login after delay
                 setTimeout(() => {
-                    window.location.href = '/pages/login.html';
+                    window.location.href = '/login';
                 }, 3000);
             } else {
                 // Handle error
-                const errorMsg = data.message || 'حدث خطأ في إعادة تعيين كلمة المرور';
+                const errorMsg = data.message || t('auth.reset.error', 'Failed to reset password');
                 showError(errorMsg);
             }
         } catch (error) {
             console.error('Reset password error:', error);
-            showError('حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى');
+            showError(t('errors.network', 'Connection error. Please try again.'));
         } finally {
             // Reset button state
             resetBtn.disabled = false;
-            resetBtnText.textContent = 'حفظ كلمة المرور الجديدة';
+            resetBtnText.textContent = t('auth.reset.submit', 'Change Password');
             resetSpinner.classList.add('hidden');
         }
     });

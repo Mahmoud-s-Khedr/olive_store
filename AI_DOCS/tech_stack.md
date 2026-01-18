@@ -1,7 +1,7 @@
 # Tech Stack
 
 ## Frontend
-- **Templates**: EJS (Embedded JavaScript)
+- **Templates**: Static HTML (`public/pages`)
 - **Styling**: TailwindCSS (CDN), custom CSS
 - **Icons**: Material Symbols (Google)
 - **Fonts**: Cairo, Tajawal (Arabic), Inter (English) via Google Fonts

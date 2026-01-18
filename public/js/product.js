@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializePage() {
+    const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : (localStorage.getItem('lang') || 'ar');
+    const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
     // Get product slug from URL
     const pathParts = window.location.pathname.split('/');
     const slug = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]; // Handle different URL formats
@@ -11,15 +14,21 @@ function initializePage() {
     let quantity = 1;
     let productData = null;
 
-    // Convert to Arabic numerals
-    function toArabicNum(num) {
-        const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-        return String(num).split('').map(d => arabicNums[parseInt(d)] || d).join('');
+    function formatNumber(num) {
+        if (lang === 'ar' && typeof Utils !== 'undefined') {
+            return Utils.toArabicNumerals(num);
+        }
+        return String(num);
     }
 
     function formatPrice(value) {
-        if (!value) return '0 ج.م';
-        return `${value.toLocaleString('ar-EG')} ج.م`;
+        if (typeof Utils !== 'undefined' && Utils.formatPrice) {
+            return Utils.formatPrice(value, lang);
+        }
+        if (typeof I18n !== 'undefined' && I18n.formatPrice) {
+            return I18n.formatPrice(value);
+        }
+        return lang === 'ar' ? `${value || 0} ج.م` : `EGP ${value || 0}`;
     }
 
     function getImageUrl(image) {
@@ -67,11 +76,27 @@ function initializePage() {
             document.getElementById('product-content').classList.remove('hidden');
 
             // Populate data
-            const nameAr = productData.name_ar || productData.name_en || '';
+            const nameAr = productData.name_ar || '';
             const nameEn = productData.name_en || '';
-            document.getElementById('breadcrumb-product').textContent = nameAr;
-            document.getElementById('product-name-ar').textContent = nameAr;
-            document.getElementById('product-name-en').textContent = nameEn;
+            const displayName = lang === 'ar'
+                ? (nameAr || t('common.unknown', 'Unknown'))
+                : (nameEn || t('common.unknown', 'Unknown'));
+            document.getElementById('breadcrumb-product').textContent = displayName;
+            const nameArEl = document.getElementById('product-name-ar');
+            const nameEnEl = document.getElementById('product-name-en');
+            if (lang === 'ar') {
+                if (nameArEl) nameArEl.textContent = nameAr || t('common.unknown', 'Unknown');
+                if (nameEnEl) {
+                    nameEnEl.textContent = '';
+                    nameEnEl.classList.add('hidden');
+                }
+            } else {
+                if (nameEnEl) nameEnEl.textContent = nameEn || t('common.unknown', 'Unknown');
+                if (nameArEl) {
+                    nameArEl.textContent = '';
+                    nameArEl.classList.add('hidden');
+                }
+            }
             document.getElementById('product-price').textContent = formatPrice(productData.price);
 
             if (productData.old_price) {
@@ -80,8 +105,14 @@ function initializePage() {
                 oldPriceEl.classList.remove('hidden');
             }
 
-            document.getElementById('product-description').textContent = productData.short_description_ar || productData.description_ar || '';
-            document.getElementById('full-description').innerHTML = productData.description_ar || productData.short_description_ar || 'لا يوجد وصف متاح';
+            const shortDescription = lang === 'ar'
+                ? (productData.short_description_ar || productData.description_ar || '')
+                : (productData.short_description_en || productData.description_en || '');
+            const fullDescription = lang === 'ar'
+                ? (productData.description_ar || productData.short_description_ar || '')
+                : (productData.description_en || productData.short_description_en || '');
+            document.getElementById('product-description').textContent = shortDescription;
+            document.getElementById('full-description').innerHTML = fullDescription || t('product.noDescription', 'No description available');
 
             // Main image
             const mainImage = document.getElementById('main-image');
@@ -89,7 +120,7 @@ function initializePage() {
             const primaryImage = getImageUrl(productData.primary_image) || getImageUrl(images.find((img) => img.is_primary)) || getImageUrl(images[0]);
             if (primaryImage) {
                 mainImage.src = primaryImage;
-                mainImage.alt = nameAr;
+                mainImage.alt = displayName;
             } else {
                 mainImage.src = '/images/placeholder-product.png'; // Placeholder
             }
@@ -124,17 +155,19 @@ function initializePage() {
                     <span class="relative flex h-3 w-3">
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                     </span>
-                    <span class="text-red-700 font-medium text-sm">غير متوفر حالياً</span>
+                    <span class="text-red-700 font-medium text-sm">${t('products.stock.out', 'Out of stock')}</span>
                 `;
                 document.getElementById('add-to-cart-btn').disabled = true;
                 document.getElementById('add-to-cart-btn').classList.add('opacity-50', 'cursor-not-allowed');
             } else if (productData.stock <= 5) {
+                const lowStockTemplate = t('product.stock.lowWithCount', 'Low stock - {count} left');
+                const lowStockText = lowStockTemplate.replace('{count}', formatNumber(productData.stock));
                 stockStatus.innerHTML = `
                     <span class="relative flex h-3 w-3">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
                     </span>
-                    <span class="text-amber-700 font-medium text-sm">كمية محدودة - ${toArabicNum(productData.stock)} قطع متبقية</span>
+                    <span class="text-amber-700 font-medium text-sm">${lowStockText}</span>
                 `;
             }
 
@@ -142,15 +175,15 @@ function initializePage() {
             const specsTable = document.getElementById('specs-table');
             specsTable.innerHTML = `
                 <tr class="hover:bg-gray-50">
-                    <td class="py-3 text-olive-light font-medium">الوزن</td>
-                    <td class="py-3 text-olive-dark">${productData.weight || 'غير محدد'}</td>
+                    <td class="py-3 text-olive-light font-medium">${t('product.specs.weight', 'Weight')}</td>
+                    <td class="py-3 text-olive-dark">${productData.weight || t('common.unknown', 'Unknown')}</td>
                 </tr>
                 <tr class="hover:bg-gray-50">
-                    <td class="py-3 text-olive-light font-medium">الأبعاد</td>
-                    <td class="py-3 text-olive-dark">${productData.dimensions || 'غير محدد'}</td>
+                    <td class="py-3 text-olive-light font-medium">${t('product.specs.dimensions', 'Dimensions')}</td>
+                    <td class="py-3 text-olive-dark">${productData.dimensions || t('common.unknown', 'Unknown')}</td>
                 </tr>
                 <tr class="hover:bg-gray-50">
-                    <td class="py-3 text-olive-light font-medium">SKU</td>
+                    <td class="py-3 text-olive-light font-medium">${t('product.specs.sku', 'SKU')}</td>
                     <td class="py-3 text-olive-dark" dir="ltr">${productData.sku || productData.id}</td>
                 </tr>
             `;
@@ -162,7 +195,7 @@ function initializePage() {
             console.error('Error loading product:', error);
             document.getElementById('loading-state').classList.add('hidden');
             document.getElementById('not-found').classList.remove('hidden');
-            showToast('حدث خطأ في تحميل المنتج', 'error');
+            showToast(t('product.errorLoading', 'Error loading product'), 'error');
         }
     }
 
@@ -182,17 +215,17 @@ function initializePage() {
 
                 if (related.length > 0) {
                     container.innerHTML = related.map(product => `
-                        <a href="/pages/product.html?slug=${product.slug}" class="group flex flex-col gap-3">
+                        <a href="/products/${product.slug || product.id}" class="group flex flex-col gap-3">
                             <div class="w-full aspect-[4/5] bg-white rounded-xl overflow-hidden relative shadow-sm hover:shadow-md transition-all">
                                 ${product.primary_image ?
-                                    `<img src="${getImageUrl(product.primary_image)}" alt="${product.name_ar}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` :
+                                    `<img src="${getImageUrl(product.primary_image)}" alt="${lang === 'ar' ? (product.name_ar || t('common.unknown', 'Unknown')) : (product.name_en || t('common.unknown', 'Unknown'))}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">` :
                                     `<div class="w-full h-full flex items-center justify-center text-olive-light bg-gray-50">
                                         <span class="material-symbols-outlined text-4xl">inventory_2</span>
                                     </div>`
                                 }
                             </div>
                             <div>
-                                <h3 class="font-bold text-olive-dark text-sm hover:text-primary cursor-pointer truncate">${product.name_ar || product.name_en || ''}</h3>
+                                <h3 class="font-bold text-olive-dark text-sm hover:text-primary cursor-pointer truncate">${lang === 'ar' ? (product.name_ar || t('common.unknown', 'Unknown')) : (product.name_en || t('common.unknown', 'Unknown'))}</h3>
                                 <div class="flex justify-between items-center mt-1">
                                     <span class="text-primary font-bold text-sm">${formatPrice(product.price)}</span>
                                 </div>
@@ -200,7 +233,7 @@ function initializePage() {
                         </a>
                     `).join('');
                 } else {
-                    container.innerHTML = '<p class="col-span-full text-center text-olive-light">لا توجد منتجات مشابهة</p>';
+                    container.innerHTML = `<p class="col-span-full text-center text-olive-light">${t('product.relatedEmpty', 'No related products')}</p>`;
                 }
             }
         } catch (error) {
@@ -228,15 +261,18 @@ function initializePage() {
             cart.push({
                 id: item.id,
                 name: item.name,
+                name_ar: item.name_ar,
+                name_en: item.name_en,
                 slug: item.slug,
                 price: item.price,
                 image: item.image,
-                quantity: qty
+                quantity: qty,
+                lang: lang
             });
         }
 
         saveCart(cart);
-        showToast('تمت الإضافة للسلة', 'success');
+        showToast(t('products.addedToCart', 'Added to cart'), 'success');
     }
 
     function updateCartBadge() {
@@ -256,27 +292,36 @@ function initializePage() {
     document.getElementById('qty-increase').addEventListener('click', function () {
         if (productData && quantity < (productData.stock || 999)) {
             quantity++;
-            document.getElementById('quantity').value = toArabicNum(quantity);
+            document.getElementById('quantity').value = formatNumber(quantity);
         }
     });
 
     document.getElementById('qty-decrease').addEventListener('click', function () {
         if (quantity > 1) {
             quantity--;
-            document.getElementById('quantity').value = toArabicNum(quantity);
+            document.getElementById('quantity').value = formatNumber(quantity);
         }
     });
+
+    const quantityInput = document.getElementById('quantity');
+    if (quantityInput) {
+        quantityInput.value = formatNumber(quantity);
+    }
 
     // Add to cart
     document.getElementById('add-to-cart-btn').addEventListener('click', function () {
         if (!productData || productData.stock <= 0) return;
 
-        const name = productData.name_ar || productData.name_en || '';
+        const name = lang === 'ar'
+            ? (productData.name_ar || t('common.unknown', 'Unknown'))
+            : (productData.name_en || t('common.unknown', 'Unknown'));
         const imageUrl = getImageUrl(productData.primary_image) || (Array.isArray(productData.images) ? getImageUrl(productData.images[0]) : '');
 
         addToCart({
             id: productData.id,
             name,
+            name_ar: productData.name_ar || '',
+            name_en: productData.name_en || '',
             slug: productData.slug,
             price: productData.price,
             image: imageUrl || '/images/placeholder-product.png'

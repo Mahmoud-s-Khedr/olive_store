@@ -1,8 +1,8 @@
 # AI Memory - Olive Store
 
 ## Repo Layout
-- Backend monolith: `app/` (config/controllers/middleware/models/routes/services/utils/views)
-- Static assets: `public/` (css/js/images/locales)
+- Backend monolith: `app/` (config/controllers/middleware/models/routes/services/utils)
+- Static assets + pages: `public/` (pages/css/js/images/locales)
 - DB: `database/schema.sql` and `database/seed.js` (admin seeder script)
 - Env sample: `.env.example`
 
@@ -17,7 +17,7 @@
 ## Frontend Status ✅ IMPLEMENTED
 All frontend pages have been implemented:
 
-### Store Pages (18 files in `app/views/pages/`)
+### Store Pages (21 files in `public/pages/`)
 - Homepage (hero, categories, featured products)
 - Products listing (filters, search, sorting, pagination)
 - Product detail (gallery, tabs, related products)
@@ -25,9 +25,10 @@ All frontend pages have been implemented:
 - Checkout (shipping form, payment selection)
 - Order success, My Orders, Order Detail
 - Auth: login, register, forgot/reset password, verify email, profile
-- Static: about, contact, shipping, payment info
+- Static: about, contact, shipping, payment info, terms
+- Logout page
 
-### Admin Pages (11 files in `app/views/admin/`)
+### Admin Pages (11 files in `public/pages/`)
 - Login (standalone page)
 - Dashboard (stats, recent orders, quick actions)
 - Products (list with filters, add/edit form)
@@ -37,15 +38,16 @@ All frontend pages have been implemented:
 - Files (media manager with upload)
 - Settings (tabs for store info, shipping, payment, notifications)
 
-### Layouts (2 files in `app/views/layouts/`)
-- `main.ejs` - Store layout with header, footer, navigation
-- `admin.ejs` - Admin layout with sidebar, topbar
+### Layouts
+- No server-side layouts; pages are static HTML in `public/pages/`
+- Shared navbar behavior handled by `public/js/navbar.js`
 
 ### Internationalization (i18n)
 - `public/js/i18n.js` - Translation module with RTL/LTR switching
 - `public/locales/ar.json` - Arabic translations
 - `public/locales/en.json` - English translations
 - Language switcher in both store and admin headers
+- Page titles and meta descriptions use `data-i18n` keys for AR/EN parity
 
 ## Design System
 - **Framework**: TailwindCSS (CDN)
@@ -68,7 +70,7 @@ All frontend pages have been implemented:
 - `cart.js` - Cart management (localStorage)
 
 ## Notes for new agents
-- Frontend is fully implemented with EJS templates + TailwindCSS
+- Frontend is fully implemented with static HTML pages + TailwindCSS
 - Bilingual support (AR/EN) with automatic RTL/LTR switching
 - Cart data stored in localStorage, synced with server on checkout
 - JWT tokens: `token` for users, `adminToken` for admin

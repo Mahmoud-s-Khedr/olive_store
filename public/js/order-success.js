@@ -1,4 +1,7 @@
 // Order Success Page JavaScript
+const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : (localStorage.getItem('lang') || 'ar');
+const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
 document.addEventListener('DOMContentLoaded', function() {
     initializePage();
 });
@@ -7,12 +10,12 @@ function initializePage() {
     // Check authentication
     const token = localStorage.getItem('authToken');
     if (!token) {
-        window.location.href = '/pages/login.html';
+        window.location.href = '/login';
         return;
     }
 
     // Get order ID from URL parameters
-    const urlParams = new URLSearchParams(window.location.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get('order_id');
 
     if (orderId) {
@@ -24,7 +27,7 @@ function initializePage() {
             const orderData = JSON.parse(lastOrder);
             displayOrderDetails(orderData);
         } else {
-            showError('لم يتم العثور على تفاصيل الطلب');
+            showError(t('orderSuccess.notFound', 'Order details not found'));
         }
     }
 
@@ -43,7 +46,7 @@ function loadOrderDetails(orderId) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('فشل في تحميل تفاصيل الطلب');
+            throw new Error(t('orderSuccess.loadError', 'Failed to load order details'));
         }
         return response.json();
     })
@@ -54,7 +57,7 @@ function loadOrderDetails(orderId) {
     })
     .catch(error => {
         console.error('Error loading order details:', error);
-        showError('حدث خطأ في تحميل تفاصيل الطلب');
+        showError(t('orderSuccess.loadError', 'Failed to load order details'));
     });
 }
 
@@ -69,33 +72,29 @@ function displayOrderDetails(order) {
     const orderDateElement = document.getElementById('order-date');
     if (orderDateElement && order.created_at) {
         const date = new Date(order.created_at);
-        orderDateElement.textContent = formatArabicDate(date);
+        orderDateElement.textContent = formatDate(date, lang);
     }
 
     // Update payment method
     const paymentMethodElement = document.getElementById('payment-method');
     if (paymentMethodElement && order.payment_method) {
-        paymentMethodElement.textContent = getPaymentMethodText(order.payment_method);
+        paymentMethodElement.textContent = getPaymentMethodText(order.payment_method, t);
     }
 }
 
-function formatArabicDate(date) {
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    };
-
-    return date.toLocaleDateString('ar-EG', options);
+function formatDate(date, lang) {
+    if (typeof Utils !== 'undefined') {
+        return Utils.formatDateTime(date, lang);
+    }
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(date).toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', options);
 }
 
-function getPaymentMethodText(method) {
+function getPaymentMethodText(method, t) {
     const methods = {
-        'cash_on_delivery': 'الدفع عند الاستلام',
-        'card': 'بطاقة ائتمان',
-        'bank_transfer': 'تحويل بنكي'
+        'cash_on_delivery': t('paymentMethods.cash_on_delivery', 'Cash on Delivery'),
+        'card': t('paymentMethods.card', 'Credit Card'),
+        'bank_transfer': t('paymentMethods.bank_transfer', 'Bank Transfer')
     };
 
     return methods[method] || method;

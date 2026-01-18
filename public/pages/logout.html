@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auth.logout.pageTitle">Logging out...</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <script>
+        const lang = localStorage.getItem('lang') || 'ar';
+        document.title = lang === 'ar' ? 'جاري تسجيل الخروج...' : 'Logging out...';
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('adminToken');
+        window.location.replace('/login');
+    </script>
+</body>
+</html>

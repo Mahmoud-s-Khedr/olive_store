@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
         accountMenu?.classList.add('hidden');
     });
 
+    const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : (localStorage.getItem('lang') || 'ar');
+    const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : (fallback || key);
+
+    function toLocaleNumber(num) {
+        if (lang === 'ar' && typeof Utils !== 'undefined') {
+            return Utils.toArabicNumerals(num);
+        }
+        return String(num);
+    }
+
     // Load categories
     async function loadCategories() {
         const grid = document.getElementById('categories-grid');
@@ -36,15 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
             emptyState.classList.add('hidden');
 
             grid.innerHTML = categories.map(cat => {
-                const name = cat.name_ar || cat.name_en || cat.name;
-                const desc = cat.description_ar || cat.description_en || '';
+                const name = lang === 'ar'
+                    ? (cat.name_ar || t('common.unknown', 'Unknown'))
+                    : (cat.name_en || t('common.unknown', 'Unknown'));
+                const desc = lang === 'ar'
+                    ? (cat.description_ar || '')
+                    : (cat.description_en || '');
                 const productCount = Number(cat.product_count || cat.products_count || 0);
                 const hasCount = Number.isFinite(productCount) && productCount > 0;
-                const countLabel = 'منتج';
-                const countDisplay = toArabicNum(productCount);
+                const countLabel = t('categories.productUnit', 'products');
+                const countDisplay = toLocaleNumber(productCount);
 
                 return `
-                <a href="/pages/products.html?category=${cat.slug || cat.id}"
+                <a href="/products?category=${cat.slug || cat.id}"
                    class="group relative aspect-square rounded-2xl overflow-hidden bg-gray-100 hover:shadow-xl transition-all duration-300">
 
                     <!-- Background Image -->
@@ -82,14 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
             `}).join('');
         } catch (error) {
             console.error('Error loading categories:', error);
-            grid.innerHTML = `<div class="col-span-full text-center py-8 text-olive-light">حدث خطأ في تحميل البيانات</div>`;
+            grid.innerHTML = `<div class="col-span-full text-center py-8 text-olive-light">${t('common.errorLoading', 'Error loading data')}</div>`;
         }
-    }
-
-    // Convert to Arabic numerals
-    function toArabicNum(num) {
-        const arabicNums = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-        return String(num).split('').map(d => arabicNums[parseInt(d)] || d).join('');
     }
 
     // Initialize

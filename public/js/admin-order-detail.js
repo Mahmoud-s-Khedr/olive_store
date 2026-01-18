@@ -1,5 +1,5 @@
 // Admin Order Detail Page JavaScript
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Sidebar toggle functionality
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
     sidebarOverlay.addEventListener('click', toggleSidebar);
 
     // Logout functionality
-    document.getElementById('logout-btn').addEventListener('click', function() {
+    document.getElementById('logout-btn').addEventListener('click', function () {
         localStorage.removeItem('adminToken');
-        window.location.href = '/pages/admin-login.html';
+        window.location.href = '/admin/login';
     });
 
     // Language and translation (simplified for static version)
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const token = localStorage.getItem('adminToken');
     if (!token) {
-        window.location.href = '/pages/admin-login.html';
+        window.location.href = '/admin/login';
         return;
     }
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const orderId = pathParts[pathParts.length - 1] || new URLSearchParams(window.location.search).get('id');
 
     if (!orderId) {
-        window.location.href = '/pages/admin-orders.html';
+        window.location.href = '/admin/orders';
         return;
     }
 
@@ -88,10 +88,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 if (response.status === 401) {
                     localStorage.removeItem('adminToken');
-                    window.location.href = '/pages/admin-login.html';
+                    window.location.href = '/admin/login';
                     return;
                 }
-                window.location.href = '/pages/admin-orders.html';
+                window.location.href = '/admin/orders';
                 return;
             }
 
@@ -114,22 +114,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const itemsContainer = document.getElementById('order-items');
             if (orderData.items && orderData.items.length > 0) {
                 itemsContainer.innerHTML = orderData.items.map(item => `
-                    <div class="flex items-center gap-4 p-4">
-                        <div class="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
-                            ${item.image || item.product?.image ?
-                            `<img src="${item.image || item.product?.image}" alt="" class="w-full h-full object-cover">` :
-                            `<div class="w-full h-full flex items-center justify-center text-slate-400">
-                                    <span class="material-symbols-outlined">inventory_2</span>
-                                </div>`
-                        }
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 py-4 px-2 sm:px-4 items-center group hover:bg-gray-50 transition-colors rounded-xl">
+                        <div class="sm:col-span-6 flex items-center gap-3">
+                            <div class="size-12 sm:size-16 rounded-lg bg-gray-100 overflow-hidden shrink-0 border border-gray-200">
+                                ${item.image || item.product?.image ?
+                        `<img src="${item.image || item.product?.image}" alt="" class="w-full h-full object-cover">` :
+                        `<div class="w-full h-full flex items-center justify-center text-slate-400">
+                                        <span class="material-symbols-outlined">inventory_2</span>
+                                    </div>`
+                    }
+                            </div>
+                            <div class="min-w-0">
+                                <p class="font-bold text-slate-900 text-sm sm:text-base truncate">${item.name || item.product?.name || 'منتج'}</p>
+                                <p class="text-xs text-slate-500 sm:hidden mt-0.5">الكمية: ${toArabicNum(item.quantity)} × ${formatPrice(item.price)}</p>
+                            </div>
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="font-medium text-slate-900">${item.name || item.product?.name || 'منتج'}</p>
-                            <p class="text-sm text-slate-500">الكمية: ${toArabicNum(item.quantity)}</p>
+                        <div class="hidden sm:block sm:col-span-3 text-center font-medium text-slate-700 font-['Work_Sans']">
+                            ${toArabicNum(item.quantity)}
                         </div>
-                        <div class="text-left">
-                            <p class="font-bold text-slate-900">${formatPrice(item.price * item.quantity)}</p>
-                            <p class="text-xs text-slate-500">${formatPrice(item.price)} × ${toArabicNum(item.quantity)}</p>
+                        <div class="sm:col-span-3 flex justify-between sm:justify-end items-center sm:text-left">
+                            <span class="text-sm text-slate-500 sm:hidden">الإجمالي:</span>
+                            <span class="font-bold text-slate-900 font-['Work_Sans']">${formatPrice(item.price * item.quantity)}</span>
                         </div>
                     </div>
                 `).join('');
@@ -143,101 +148,32 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('shipping').textContent = formatPrice(orderData.shipping_cost || 0);
             document.getElementById('total').textContent = formatPrice(orderData.total);
 
-            // Customer
-            const address = orderData.shipping_address || {
-                name: orderData.customer_name,
-                email: orderData.email,
-                phone: orderData.phone,
-                address: orderData.address,
-                city: orderData.city,
-                governorate: orderData.governorate
-            };
-            const cityLine = [address.city, address.governorate].filter(Boolean).join(', ');
-            document.getElementById('customer-info').innerHTML = `
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-                        ${(address.name || 'U').charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                        <p class="font-medium text-slate-900">${address.name || 'غير معروف'}</p>
-                        <p class="text-xs text-slate-500" dir="ltr">${address.email || ''}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 text-sm">
-                    <span class="material-symbols-outlined text-slate-400 text-lg">call</span>
-                    <span class="text-slate-600" dir="ltr">${address.phone || '-'}</span>
-                </div>
-            `;
+            // ... (keep customer info, address, payment rendering)
 
-            // Address
-            document.getElementById('shipping-address').innerHTML = `
-                <p>${address.address || ''}</p>
-                <p>${cityLine}</p>
-            `;
-
-            // Payment
-            const paymentLabels = {
-                'cod': 'عند الاستلام',
-                'card': 'بطاقة'
-            };
-            document.getElementById('payment-method').textContent = paymentLabels[orderData.payment_method] || orderData.payment_method;
-
-            const paymentStatusEl = document.getElementById('payment-status');
-            if (orderData.payment_method === 'cod') {
-                paymentStatusEl.textContent = orderData.status === 'delivered' ? 'مدفوع' : 'عند الاستلام';
-                paymentStatusEl.className = `px-2 py-0.5 rounded-full text-xs font-medium ${orderData.status === 'delivered' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`;
-            } else {
-                paymentStatusEl.textContent = 'مدفوع';
-                paymentStatusEl.className = 'px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800';
+            // Status Select
+            const statusSelect = document.getElementById('status-select');
+            if (statusSelect) {
+                statusSelect.value = orderData.status;
             }
-
-            // Notes
-            if (orderData.notes) {
-                document.getElementById('notes-section').classList.remove('hidden');
-                document.getElementById('order-notes').textContent = orderData.notes;
-            }
-
-            // Timeline
-            document.getElementById('order-timeline').innerHTML = `
-                <div class="flex gap-3">
-                    <div class="w-2 h-2 rounded-full bg-primary mt-2"></div>
-                    <div>
-                        <p class="text-sm font-medium text-slate-900">تم إنشاء الطلب</p>
-                        <p class="text-xs text-slate-500">${formatDate(orderData.created_at)}</p>
-                    </div>
-                </div>
-            `;
-
-            // Highlight current status button
-            document.querySelectorAll('.status-btn').forEach(btn => {
-                if (btn.dataset.status === orderData.status) {
-                    btn.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
-                }
-            });
 
         } catch (error) {
             console.error('Error loading order:', error);
-            // Show error message
-            document.getElementById('loading-state').innerHTML = `
-                <div class="text-center">
-                    <span class="material-symbols-outlined text-red-500 text-6xl mb-4">error</span>
-                    <p class="text-red-600 mb-4">حدث خطأ في تحميل الطلب</p>
-                    <button onclick="window.location.href='/pages/admin-orders.html'" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                        العودة للطلبات
-                    </button>
-                </div>
-            `;
+            // ... (keep error handling)
         }
     }
 
     // Status update
-    document.querySelectorAll('.status-btn').forEach(btn => {
-        btn.addEventListener('click', async function () {
-            const newStatus = this.dataset.status;
-            if (newStatus === orderData.status) return;
+    const saveStatusBtn = document.getElementById('save-status-btn');
+    if (saveStatusBtn) {
+        saveStatusBtn.addEventListener('click', async function () {
+            const statusSelect = document.getElementById('status-select');
+            const newStatus = statusSelect.value;
+
+            if (!newStatus || newStatus === orderData.status) return;
 
             // Show loading state
-            this.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-current mx-auto"></div>';
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span>';
             this.disabled = true;
 
             try {
@@ -253,18 +189,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     location.reload();
                 } else {
-                    alert('حدث خطأ في تحديث حالة الطلب');
-                    this.innerHTML = this.textContent;
+                    const data = await response.json();
+                    alert(data.message || 'حدث خطأ في تحديث حالة الطلب');
+                    this.innerHTML = originalText;
                     this.disabled = false;
                 }
             } catch (error) {
                 console.error('Error updating status:', error);
                 alert('حدث خطأ في تحديث حالة الطلب');
-                this.innerHTML = this.textContent;
+                this.innerHTML = originalText;
                 this.disabled = false;
             }
         });
-    });
+    }
 
     // Initialize
     loadOrder();

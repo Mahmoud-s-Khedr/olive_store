@@ -1,128 +1,111 @@
-// Admin login page JavaScript
+/**
+ * Admin Login Page JavaScript
+ * Uses AuthModule for authentication
+ */
 document.addEventListener('DOMContentLoaded', function () {
     const t = (key, fallback) => typeof I18n !== 'undefined' ? I18n.t(key, fallback) : fallback;
     const lang = typeof I18n !== 'undefined' ? I18n.getCurrentLanguage() : 'ar';
 
-    const form = document.querySelector('form'); // Assuming the form is the only form on the page
+    // Check if already logged in
+    if (AuthModule.isAdminLoggedIn()) {
+        window.location.href = '/pages/admin-dashboard.html';
+        return;
+    }
+
+    const form = document.getElementById('login-form');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const togglePassword = document.querySelector('button[type="button"]'); // The toggle button
-    const passwordIcon = togglePassword ? togglePassword.querySelector('span') : null;
-    const loginBtn = document.querySelector('button[type="submit"]'); // The submit button
-    const loginBtnText = loginBtn ? loginBtn.querySelector('span:first-child') : null;
-    const loginBtnIcon = loginBtn ? loginBtn.querySelector('span:last-child') : null;
-    // Assuming no spinner in HTML, but can add if needed
-    const loginError = document.createElement('div'); // Or find an existing error div
-    loginError.id = 'admin-login-error';
-    loginError.className = 'hidden'; // Assuming CSS class for hidden
-    form.appendChild(loginError); // Append to form or appropriate place
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const loginBtn = document.getElementById('login-btn');
+    const loginBtnText = document.getElementById('login-btn-text');
+    const loginBtnIcon = document.getElementById('login-btn-icon');
+    const loginBtnSpinner = document.getElementById('login-btn-spinner');
 
     // Toggle password visibility
-    togglePassword?.addEventListener('click', function (e) {
-        e.preventDefault();
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        if (passwordIcon) {
-            passwordIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
-        }
-        passwordInput.focus();
-    });
+    if (togglePasswordBtn && passwordInput) {
+        togglePasswordBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const icon = this.querySelector('span');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                if (icon) icon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                if (icon) icon.textContent = 'visibility';
+            }
+
+            passwordInput.focus();
+        });
+    }
 
     // Form validation
     function validateForm() {
         let isValid = true;
+        Utils.clearAllFieldErrors('login-form');
+
         if (!emailInput.value.trim()) {
+            Utils.showFieldError('email', t('validation.required', 'هذا الحقل مطلوب'));
             isValid = false;
-            // Show error for email
+        } else if (!Utils.isValidEmail(emailInput.value.trim())) {
+            Utils.showFieldError('email', t('validation.email', 'البريد الإلكتروني غير صحيح'));
+            isValid = false;
         }
+
         if (!passwordInput.value.trim()) {
+            Utils.showFieldError('password', t('validation.required', 'هذا الحقل مطلوب'));
             isValid = false;
-            // Show error for password
         }
+
         return isValid;
     }
 
+    // Set loading state
+    function setLoading(loading) {
+        if (loginBtn) loginBtn.disabled = loading;
+        if (loginBtnText) loginBtnText.textContent = loading ? t('auth.login.loggingIn', 'جاري الدخول...') : t('auth.login.submit', 'دخول');
+        if (loginBtnIcon) loginBtnIcon.classList.toggle('hidden', loading);
+        if (loginBtnSpinner) loginBtnSpinner.classList.toggle('hidden', !loading);
+    }
+
     // Form submission
-    form?.addEventListener('submit', async function (e) {
-        e.preventDefault();
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-        // Client-side validation
-        if (!validateForm()) {
-            if (typeof Utils !== 'undefined') {
-                Utils.showError('admin-login-error', t('auth.login.fillFields', 'يرجى ملء جميع الحقول'));
+            // Client-side validation
+            if (!validateForm()) {
+                return;
             }
-            return;
-        }
 
-        // Hide previous errors
-        if (typeof Utils !== 'undefined') {
+            // Hide previous errors
             Utils.hideError('admin-login-error');
-        }
 
-        // Show loading state
-        if (loginBtn) {
-            loginBtn.disabled = true;
-            if (loginBtnText) loginBtnText.textContent = t('auth.login.loggingIn', 'جاري الدخول...');
-            if (loginBtnIcon) loginBtnIcon.classList.add('hidden');
-            // Add spinner if needed
-        }
+            // Show loading state
+            setLoading(true);
 
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: emailInput.value.trim(),
-                    password: passwordInput.value
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.token) {
-                // Check if user is admin
-                if (!data.user.is_admin) {
-                    throw new Error(t('auth.login.notAdmin', 'غير مصرح لك بالدخول كمسؤول'));
-                }
-
-                // Store token
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
+            try {
+                // Use AuthModule for admin login
+                await AuthModule.adminLogin(emailInput.value.trim(), passwordInput.value);
 
                 // Show success message
-                if (typeof Utils !== 'undefined') {
-                    Utils.showToast(t('auth.login.success', 'تم تسجيل الدخول بنجاح'), 'success');
-                }
+                Utils.showToast(t('auth.login.success', 'تم تسجيل الدخول بنجاح'), 'success');
 
                 // Redirect to admin dashboard
                 setTimeout(() => {
-                    window.location.href = '/admin';
+                    window.location.href = '/pages/admin-dashboard.html';
                 }, 500);
-            } else {
-                // Create error object with status for parseError
-                const error = new Error(data.message);
-                error.status = response.status;
+
+            } catch (error) {
+                console.error('Admin login error:', error);
                 const errorMsg = Utils.parseError(error, lang);
-                if (typeof Utils !== 'undefined') {
-                    Utils.showError('admin-login-error', errorMsg);
-                }
-            }
-        } catch (error) {
-            console.error('Admin login error:', error);
-            const errorMsg = Utils.parseError(error, lang);
-            if (typeof Utils !== 'undefined') {
                 Utils.showError('admin-login-error', errorMsg);
+
+                // Reset button state on error
+                setLoading(false);
             }
-        } finally {
-            // Reset button state
-            if (loginBtn) {
-                loginBtn.disabled = false;
-                if (loginBtnText) loginBtnText.textContent = t('auth.login.submit', 'دخول');
-                if (loginBtnIcon) loginBtnIcon.classList.remove('hidden');
-                // Hide spinner
-            }
-        }
-    });
+        });
+    }
 });
